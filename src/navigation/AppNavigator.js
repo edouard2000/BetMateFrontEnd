@@ -4,6 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import MainScreen from '../screens/MainScreen';
 import UserDashboard from '../screens/DashboardScreen';
+import ProfileScreen from '../screens/UserProfileScreen';
+import SocialScreen from '../screens/SocialScreen';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +19,8 @@ const AppNavigator = () => {
         }}>
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="UserDashboard" component={UserDashboard} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="SocialScreen" component={SocialScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
