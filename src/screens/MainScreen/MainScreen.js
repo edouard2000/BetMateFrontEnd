@@ -49,7 +49,7 @@ const MainScreen = () => {
       logo: null,
       isAdmin: false,
     },
-    // Add more bets as needed...
+    
   ];
 
   const filteredBets = bets.filter(bet =>

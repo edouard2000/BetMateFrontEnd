@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 10,
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    height: 40,
     marginBottom: 20,
   },
   searchInput: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#151515',
     borderRadius: 10,
     paddingHorizontal: 15,
-    borderWidth: 0.5,
+    borderWidth: Platform.OS === 'android' ? 1 : 1,
     borderColor: '#3498db',
   },
   categoryTitle: {
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     paddingBottom: 15,
     marginTop: 30,
-    borderWidth: 1,
+    borderWidth: Platform.OS === 'android' ? 2 : 2,
     borderColor: '#3498db',
     paddingTop: 15,
     paddingHorizontal: 5,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     transform: [{translateX: -100}],
     backgroundColor: '#151515',
     borderRadius: 10,
-    borderWidth: 0.5,
+    borderWidth: Platform.OS === 'android' ? 1 : 1,
     borderColor: '#3498db',
     padding: 10,
     width: 200,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   dropdownItem: {
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: Platform.OS === 'android' ? 1 : 1,
     borderBottomColor: '#3498db',
   },
   dropdownItemText: {

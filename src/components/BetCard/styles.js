@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    borderWidth: 0.5,
+    borderWidth: Platform.OS === 'android' ? 1 : 1,
     borderColor: '#1E88E5',
   },
   headerSection: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#151515',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: Platform.OS === 'android' ? 1 : 1,
     borderColor: '#1E88E5',
   },
   avatar: {
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   bodySection: {
     padding: 10,
     backgroundColor: '#151515',
-    borderTopWidth: 0.5,
+    borderTopWidth: Platform.OS === 'android' ? 1 : 1,
     borderColor: '#1E88E5',
   },
   bodyItem: {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#151515',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    borderTopWidth: 0.5,
+    borderTopWidth: Platform.OS === 'android' ? 1 : 1,
     borderColor: '#1E88E5',
   },
   betNowButton: {
