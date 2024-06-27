@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
@@ -8,21 +8,9 @@ import styles from './styles';
 
 const BetCard = ({bet}) => {
   const navigation = useNavigation();
-  const [unreadNotificationCount, setUnreadNotificationCount] = useState(3);
-
-  const handleMorePress = () => {
-    navigation.navigate('BetList');
-  };
-
-  const handleChatPress = () => {
-    navigation.navigate('Chat', {messages: bet.messages});
-  };
-
   const handleCardPress = () => {
     navigation.navigate('BetDetail', {bet});
   };
-
-  const onCloneBet = () => {};
 
   return (
     <TouchableOpacity onPress={handleCardPress} style={styles.cardContainer}>
@@ -34,11 +22,6 @@ const BetCard = ({bet}) => {
         <Text style={styles.betName}>{bet.name}</Text>
         <TouchableOpacity>
           <Icon name="notifications" size={20} color="#3498db" />
-          {unreadNotificationCount > 0 && (
-            <View style={styles.notificationBadge}>
-              <Text style={styles.badgeText}>{unreadNotificationCount}</Text>
-            </View>
-          )}
         </TouchableOpacity>
       </View>
       <View style={styles.lineContainer}>
@@ -80,24 +63,17 @@ const BetCard = ({bet}) => {
         </View>
       </View>
       <View style={styles.footerSection}>
-        <TouchableOpacity style={styles.betNowButton} onPress={handleMorePress}>
+        <TouchableOpacity style={styles.betNowButton} onPress={handleCardPress}>
           <Text style={styles.betNowButtonText}>Bet Now</Text>
         </TouchableOpacity>
         <View style={styles.footerIcons}>
-          <TouchableOpacity onPress={onCloneBet}>
+          <TouchableOpacity>
             <Icon name="copy-outline" size={20} color="#3498db" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleChatPress}>
+          <TouchableOpacity>
             <Icon name="chatbubble-outline" size={20} color="#3498db" />
-            {bet.messages && bet.messages.length > 0 && (
-              <View style={styles.notificationBadge}>
-                <Text style={styles.badgeText}>
-                  {bet.messages.length > 10 ? '10+' : bet.messages.length}
-                </Text>
-              </View>
-            )}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity>
             <Icon name="share-social-outline" size={20} color="#3498db" />
           </TouchableOpacity>
         </View>

@@ -7,12 +7,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A1A1A',
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: {width: 0, height: Platform.OS === 'android' ? 5 : 5},
     shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
-    borderWidth: Platform.OS === 'android' ? 1 : 1,
-    borderColor: '#1E88E5',
+    shadowRadius: 10,
+    elevation: Platform.OS === 'android' ? 10 : 10,
   },
   headerSection: {
     padding: 10,
@@ -22,8 +20,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#151515',
-    borderBottomWidth: Platform.OS === 'android' ? 1 : 1,
-    borderColor: '#1E88E5',
   },
   avatar: {
     width: 30,
@@ -75,8 +71,6 @@ const styles = StyleSheet.create({
   bodySection: {
     padding: 10,
     backgroundColor: '#151515',
-    borderTopWidth: Platform.OS === 'android' ? 1 : 1,
-    borderColor: '#1E88E5',
   },
   bodyItem: {
     flexDirection: 'row',
@@ -100,8 +94,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#151515',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    borderTopWidth: Platform.OS === 'android' ? 1 : 1,
-    borderColor: '#1E88E5',
   },
   betNowButton: {
     borderWidth: 1,
@@ -118,6 +110,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 80,
+  },
+  categoryIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 5,
+  },
+  categoryIcon: {
+    marginLeft: 10,
   },
 });
 

@@ -49,7 +49,6 @@ const MainScreen = () => {
       logo: null,
       isAdmin: false,
     },
-    
   ];
 
   const filteredBets = bets.filter(bet =>
@@ -70,7 +69,7 @@ const MainScreen = () => {
           </TouchableOpacity>
           <View style={styles.iconWithBadge}>
             <TouchableOpacity style={styles.notificationButton}>
-              <Icon name="notifications-outline" size={28} color="#3498db" />
+              <Icon name="notifications-outline" size={28} color="#1E88E5" />
             </TouchableOpacity>
             <View style={styles.badge}>
               <Text style={styles.badgeText}>5</Text>
@@ -81,7 +80,7 @@ const MainScreen = () => {
               <Icon
                 name="chatbubble-ellipses-outline"
                 size={28}
-                color="#3498db"
+                color="#1E88E5"
               />
             </TouchableOpacity>
             <View style={styles.badge}>
@@ -101,9 +100,9 @@ const MainScreen = () => {
         />
       </View>
       <ScrollView style={styles.categoryList}>
-        <View style={styles.mostViewedSection}>
-          <View style={styles.mostViewedHeaderContainer}>
-            <Text style={styles.mostViewedTitle}>Most Viewed</Text>
+        <View style={styles.categoryContainer}>
+          <View style={styles.categoryHeader}>
+            <Text style={styles.categoryTitle}>Trendings</Text>
           </View>
           <ScrollView horizontal style={styles.betsList}>
             {mostViewedBets.map((bet, index) => (
@@ -128,7 +127,7 @@ const MainScreen = () => {
                   <Icon
                     name="information-circle-outline"
                     size={22}
-                    color="#3498db"
+                    color="#1E88E5"
                     style={styles.categoryIcon}
                   />
                   <View style={styles.betCountContainer}>
@@ -153,19 +152,20 @@ const MainScreen = () => {
       </ScrollView>
       <View style={styles.bottomNav}>
         <TouchableOpacity onPress={() => navigation.navigate('Main')}>
-          <Icon name="home-outline" size={30} color="#3498db" />
+          <Icon name="home-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SocialScreen')}>
-          <Icon name="refresh-outline" size={30} color="#3498db" />
+          <Icon name="sync-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setDropdownVisible(!dropdownVisible)}>
-          <Icon name="add-circle-outline" size={30} color="#3498db" />
+          <Icon name="add-circle" size={35} color="#1E88E5" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('UserDashboard')}>
-          <Icon name="trending-up-outline" size={30} color="#3498db" />
+
+        <TouchableOpacity onPress={() => navigation.navigate('PeerToPeer')}>
+          <Icon name="people-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-          <Icon name="person-outline" size={30} color="#3498db" />
+          <Icon name="person-circle-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
       </View>
       {dropdownVisible && (
@@ -190,9 +190,9 @@ const MainScreen = () => {
             style={styles.dropdownItem}
             onPress={() => {
               setDropdownVisible(false);
-              navigation.navigate('AddPeerRequest');
+              navigation.navigate('#');
             }}>
-            <Text style={styles.dropdownItemText}>Add P2P Request</Text>
+            <Text style={styles.dropdownItemText}>Join MarketPlace</Text>
           </TouchableOpacity>
         </View>
       )}
