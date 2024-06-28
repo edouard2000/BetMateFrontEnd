@@ -12,6 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import BetCard from '../../components/BetCard';
 import {useNavigation} from '@react-navigation/native';
+import BalanceButton from './BalanceButton'; // Adjust the path as needed
 import styles from './styles';
 import bets from './bet';
 
@@ -25,6 +26,7 @@ const MainScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isTrendingOn, setIsTrendingOn] = useState(false);
   const [activePage, setActivePage] = useState({});
+  const [balance, setBalance] = useState('$100');
 
   const gameCategories = [
     'All Bets',
@@ -46,6 +48,10 @@ const MainScreen = () => {
       ...prevState,
       [rowIndex]: page,
     }));
+  };
+
+  const handleAddBalance = () => {
+    // Logic to add balance
   };
 
   const renderBetRow = (bets, rowIndex, isLastRow) => {
@@ -96,6 +102,12 @@ const MainScreen = () => {
           <TouchableOpacity
             style={styles.createBetButton}
             onPress={() => navigation.navigate('CreateBet')}>
+            <Icon
+              name="add-circle-outline"
+              size={20}
+              color="#ffffff"
+              style={styles.plusIcon}
+            />
             <Text style={styles.createBetButtonText}>Create Bet</Text>
           </TouchableOpacity>
           <View style={styles.iconWithBadge}>
@@ -131,14 +143,17 @@ const MainScreen = () => {
         />
       </View>
       <View style={styles.trendingSwitchContainer}>
-        <Switch
-          value={isTrendingOn}
-          onValueChange={setIsTrendingOn}
-          trackColor={{false: '#767577', true: '#1E88E5'}}
-          thumbColor={isTrendingOn ? '#ffffff' : '#f4f3f4'}
-          style={styles.switch}
-        />
-        <Text style={styles.switchLabel}>Trending</Text>
+        <View style={styles.switchContainer}>
+          <Switch
+            value={isTrendingOn}
+            onValueChange={setIsTrendingOn}
+            trackColor={{false: '#767577', true: '#1E88E5'}}
+            thumbColor={isTrendingOn ? '#ffffff' : '#f4f3f4'}
+            style={styles.switch}
+          />
+          <Text style={styles.switchLabel}>Trending</Text>
+        </View>
+        <BalanceButton balance={balance} onPress={handleAddBalance} />
       </View>
       {isTrendingOn && (
         <View style={styles.trendingSection}>
