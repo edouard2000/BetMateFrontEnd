@@ -8,6 +8,7 @@ import ProfileScreen from '../screens/UserProfileScreen';
 import SocialScreen from '../screens/SocialScreen';
 import BetListScreen from '../screens/BetListScreen';
 import Chat from '../screens/Chat';
+import GeneralChatScreen from '../screens/GeneralChatScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,8 @@ const AppNavigator = () => {
         <Stack.Screen name="SocialScreen" component={SocialScreen} />
         <Stack.Screen name="BetList" component={BetListScreen} />
         <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="GeneralChatScreen" component={GeneralChatScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

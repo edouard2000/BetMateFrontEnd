@@ -119,12 +119,10 @@ const MainScreen = () => {
             </View>
           </View>
           <View style={styles.iconWithBadge}>
-            <TouchableOpacity style={styles.chatButton}>
-              <Icon
-                name="chatbubble-ellipses-outline"
-                size={28}
-                color="#1E88E5"
-              />
+            <TouchableOpacity 
+            style={styles.chatButton}
+            onPress={() => navigation.navigate('GeneralChatScreen')}>
+              <Icon name="chatbubble-ellipses-outline" size={28} color="#1E88E5" />
             </TouchableOpacity>
             <View style={styles.badge}>
               <Text style={styles.badgeText}>3</Text>
