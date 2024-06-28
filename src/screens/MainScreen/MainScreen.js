@@ -22,7 +22,7 @@ const MainScreen = () => {
   const [selectedTrending, setSelectedTrending] = useState('Bets');
   const [selectedCategory, setSelectedCategory] = useState('All Bets');
   const [searchQuery, setSearchQuery] = useState('');
-  const [isTrendingOn, setIsTrendingOn] = useState(true);
+  const [isTrendingOn, setIsTrendingOn] = useState(false);
   const [activePage, setActivePage] = useState({});
 
   const gameCategories = [
