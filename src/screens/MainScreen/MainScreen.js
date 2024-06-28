@@ -48,52 +48,44 @@ const MainScreen = () => {
     }));
   };
 
-  const handleNavigation = direction => {
-    const currentIndex = ['Bets', 'P2P'].indexOf(selectedTrending);
-    if (direction === 'left' && currentIndex > 0) {
-      setSelectedTrending('Bets');
-    } else if (direction === 'right' && currentIndex < 1) {
-      setSelectedTrending('P2P');
-    }
-  };
-
-  const renderBetRow = (bets, rowIndex) => (
-    <View key={rowIndex} style={styles.betRowContainer}>
-      <ScrollView
-        horizontal
-        pagingEnabled
-        onScroll={event => handleScroll(event, rowIndex)}
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}>
-        {bets.map((bet, index) => (
-          <View key={index} style={styles.betCardContainer}>
-            <BetCard
-              bet={bet}
-              onPress={() => navigation.navigate('BetDetail', {bet})}
-            />
+  const renderBetRow = (bets, rowIndex, isLastRow) => {
+    return (
+      <View key={rowIndex} style={styles.betRowContainer}>
+        <ScrollView
+          horizontal
+          pagingEnabled
+          onScroll={event => handleScroll(event, rowIndex)}
+          scrollEventThrottle={16}
+          showsHorizontalScrollIndicator={false}>
+          {bets.map((bet, index) => (
+            <View key={index} style={styles.betCardContainer}>
+              <BetCard
+                bet={bet}
+                onPress={() => navigation.navigate('BetDetail', {bet})}
+              />
+            </View>
+          ))}
+        </ScrollView>
+        {!isLastRow && (
+          <View style={styles.lineContainer}>
+            <View style={styles.dot} />
+            <View style={styles.horizontalLine} />
+            <View style={styles.dot} />
           </View>
-        ))}
-      </ScrollView>
-      <View style={styles.paginationContainer}>
-        {[...Array(Math.ceil(bets.length / 4)).keys()].map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.paginationDot,
-              {
-                backgroundColor:
-                  activePage[rowIndex] === index ? '#1E88E5' : '#CCCCCC',
-              },
-            ]}
-          />
-        ))}
+        )}
       </View>
-    </View>
-  );
+    );
+  };
 
   const rows = [];
   for (let i = 0; i < filteredBets.length; i += 4) {
-    rows.push(renderBetRow(filteredBets.slice(i, i + 4), i / 4));
+    rows.push(
+      renderBetRow(
+        filteredBets.slice(i, i + 4),
+        i / 4,
+        i + 4 >= filteredBets.length,
+      ),
+    );
   }
 
   return (

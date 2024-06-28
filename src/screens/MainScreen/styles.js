@@ -215,6 +215,24 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 15,
   },
+  lineContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 2,
+  },
+  dot: {
+    width: 5,
+    height: 5,
+    borderRadius: 5,
+    backgroundColor: '#1E88E5',
+  },
+  horizontalLine: {
+    width: '80%',
+    height: 2,
+    backgroundColor: '#1E88E5',
+    marginHorizontal: 5,
+  },
 });
 
 export default styles;
