@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,10 +11,11 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BetCard from '../../components/BetCard';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
+import bets from './bet';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -33,144 +34,6 @@ const MainScreen = () => {
     'Volleyball',
   ];
 
-  const bets = [
-    {
-      name: 'Chelsea',
-      slogan: 'Exciting match',
-      category: 'Soccer',
-      teamCount: 5,
-      peopleBetted: 100,
-      isFull: false,
-      subscribers: 150,
-      scores: '225',
-      closingTime: '2024-05-30 18:00',
-      remainingBalance: 500,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: true,
-    },
-    {
-      name: 'Bet 2',
-      slogan: 'Thrilling game',
-      category: 'Soccer',
-      teamCount: 4,
-      peopleBetted: 80,
-      isFull: false,
-      subscribers: 120,
-      scores: '89-92',
-      closingTime: '2024-05-30 20:00',
-      remainingBalance: 300,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: false,
-    },
-    {
-      name: 'Bet 3',
-      slogan: 'Stunning match',
-      category: 'Soccer',
-      teamCount: 6,
-      peopleBetted: 120,
-      isFull: false,
-      subscribers: 180,
-      scores: '100-95',
-      closingTime: '2024-05-31 16:00',
-      remainingBalance: 200,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: false,
-    },
-    {
-      name: 'Bet 4',
-      slogan: 'Unforgettable match',
-      category: 'Soccer',
-      teamCount: 5,
-      peopleBetted: 140,
-      isFull: false,
-      subscribers: 160,
-      scores: '92-88',
-      closingTime: '2024-05-31 14:00',
-      remainingBalance: 100,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: false,
-    },
-    {
-      name: 'Bet 5',
-      slogan: 'Amazing match',
-      category: 'Soccer',
-      teamCount: 6,
-      peopleBetted: 160,
-      isFull: false,
-      subscribers: 180,
-      scores: '98-90',
-      closingTime: '2024-05-31 12:00',
-      remainingBalance: 50,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: false,
-    },
-    {
-      name: 'Bet 6',
-      slogan: 'Excellent match',
-      category: 'Soccer',
-      teamCount: 4,
-      peopleBetted: 100,
-      isFull: false,
-      subscribers: 150,
-      scores: '85-87',
-      closingTime: '2024-05-31 10:00',
-      remainingBalance: 200,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: false,
-    },
-    {
-      name: 'Bet 7',
-      slogan: 'Fantastic match',
-      category: 'Soccer',
-      teamCount: 5,
-      peopleBetted: 120,
-      isFull: false,
-      subscribers: 180,
-      scores: '102-98',
-      closingTime: '2024-05-31 08:00',
-      remainingBalance: 50,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: false,
-    },
-    {
-      name: 'Bet 8',
-      slogan: 'Superb match',
-      category: 'Soccer',
-      teamCount: 6,
-      peopleBetted: 140,
-      isFull: false,
-      subscribers: 160,
-      scores: '96-94',
-      closingTime: '2024-05-31 06:00',
-      remainingBalance: 100,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: false,
-    },
-    {
-      name: 'Bet 9',
-      slogan: 'Brilliant match',
-      category: 'Soccer',
-      teamCount: 4,
-      peopleBetted: 100,
-      isFull: false,
-      subscribers: 150,
-      scores: '85-87',
-      closingTime: '2024-05-31 04:00',
-      remainingBalance: 200,
-      totalBalance: 1000,
-      logo: null,
-      isAdmin: false,
-    }
-  ];
-
   const filteredBets =
     selectedCategory === 'All Bets'
       ? bets
@@ -185,6 +48,15 @@ const MainScreen = () => {
     }));
   };
 
+  const handleNavigation = direction => {
+    const currentIndex = ['Bets', 'P2P'].indexOf(selectedTrending);
+    if (direction === 'left' && currentIndex > 0) {
+      setSelectedTrending('Bets');
+    } else if (direction === 'right' && currentIndex < 1) {
+      setSelectedTrending('P2P');
+    }
+  };
+
   const renderBetRow = (bets, rowIndex) => (
     <View key={rowIndex} style={styles.betRowContainer}>
       <ScrollView
@@ -192,13 +64,12 @@ const MainScreen = () => {
         pagingEnabled
         onScroll={event => handleScroll(event, rowIndex)}
         scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-      >
+        showsHorizontalScrollIndicator={false}>
         {bets.map((bet, index) => (
           <View key={index} style={styles.betCardContainer}>
             <BetCard
               bet={bet}
-              onPress={() => navigation.navigate('BetDetail', { bet })}
+              onPress={() => navigation.navigate('BetDetail', {bet})}
             />
           </View>
         ))}
@@ -232,8 +103,7 @@ const MainScreen = () => {
         <View style={styles.headerRight}>
           <TouchableOpacity
             style={styles.createBetButton}
-            onPress={() => navigation.navigate('CreateBet')}
-          >
+            onPress={() => navigation.navigate('CreateBet')}>
             <Text style={styles.createBetButtonText}>Create Bet</Text>
           </TouchableOpacity>
           <View style={styles.iconWithBadge}>
@@ -246,7 +116,11 @@ const MainScreen = () => {
           </View>
           <View style={styles.iconWithBadge}>
             <TouchableOpacity style={styles.chatButton}>
-              <Icon name="chatbubble-ellipses-outline" size={28} color="#1E88E5" />
+              <Icon
+                name="chatbubble-ellipses-outline"
+                size={28}
+                color="#1E88E5"
+              />
             </TouchableOpacity>
             <View style={styles.badge}>
               <Text style={styles.badgeText}>3</Text>
@@ -268,7 +142,7 @@ const MainScreen = () => {
         <Switch
           value={isTrendingOn}
           onValueChange={setIsTrendingOn}
-          trackColor={{ false: '#767577', true: '#1E88E5' }}
+          trackColor={{false: '#767577', true: '#1E88E5'}}
           thumbColor={isTrendingOn ? '#ffffff' : '#f4f3f4'}
           style={styles.switch}
         />
@@ -285,8 +159,7 @@ const MainScreen = () => {
                   selectedTrending === title
                     ? styles.trendingTitleActive
                     : styles.trendingTitle
-                }
-              >
+                }>
                 <Text style={styles.trendingText}>{title}</Text>
                 {selectedTrending === title && (
                   <View style={styles.activeIndicator} />
@@ -312,7 +185,7 @@ const MainScreen = () => {
                 <BetCard
                   key={index}
                   bet={bet}
-                  onPress={() => navigation.navigate('BetDetail', { bet })}
+                  onPress={() => navigation.navigate('BetDetail', {bet})}
                 />
               ))}
             </ScrollView>
@@ -325,15 +198,13 @@ const MainScreen = () => {
             <TouchableOpacity
               key={index}
               onPress={() => setSelectedCategory(category)}
-              style={styles.categoryTitle}
-            >
+              style={styles.categoryTitle}>
               <Text
                 style={
                   selectedCategory === category
                     ? styles.categoryTextActive
                     : styles.categoryText
-                }
-              >
+                }>
                 {category}
               </Text>
               {selectedCategory === category && (
@@ -346,8 +217,7 @@ const MainScreen = () => {
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         horizontal={false}
-        nestedScrollEnabled
-      >
+        nestedScrollEnabled>
         {rows}
       </ScrollView>
       <View style={styles.bottomNav}>
@@ -374,8 +244,7 @@ const MainScreen = () => {
             onPress={() => {
               setDropdownVisible(false);
               navigation.navigate('CreateBet');
-            }}
-          >
+            }}>
             <Text style={styles.dropdownItemText}>Create Bet</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -383,8 +252,7 @@ const MainScreen = () => {
             onPress={() => {
               setDropdownVisible(false);
               navigation.navigate('CreatePrediction');
-            }}
-          >
+            }}>
             <Text style={styles.dropdownItemText}>Predict</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -392,8 +260,7 @@ const MainScreen = () => {
             onPress={() => {
               setDropdownVisible(false);
               navigation.navigate('#');
-            }}
-          >
+            }}>
             <Text style={styles.dropdownItemText}>Join MarketPlace</Text>
           </TouchableOpacity>
         </View>
