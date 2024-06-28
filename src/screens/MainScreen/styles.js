@@ -1,4 +1,4 @@
-import {StyleSheet, Platform} from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
+    padding: 15,
     marginHorizontal: -10,
   },
   title: {
@@ -72,52 +72,117 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
   },
-  categoryList: {
-    flex: 1,
+  trendingSwitchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
-  categoryContainer: {
-    marginBottom: 20,
-    padding: 10,
+  switchLabel: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    marginLeft: 10,
+  },
+  switch: {
+    transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
+  },
+  trendingSection: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     backgroundColor: '#151515',
     borderRadius: 10,
+    marginHorizontal: 10,
+    marginBottom: 10,
   },
-  categoryHeader: {
+  trendingHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 5,
-    paddingVertical: 5,
-    backgroundColor: '#151515',
-    borderRadius: 10,
-    paddingHorizontal: 15,
+    marginBottom: 10,
   },
-  categoryTitle: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: '#1E88E5',
+  trendingTitle: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
-  categoryIcons: {
+  trendingTitleActive: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  trendingText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
+  activeIndicator: {
+    width: 30,
+    height: 2,
+    backgroundColor: '#1E88E5',
+    marginTop: 5,
+  },
+  trendingNavIcons: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  categoryIcon: {
-    marginLeft: 10,
-  },
-  betCountContainer: {
-    backgroundColor: '#1E88E5',
-    borderRadius: 10,
-    paddingVertical: 2,
-    paddingHorizontal: 8,
-    marginLeft: 20,
-  },
-  betCountText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: 10,
-  },
   betsList: {
-    paddingLeft: 20,
+    paddingLeft: 10,
     marginTop: 10,
+  },
+  categoryHeader: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 10,
+    backgroundColor: '#000000',
+    paddingVertical: 10,
+  },
+  categoryList: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  categoryTitle: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    marginHorizontal: 5,
+  },
+  categoryTitleActive: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1E88E5',
+  },
+  categoryText: {
+    color: '#AAAAAA',
+    fontSize: 16,
+  },
+  categoryTextActive: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
+  activeCategoryIndicator: {
+    width: 50,
+    height: 2,
+    backgroundColor: '#1E88E5',
+    marginTop: 5,
+    alignSelf: 'center',
+  },
+  content: {
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  betGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  betCardContainer: {
+    width: '%', 
   },
   bottomNav: {
     flexDirection: 'row',
@@ -128,7 +193,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 60,
     left: '50%',
-    transform: [{translateX: -100}],
+    transform: [{ translateX: -100 }],
     backgroundColor: '#151515',
     borderRadius: 10,
     padding: 10,

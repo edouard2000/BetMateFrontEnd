@@ -1,4 +1,4 @@
-import {StyleSheet, Platform} from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A1A1A',
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: Platform.OS === 'android' ? 5 : 5},
+    shadowOffset: { width: 0, height: Platform.OS === 'android' ? 5 : 5 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
     elevation: Platform.OS === 'android' ? 10 : 10,

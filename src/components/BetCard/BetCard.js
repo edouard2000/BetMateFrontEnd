@@ -1,22 +1,22 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
 import formatTime from '../../utils/formatTime';
 import styles from './styles';
 
-const BetCard = ({bet}) => {
+const BetCard = ({ bet }) => {
   const navigation = useNavigation();
   const handleCardPress = () => {
-    navigation.navigate('BetDetail', {bet});
+    navigation.navigate('BetDetail', { bet });
   };
 
   return (
     <TouchableOpacity onPress={handleCardPress} style={styles.cardContainer}>
       <View style={styles.headerSection}>
         <Image
-          source={{uri: generateAvatarUrl(bet.name)}}
+          source={{ uri: generateAvatarUrl(bet.name) }}
           style={styles.avatar}
         />
         <Text style={styles.betName}>{bet.name}</Text>
