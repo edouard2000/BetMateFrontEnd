@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   switch: {
-    transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
+    transform: [{scaleX: 0.8}, {scaleY: 0.8}],
   },
   trendingSection: {
     paddingHorizontal: 10,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   betCardContainer: {
-    width: '%', 
+    width: '25%',
   },
   bottomNav: {
     flexDirection: 'row',
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 60,
     left: '50%',
-    transform: [{ translateX: -100 }],
+    transform: [{translateX: -100}],
     backgroundColor: '#151515',
     borderRadius: 10,
     padding: 10,
