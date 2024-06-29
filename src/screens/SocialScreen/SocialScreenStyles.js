@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 20,
     paddingHorizontal: 10,
-    paddingVertical: Platform.OS === 'android' ? 12 : 8,
+    paddingVertical: 8,
     marginBottom: 20,
     marginTop: 10,
   },

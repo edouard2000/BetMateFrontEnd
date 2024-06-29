@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -12,22 +12,24 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import BetCard from '../../components/BetCard';
 import {useNavigation} from '@react-navigation/native';
-import BalanceButton from './BalanceButton'; // Adjust the path as needed
+import DropdownMenu from '../../components/DropdownMenu/DropdownMenu';
+import DropdownAdd from '../../components/DropdownMenu/DropdownAdd';
 import styles from './styles';
 import bets from './bet';
-import { useUnreadMessage } from '../../context/UnreadMessageContext';
+import {useUnreadMessage} from '../../context/UnreadMessageContext';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const MainScreen = () => {
   const navigation = useNavigation();
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [menuDropdownVisible, setMenuDropdownVisible] = useState(false);
+  const [addDropdownVisible, setAddDropdownVisible] = useState(false);
   const [selectedTrending, setSelectedTrending] = useState('Bets');
   const [selectedCategory, setSelectedCategory] = useState('All Bets');
   const [searchQuery, setSearchQuery] = useState('');
   const [isTrendingOn, setIsTrendingOn] = useState(false);
   const [activePage, setActivePage] = useState({});
-  const { unreadCount } = useUnreadMessage();
+  const {unreadCount} = useUnreadMessage();
   const [balance, setBalance] = useState('$100');
 
   const gameCategories = [
@@ -52,10 +54,6 @@ const MainScreen = () => {
     }));
   };
 
-  const handleAddBalance = () => {
-    // Logic to add balance
-  };
-
   const renderBetRow = (bets, rowIndex, isLastRow) => {
     return (
       <View key={rowIndex} style={styles.betRowContainer}>
@@ -69,7 +67,7 @@ const MainScreen = () => {
             <View key={index} style={styles.betCardContainer}>
               <BetCard
                 bet={bet}
-                onPress={() => navigation.navigate('BetDetail', { bet })}
+                onPress={() => navigation.navigate('BetDetail', {bet})}
               />
             </View>
           ))}
@@ -96,6 +94,16 @@ const MainScreen = () => {
     );
   }
 
+  const toggleMenuDropdown = () => {
+    setMenuDropdownVisible(!menuDropdownVisible);
+    if (addDropdownVisible) setAddDropdownVisible(false);
+  };
+
+  const toggleAddDropdown = () => {
+    setAddDropdownVisible(!addDropdownVisible);
+    if (menuDropdownVisible) setMenuDropdownVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -121,10 +129,14 @@ const MainScreen = () => {
             </View>
           </View>
           <View style={styles.iconWithBadge}>
-            <TouchableOpacity 
-            style={styles.chatButton}
-            onPress={() => navigation.navigate('GeneralChatScreen')}>
-              <Icon name="chatbubble-ellipses-outline" size={28} color="#1E88E5" />
+            <TouchableOpacity
+              style={styles.chatButton}
+              onPress={() => navigation.navigate('GeneralChatScreen')}>
+              <Icon
+                name="chatbubble-ellipses-outline"
+                size={28}
+                color="#1E88E5"
+              />
             </TouchableOpacity>
             {unreadCount > 0 && (
               <View style={styles.badge}>
@@ -155,7 +167,6 @@ const MainScreen = () => {
           />
           <Text style={styles.switchLabel}>Trending</Text>
         </View>
-        <BalanceButton balance={balance} onPress={handleAddBalance} />
       </View>
       {isTrendingOn && (
         <View style={styles.trendingSection}>
@@ -194,7 +205,7 @@ const MainScreen = () => {
                 <BetCard
                   key={index}
                   bet={bet}
-                  onPress={() => navigation.navigate('BetDetail', { bet })}
+                  onPress={() => navigation.navigate('BetDetail', {bet})}
                 />
               ))}
             </ScrollView>
@@ -236,44 +247,26 @@ const MainScreen = () => {
         <TouchableOpacity onPress={() => navigation.navigate('SocialScreen')}>
           <Icon name="sync-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setDropdownVisible(!dropdownVisible)}>
+        <TouchableOpacity onPress={toggleAddDropdown}>
           <Icon name="add-circle" size={35} color="#1E88E5" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('P2PScreen')}>
           <Icon name="people-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-          <Icon name="person-circle-outline" size={30} color="#1E88E5" />
+        <TouchableOpacity onPress={toggleMenuDropdown}>
+          <Icon name="menu-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
       </View>
-      {dropdownVisible && (
-        <View style={styles.dropdown}>
-          <TouchableOpacity
-            style={styles.dropdownItem}
-            onPress={() => {
-              setDropdownVisible(false);
-              navigation.navigate('CreateBet');
-            }}>
-            <Text style={styles.dropdownItemText}>Create Bet</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.dropdownItem}
-            onPress={() => {
-              setDropdownVisible(false);
-              navigation.navigate('CreatePrediction');
-            }}>
-            <Text style={styles.dropdownItemText}>Predict</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.dropdownItem}
-            onPress={() => {
-              setDropdownVisible(false);
-              navigation.navigate('#');
-            }}>
-            <Text style={styles.dropdownItemText}>Join MarketPlace</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <DropdownMenu
+        navigation={navigation}
+        visible={menuDropdownVisible}
+        setVisible={setMenuDropdownVisible}
+      />
+      <DropdownAdd
+        navigation={navigation}
+        visible={addDropdownVisible}
+        setVisible={setAddDropdownVisible}
+      />
     </SafeAreaView>
   );
 };

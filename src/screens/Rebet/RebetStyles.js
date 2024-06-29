@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     elevation: 5,
-    borderWidth: 0.4,
-    borderColor: '#1E88E5',
   },
   statusContainer: {
     alignItems: 'flex-end',
@@ -25,8 +23,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   avatar: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     borderRadius: 20,
     marginRight: 10,
   },
@@ -73,8 +71,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
-    borderWidth: 0.3,
-    borderColor: '#1E88E5',
   },
   gameHeader: {
     flexDirection: 'row',
@@ -108,9 +104,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#1E88E5',
     fontWeight: 'bold',
-    borderWidth: 1,
-    borderColor: '#1E88E5',
-    borderRadius: 5,
     paddingHorizontal: 6,
     paddingVertical: 2,
     marginLeft: 10,
@@ -123,8 +116,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#121212',
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
-    borderWidth: 0.3,
-    borderColor: '#1E88E5',
   },
   oddText: {
     fontSize: 12,
@@ -163,7 +154,7 @@ const styles = StyleSheet.create({
   },
   horizontalLine: {
     width: '80%',
-    height: 1,
+    height: 2,
     backgroundColor: '#1E88E5',
     marginHorizontal: 5,
   },
