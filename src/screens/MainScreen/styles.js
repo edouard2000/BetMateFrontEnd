@@ -44,12 +44,17 @@ const styles = StyleSheet.create({
   notificationButton: {},
   chatButton: {},
   createBetButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 2,
     borderColor: '#1E88E5',
     backgroundColor: '#1E88E5',
     paddingVertical: 6,
     paddingHorizontal: 13,
     borderRadius: 10,
+  },
+  plusIcon: {
+    marginRight: 5,
   },
   createBetButtonText: {
     color: '#fff',
@@ -75,8 +80,13 @@ const styles = StyleSheet.create({
   trendingSwitchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
     marginBottom: 10,
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   switchLabel: {
     color: '#FFFFFF',
