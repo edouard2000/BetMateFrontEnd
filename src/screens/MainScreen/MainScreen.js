@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -11,11 +11,12 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BetCard from '../../components/BetCard';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import bets from './bet';
+import { useUnreadMessage } from '../../context/UnreadMessageContext';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -25,6 +26,7 @@ const MainScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isTrendingOn, setIsTrendingOn] = useState(false);
   const [activePage, setActivePage] = useState({});
+  const { unreadCount } = useUnreadMessage();
 
   const gameCategories = [
     'All Bets',
@@ -61,7 +63,7 @@ const MainScreen = () => {
             <View key={index} style={styles.betCardContainer}>
               <BetCard
                 bet={bet}
-                onPress={() => navigation.navigate('BetDetail', {bet})}
+                onPress={() => navigation.navigate('BetDetail', { bet })}
               />
             </View>
           ))}
@@ -107,14 +109,16 @@ const MainScreen = () => {
             </View>
           </View>
           <View style={styles.iconWithBadge}>
-            <TouchableOpacity 
-            style={styles.chatButton}
-            onPress={() => navigation.navigate('GeneralChatScreen')}>
+            <TouchableOpacity
+              style={styles.chatButton}
+              onPress={() => navigation.navigate('GeneralChatScreen')}>
               <Icon name="chatbubble-ellipses-outline" size={28} color="#1E88E5" />
             </TouchableOpacity>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>3</Text>
-            </View>
+            {unreadCount > 0 && (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{unreadCount}</Text>
+              </View>
+            )}
           </View>
         </View>
       </View>
@@ -132,7 +136,7 @@ const MainScreen = () => {
         <Switch
           value={isTrendingOn}
           onValueChange={setIsTrendingOn}
-          trackColor={{false: '#767577', true: '#1E88E5'}}
+          trackColor={{ false: '#767577', true: '#1E88E5' }}
           thumbColor={isTrendingOn ? '#ffffff' : '#f4f3f4'}
           style={styles.switch}
         />
@@ -175,7 +179,7 @@ const MainScreen = () => {
                 <BetCard
                   key={index}
                   bet={bet}
-                  onPress={() => navigation.navigate('BetDetail', {bet})}
+                  onPress={() => navigation.navigate('BetDetail', { bet })}
                 />
               ))}
             </ScrollView>
