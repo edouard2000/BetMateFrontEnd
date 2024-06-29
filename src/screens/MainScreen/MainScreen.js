@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -15,8 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import BalanceButton from './BalanceButton'; // Adjust the path as needed
 import styles from './styles';
 import bets from './bet';
+import { useUnreadMessage } from '../../context/UnreadMessageContext';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -26,6 +27,7 @@ const MainScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isTrendingOn, setIsTrendingOn] = useState(false);
   const [activePage, setActivePage] = useState({});
+  const { unreadCount } = useUnreadMessage();
   const [balance, setBalance] = useState('$100');
 
   const gameCategories = [
@@ -67,7 +69,7 @@ const MainScreen = () => {
             <View key={index} style={styles.betCardContainer}>
               <BetCard
                 bet={bet}
-                onPress={() => navigation.navigate('BetDetail', {bet})}
+                onPress={() => navigation.navigate('BetDetail', { bet })}
               />
             </View>
           ))}
@@ -119,18 +121,16 @@ const MainScreen = () => {
             </View>
           </View>
           <View style={styles.iconWithBadge}>
-            <TouchableOpacity
-              style={styles.chatButton}
-              onPress={() => navigation.navigate('GeneralChatScreen')}>
-              <Icon
-                name="chatbubble-ellipses-outline"
-                size={28}
-                color="#1E88E5"
-              />
+            <TouchableOpacity 
+            style={styles.chatButton}
+            onPress={() => navigation.navigate('GeneralChatScreen')}>
+              <Icon name="chatbubble-ellipses-outline" size={28} color="#1E88E5" />
             </TouchableOpacity>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>3</Text>
-            </View>
+            {unreadCount > 0 && (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{unreadCount}</Text>
+              </View>
+            )}
           </View>
         </View>
       </View>
@@ -194,7 +194,7 @@ const MainScreen = () => {
                 <BetCard
                   key={index}
                   bet={bet}
-                  onPress={() => navigation.navigate('BetDetail', {bet})}
+                  onPress={() => navigation.navigate('BetDetail', { bet })}
                 />
               ))}
             </ScrollView>
