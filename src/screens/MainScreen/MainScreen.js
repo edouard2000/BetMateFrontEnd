@@ -119,10 +119,14 @@ const MainScreen = () => {
             </View>
           </View>
           <View style={styles.iconWithBadge}>
-            <TouchableOpacity 
-            style={styles.chatButton}
-            onPress={() => navigation.navigate('GeneralChatScreen')}>
-              <Icon name="chatbubble-ellipses-outline" size={28} color="#1E88E5" />
+            <TouchableOpacity
+              style={styles.chatButton}
+              onPress={() => navigation.navigate('GeneralChatScreen')}>
+              <Icon
+                name="chatbubble-ellipses-outline"
+                size={28}
+                color="#1E88E5"
+              />
             </TouchableOpacity>
             <View style={styles.badge}>
               <Text style={styles.badgeText}>3</Text>
@@ -235,7 +239,7 @@ const MainScreen = () => {
         <TouchableOpacity onPress={() => setDropdownVisible(!dropdownVisible)}>
           <Icon name="add-circle" size={35} color="#1E88E5" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('PeerToPeer')}>
+        <TouchableOpacity onPress={() => navigation.navigate('P2PScreen')}>
           <Icon name="people-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>

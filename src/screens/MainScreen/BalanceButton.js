@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   balanceText: {
     color: '#ffffff',
-    fontSize: 16,
+    fontSize: 15,
     marginRight: 10,
   },
 });
