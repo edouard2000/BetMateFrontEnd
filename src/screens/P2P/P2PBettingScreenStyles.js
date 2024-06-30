@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   createP2PButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1E88E5',
+    backgroundColor: 'green',
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 10,

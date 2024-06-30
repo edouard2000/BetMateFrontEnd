@@ -1,14 +1,14 @@
-import React from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './PostedRequestCardStyles';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
+import PostedRequestModal from './PostedRequestModal';
 
-const PostedRequestCard = ({request}) => {
+const PostedRequestCard = ({ request }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const gameDate = new Date(request.gameTime);
-  const timeString = gameDate.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  const timeString = gameDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const dateString = gameDate.toLocaleDateString();
 
   return (
@@ -19,17 +19,17 @@ const PostedRequestCard = ({request}) => {
       </View>
       <View style={styles.tableCell}>
         <Image
-          source={{uri: generateAvatarUrl(request.teamA)}}
+          source={{ uri: generateAvatarUrl(request.teamA) }}
           style={styles.teamLogo}
         />
         <Text style={styles.gameText}>vs</Text>
         <Image
-          source={{uri: generateAvatarUrl(request.teamB)}}
+          source={{ uri: generateAvatarUrl(request.teamB) }}
           style={styles.teamLogo}
         />
       </View>
       <View style={styles.tableCell}>
-        <TouchableOpacity style={styles.moreButton}>
+        <TouchableOpacity style={styles.moreButton} onPress={() => setModalVisible(true)}>
           <Text style={styles.moreButtonText}>More</Text>
         </TouchableOpacity>
       </View>
@@ -41,6 +41,11 @@ const PostedRequestCard = ({request}) => {
           <Text style={styles.joinButtonText}>Join</Text>
         </TouchableOpacity>
       </View>
+      <PostedRequestModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        request={request}
+      />
     </View>
   );
 };

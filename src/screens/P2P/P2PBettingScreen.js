@@ -41,6 +41,14 @@ const P2PBettingScreen = ({navigation}) => {
       teamB: 'Team F',
       amount: 60,
       gameTime: '2024-07-01T20:00:00Z',
+      betTerms: '1',
+    },
+    {
+      teamA: 'Team G',
+      teamB: 'Team H',
+      amount: 100,
+      gameTime: '2024-07-02T18:00:00Z',
+      betTerms: '2',
     },
   ];
 
