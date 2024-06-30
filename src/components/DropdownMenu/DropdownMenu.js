@@ -32,7 +32,7 @@ const DropdownMenu = ({navigation, visible, setVisible}) => {
         style={DropdownMenuStyles.dropdownMenuItem}
         onPress={() => {
           setVisible(false);
-          navigation.navigate('Market');
+          navigation.navigate('MarketScreen');
         }}>
         <Icon name="trending-up-outline" size={20} color="#FFFFFF" />
 

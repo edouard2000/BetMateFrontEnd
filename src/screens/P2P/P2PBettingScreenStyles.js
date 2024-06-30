@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0D0D0D',
   },
   tableHeader: {
-    color: '#AAAAAA',
+    color: 'gray',
     fontSize: 10,
     flex: 1,
     textAlign: 'center',

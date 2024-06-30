@@ -10,6 +10,7 @@ import BetListScreen from '../screens/BetListScreen';
 import Chat from '../screens/Chat';
 import GeneralChatScreen from '../screens/GeneralChatScreen';
 import P2PBettingScreen from '../screens/P2P/P2PBettingScreen';
+import MarketScreen from '../screens/MarketScreen/MarketScreen';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="GeneralChatScreen" component={GeneralChatScreen} />
         <Stack.Screen name="P2PBettingScreen" component={P2PBettingScreen} />
+        <Stack.Screen name="MarketScreen" component={MarketScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
