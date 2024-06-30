@@ -30,7 +30,7 @@ const MainScreen = () => {
   const [isTrendingOn, setIsTrendingOn] = useState(false);
   const [activePage, setActivePage] = useState({});
   const {unreadCount} = useUnreadMessage();
-  const [balance, setBalance] = useState('$100');
+
 
   const gameCategories = [
     'All Bets',
@@ -250,7 +250,8 @@ const MainScreen = () => {
         <TouchableOpacity onPress={toggleAddDropdown}>
           <Icon name="add-circle" size={35} color="#1E88E5" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('P2PScreen')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('P2PBettingScreen')}>
           <Icon name="people-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
         <TouchableOpacity onPress={toggleMenuDropdown}>

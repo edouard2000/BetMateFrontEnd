@@ -66,7 +66,7 @@ const SocialScreen = ({navigation}) => {
       </View>
       <View style={styles.bottomNav}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="chevron-back-outline" size={30} color="#3498db" />
+          <Icon name="arrow-undo-outline" size={25} color="#1E88E5" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
