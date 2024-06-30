@@ -57,6 +57,21 @@ const styles = StyleSheet.create({
     color: '#2ecc71',
     fontSize: 14,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#000000',
+    padding: 10,
+    borderRadius: 5,
+  },
+  modalText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+  },
 });
 
 export default styles;

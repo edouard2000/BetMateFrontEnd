@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import styles from './PostedRequestCardStyles';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
 import PostedRequestModal from './PostedRequestModal';
 
-const PostedRequestCard = ({ request }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+const PostedRequestCard = ({request}) => {
+  const [cardModalVisibility, setCardModalVisibility] = useState(false);
+  const [teamName, setTeamName] = useState('');
+  const [teamModalVisible, setTeamModalVisible] = useState(false);
+
+  const showTeamName = team => {
+    console.log('Team logo clicked:', team); // Debugging: Log the clicked team
+    setTeamName(team);
+    setTeamModalVisible(true);
+  };
 
   const gameDate = new Date(request.gameTime);
-  const timeString = gameDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const timeString = gameDate.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
   const dateString = gameDate.toLocaleDateString();
 
   return (
@@ -18,18 +36,24 @@ const PostedRequestCard = ({ request }) => {
         <Text style={styles.date}>{dateString}</Text>
       </View>
       <View style={styles.tableCell}>
-        <Image
-          source={{ uri: generateAvatarUrl(request.teamA) }}
-          style={styles.teamLogo}
-        />
+        <TouchableOpacity onPress={() => showTeamName(request.teamA)}>
+          <Image
+            source={{uri: generateAvatarUrl(request.teamA)}}
+            style={styles.teamLogo}
+          />
+        </TouchableOpacity>
         <Text style={styles.gameText}>vs</Text>
-        <Image
-          source={{ uri: generateAvatarUrl(request.teamB) }}
-          style={styles.teamLogo}
-        />
+        <TouchableOpacity onPress={() => showTeamName(request.teamB)}>
+          <Image
+            source={{uri: generateAvatarUrl(request.teamB)}}
+            style={styles.teamLogo}
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.tableCell}>
-        <TouchableOpacity style={styles.moreButton} onPress={() => setModalVisible(true)}>
+        <TouchableOpacity
+          style={styles.moreButton}
+          onPress={() => setCardModalVisibility(true)}>
           <Text style={styles.moreButtonText}>More</Text>
         </TouchableOpacity>
       </View>
@@ -42,10 +66,22 @@ const PostedRequestCard = ({ request }) => {
         </TouchableOpacity>
       </View>
       <PostedRequestModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        visible={cardModalVisibility}
+        onClose={() => setCardModalVisibility(false)}
         request={request}
       />
+      <Modal
+        transparent={true}
+        visible={teamModalVisible}
+        onRequestClose={() => setTeamModalVisible(false)}>
+        <TouchableWithoutFeedback onPress={() => setTeamModalVisible(false)}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>{teamName}</Text>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 };
