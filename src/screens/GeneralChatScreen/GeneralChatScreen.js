@@ -14,6 +14,7 @@ import generateAvatarUrl from '../../utils/generateAvatarUrl';
 import {useUnreadMessage} from '../../context/UnreadMessageContext';
 
 const socket = io('https://betmatebackend.onrender.com/');
+// const socket = io('http://172.20.10.3:5001');
 
 const GeneralChatScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
@@ -40,9 +41,18 @@ const GeneralChatScreen = ({navigation}) => {
       setUnreadCount(unreadMessages.length);
     });
 
+    socket.on('likeUpdated', data => {
+      setMessages(prevMessages => 
+        prevMessages.map(msg => 
+          msg._id === data.data._id ? data.data : msg
+        )
+      );
+    });
+
     return () => {
       socket.off('NEW_GLOBAL_MESSAGE');
       socket.off('messages');
+      socket.off('likeUpdated');
     };
   }, []);
 
@@ -55,7 +65,7 @@ const GeneralChatScreen = ({navigation}) => {
   const sendMessage = async () => {
     if (inputText.trim()) {
       socket.emit('sendMessage', {
-        userId: '667686b8cafc558ed66a811a',
+        userId: '66768003bc6550fbf2a04d06',
         message: inputText,
       });
       setInputText('');
@@ -76,8 +86,15 @@ const GeneralChatScreen = ({navigation}) => {
     }
   };
 
+  const toggleLike = (messageId) => {
+    socket.emit('toggleLike', {
+      userId: '66768003bc6550fbf2a04d06', // Replace with actual userId
+      messageId: messageId
+    });
+  };
+
   const renderMessage = ({item, index}) => {
-    const isFirstUnread = index === messages.length - unreadCount;
+    const isFirstUnread = (index === messages.length - unreadCount) && (item.userId._id !== '66768003bc6550fbf2a04d06');
     return (
       <>
         {isFirstUnread && (
@@ -87,18 +104,28 @@ const GeneralChatScreen = ({navigation}) => {
         )}
         <View style={styles.messageContainer}>
           <Image
-            source={{uri: item.avatar || generateAvatarUrl(item.id)}}
+            source={{uri: item.avatar || generateAvatarUrl(item.senderName)}}
             style={styles.avatar}
           />
           <View style={styles.messageContent}>
-            <Text style={styles.username}>{item.id || 'Anonymous'}</Text>
+            <Text style={styles.username}>{item.senderName}</Text>
             <Text style={styles.messageText}>{item.message}</Text>
-            <Text style={styles.messageTime}>
-              {new Date(item.createdAt).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </Text>
+            <View style={styles.messageFooter}>
+              <Text style={styles.messageTime}>
+                {new Date(item.createdAt).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </Text>
+              <TouchableOpacity onPress={() => toggleLike(item._id)} style={styles.likeButton}>
+                <Icon 
+                  name={item.likes.includes('66768003bc6550fbf2a04d06') ? "heart" : "heart-outline"} 
+                  size={20} 
+                  color={item.likes.includes('66768003bc6550fbf2a04d06') ? "#ff0000" : "#888"} 
+                />
+                <Text style={styles.likeCount}>{item.likes.length}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </>
@@ -230,6 +257,21 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  messageFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  likeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  likeCount: {
+    color: '#888',
+    fontSize: 12,
+    marginLeft: 5,
   },
 });
 
