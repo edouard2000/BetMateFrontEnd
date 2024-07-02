@@ -50,16 +50,6 @@ const DetailModal = ({visible, onClose, item}) => {
                   <Text style={styles.value}>${item.originalPrice}</Text>
                 </View>
               </View>
-
-              {/* Footer */}
-              <View style={styles.footer}>
-                <TouchableOpacity style={styles.sellButton}>
-                  <Text style={styles.sellButtonText}>Sell</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buyButton}>
-                  <Text style={styles.buyButtonText}>Buy</Text>
-                </TouchableOpacity>
-              </View>
             </View>
           </TouchableWithoutFeedback>
         </View>

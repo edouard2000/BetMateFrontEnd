@@ -1,10 +1,26 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Modal,
+} from 'react-native';
 import styles from './activitiesListStyles';
-import dummyData from './dummyData';
+import dummyDataActivities from './dummyDataActivities';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
+import StockDetail from './StockDetail';
 
 const ActivitiesList = ({navigation}) => {
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleDetailPress = item => {
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
+
   const renderItem = ({item}) => (
     <View style={styles.itemContainer}>
       <Image
@@ -13,11 +29,11 @@ const ActivitiesList = ({navigation}) => {
       />
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.price}>${item.shareValue}</Text>
+        <Text style={styles.price}>${item.price}</Text>
       </View>
       <TouchableOpacity
         style={styles.detailButton}
-        onPress={() => navigation.navigate('DetailPage', {item})}>
+        onPress={() => handleDetailPress(item)}>
         <Text style={styles.detailButtonText}>Detail</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buyButton}>
@@ -27,11 +43,24 @@ const ActivitiesList = ({navigation}) => {
   );
 
   return (
-    <FlatList
-      data={dummyData}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={dummyDataActivities}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+      {selectedItem && (
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}>
+          <StockDetail
+            item={selectedItem}
+            onClose={() => setModalVisible(false)}
+          />
+        </Modal>
+      )}
+    </View>
   );
 };
 

@@ -1,14 +1,30 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Modal,
+} from 'react-native';
 import styles from './sharelistStyles';
 import dummyDataTeams from './dummyDataTeams'; // Use a specific dummy data file for teams
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
+import TeamDetail from './TeamDetail';
 
 const TeamShareList = ({navigation}) => {
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleItemPress = team => {
+    setSelectedTeam(team);
+    setModalVisible(true);
+  };
+
   const renderItem = ({item}) => (
     <TouchableOpacity
       style={styles.itemContainer}
-      onPress={() => navigation.navigate('DetailPage', {item})}>
+      onPress={() => handleItemPress(item)}>
       <Image
         source={{uri: generateAvatarUrl(item.name) || item.imageUrl}}
         style={styles.avatar}
@@ -29,11 +45,24 @@ const TeamShareList = ({navigation}) => {
   );
 
   return (
-    <FlatList
-      data={dummyDataTeams}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={dummyDataTeams}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+      {selectedTeam && (
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}>
+          <TeamDetail
+            team={selectedTeam}
+            onClose={() => setModalVisible(false)}
+          />
+        </Modal>
+      )}
+    </View>
   );
 };
 

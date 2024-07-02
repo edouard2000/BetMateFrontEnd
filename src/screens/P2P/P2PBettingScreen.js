@@ -56,10 +56,17 @@ const P2PBettingScreen = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
+          style={styles.menuButton}
+          onPress={() => {
+            /* Add menu action here */
+          }}>
+          <Icon name="menu-outline" size={28} color="#1E88E5" />
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.createP2PButton}
           onPress={() => navigation.navigate('CreateP2P')}>
-          <Text style={styles.createP2PButtonText}>Create P2P</Text>
           <Icon name="add-outline" size={20} color="#ffffff" />
+          <Text style={styles.createP2PButtonText}>Create P2P</Text>
         </TouchableOpacity>
       </View>
 

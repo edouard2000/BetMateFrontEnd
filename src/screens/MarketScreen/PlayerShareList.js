@@ -1,14 +1,30 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Modal,
+} from 'react-native';
 import styles from './sharelistStyles';
-import dummyPlayerData from './dummyPlayerData'; // Use different dummy data
+import dummyPlayerData from './dummyPlayerData';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
+import PlayerDetail from './PlayerDetail';
 
-const PlayerShareList = ({navigation}) => {
+const PlayerShareList = () => {
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleItemPress = player => {
+    setSelectedPlayer(player);
+    setModalVisible(true);
+  };
+
   const renderItem = ({item}) => (
     <TouchableOpacity
       style={styles.itemContainer}
-      onPress={() => navigation.navigate('DetailPage', {item})}>
+      onPress={() => handleItemPress(item)}>
       <Image
         source={{uri: generateAvatarUrl(item.name) || item.imageUrl}}
         style={styles.avatar}
@@ -29,11 +45,24 @@ const PlayerShareList = ({navigation}) => {
   );
 
   return (
-    <FlatList
-      data={dummyPlayerData}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={dummyPlayerData}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+      {selectedPlayer && (
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}>
+          <PlayerDetail
+            player={selectedPlayer}
+            onClose={() => setModalVisible(false)}
+          />
+        </Modal>
+      )}
+    </View>
   );
 };
 

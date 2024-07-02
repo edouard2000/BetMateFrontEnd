@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
   shareValue: {
     fontSize: 14,
     color: '#FFFFFF',
-    flex: 1,
+    flex: 1.5,
     textAlign: 'right',
   },
   recentChange: {
     fontSize: 12,
-    flex: 1,
+    flex: 1.5,
     textAlign: 'right',
   },
   buyButton: {

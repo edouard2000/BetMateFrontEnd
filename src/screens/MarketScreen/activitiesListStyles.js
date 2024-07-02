@@ -1,6 +1,10 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -9,7 +13,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginVertical: 3,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,

@@ -56,31 +56,6 @@ const styles = StyleSheet.create({
     color: '#1E88E5',
     fontWeight: 'bold',
   },
-  footer: {
-    flexDirection: 'row',
-  },
-  sellButton: {
-    backgroundColor: '#1E88E5',
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginRight: 80,
-  },
-  sellButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-  },
-  buyButton: {
-    backgroundColor: 'red',
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginLeft: 85,
-  },
-  buyButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-  },
 });
 
 export default styles;
