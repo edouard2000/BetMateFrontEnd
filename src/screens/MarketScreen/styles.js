@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     alignItems: 'center',
+    backgroundColor: '#0D0D0D',
   },
   homeButton: {
     padding: 10,
