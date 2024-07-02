@@ -11,12 +11,14 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import io from 'socket.io-client';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
+import { useSelector } from 'react-redux';
 import {useUnreadMessage} from '../../context/UnreadMessageContext';
 
 const socket = io('https://betmatebackend.onrender.com/');
 // const socket = io('http://172.20.10.3:5001');
 
 const GeneralChatScreen = ({navigation}) => {
+  const userProfile = useSelector((state) => state.user.profile);
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const {setUnreadCount, unreadCount} = useUnreadMessage();
@@ -26,7 +28,7 @@ const GeneralChatScreen = ({navigation}) => {
     socket.on('NEW_GLOBAL_MESSAGE', data => {
       setMessages(prevMessages => [...prevMessages, data.data]);
       // Check if the message was sent by another user
-      if (data.data.userId !== '66768003bc6550fbf2a04d06') {
+      if (data.data.userId !== userProfile._id) {
         setUnreadCount(prevCount => prevCount + 1);
       }
     });
@@ -34,9 +36,8 @@ const GeneralChatScreen = ({navigation}) => {
     socket.emit('fetchMessages');
     socket.on('messages', data => {
       setMessages(data.data);
-      // Replace '66768003bc6550fbf2a04d06' with actual userId
       const unreadMessages = data.data.filter(
-        msg => !msg.readBy.includes('66768003bc6550fbf2a04d06'),
+        msg => !msg.readBy.includes(userProfile._id),
       );
       setUnreadCount(unreadMessages.length);
     });
@@ -65,7 +66,7 @@ const GeneralChatScreen = ({navigation}) => {
   const sendMessage = async () => {
     if (inputText.trim()) {
       socket.emit('sendMessage', {
-        userId: '66768003bc6550fbf2a04d06',
+        userId: userProfile._id,
         message: inputText,
       });
       setInputText('');
@@ -74,12 +75,12 @@ const GeneralChatScreen = ({navigation}) => {
 
   const markMessagesAsRead = () => {
     const unreadMessageIds = messages
-      .filter(msg => !msg.readBy.includes('66768003bc6550fbf2a04d06'))
+      .filter(msg => !msg.readBy.includes(userProfile._id))
       .map(msg => msg._id);
 
     if (unreadMessageIds.length > 0) {
       socket.emit('markAsRead', {
-        userId: '66768003bc6550fbf2a04d06',
+        userId: userProfile._id,
         messageIds: unreadMessageIds,
       });
       setUnreadCount(0);
@@ -88,13 +89,13 @@ const GeneralChatScreen = ({navigation}) => {
 
   const toggleLike = (messageId) => {
     socket.emit('toggleLike', {
-      userId: '66768003bc6550fbf2a04d06', // Replace with actual userId
+      userId: userProfile._id,
       messageId: messageId
     });
   };
 
   const renderMessage = ({item, index}) => {
-    const isFirstUnread = (index === messages.length - unreadCount) && (item.userId._id !== '66768003bc6550fbf2a04d06');
+    const isFirstUnread = (index === messages.length - unreadCount) && (item.userId._id !== userProfile._id);
     return (
       <>
         {isFirstUnread && (
@@ -119,9 +120,9 @@ const GeneralChatScreen = ({navigation}) => {
               </Text>
               <TouchableOpacity onPress={() => toggleLike(item._id)} style={styles.likeButton}>
                 <Icon 
-                  name={item.likes.includes('66768003bc6550fbf2a04d06') ? "heart" : "heart-outline"} 
+                  name={item.likes.includes(userProfile._id) ? "heart" : "heart-outline"} 
                   size={20} 
-                  color={item.likes.includes('66768003bc6550fbf2a04d06') ? "#ff0000" : "#888"} 
+                  color={item.likes.includes(userProfile._id) ? "#ff0000" : "#888"} 
                 />
                 <Text style={styles.likeCount}>{item.likes.length}</Text>
               </TouchableOpacity>

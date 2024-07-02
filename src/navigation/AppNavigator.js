@@ -11,6 +11,7 @@ import Chat from '../screens/Chat';
 import GeneralChatScreen from '../screens/GeneralChatScreen';
 import P2PBettingScreen from '../screens/P2P/P2PBettingScreen';
 import MarketScreen from '../screens/MarketScreen/MarketScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,10 +19,11 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Main"
+        initialRouteName="Login"
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="UserDashboard" component={UserDashboard} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
