@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -16,12 +16,16 @@ import DropdownMenu from '../../components/DropdownMenu/DropdownMenu';
 import DropdownAdd from '../../components/DropdownMenu/DropdownAdd';
 import styles from './styles';
 import bets from './bet';
-import {useUnreadMessage} from '../../context/UnreadMessageContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUnreadCount } from '../../store/unreadMessageSlice';
 
 const {width} = Dimensions.get('window');
 
 const MainScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { unreadCount } = useSelector((state) => state.unreadMessage);
+  const userProfile = useSelector((state) => state.user.profile);
   const [menuDropdownVisible, setMenuDropdownVisible] = useState(false);
   const [addDropdownVisible, setAddDropdownVisible] = useState(false);
   const [selectedTrending, setSelectedTrending] = useState('Bets');
@@ -29,7 +33,6 @@ const MainScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isTrendingOn, setIsTrendingOn] = useState(false);
   const [activePage, setActivePage] = useState({});
-  const {unreadCount} = useUnreadMessage();
 
 
   const gameCategories = [
@@ -103,6 +106,10 @@ const MainScreen = () => {
     setAddDropdownVisible(!addDropdownVisible);
     if (menuDropdownVisible) setMenuDropdownVisible(false);
   };
+
+  useEffect(() => {
+    dispatch(fetchUnreadCount(userProfile._id));
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={styles.container}>

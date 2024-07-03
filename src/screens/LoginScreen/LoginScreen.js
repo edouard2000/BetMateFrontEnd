@@ -5,6 +5,7 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
@@ -18,6 +19,7 @@ const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleNext = async () => {
@@ -33,6 +35,7 @@ const LoginScreen = ({ navigation }) => {
                 setError('Please enter your password');
                 return;
             }
+            setIsLoading(true);
             try {
                 const response = await axios.post(
                     'https://betmatebackend.onrender.com/api/users/login',
@@ -42,9 +45,11 @@ const LoginScreen = ({ navigation }) => {
                 if (response.status === 200) {
                     await AsyncStorage.setItem('access_token', response.data.data.access_token);
                     await fetchUserProfile(response.data.data.access_token);
+                    setIsLoading(false);
                     navigation.navigate('Main');
                 } else {
                     setError(response.data.message || 'An error occurred during login');
+                    setIsLoading(false);
                 }
             } catch (error) {
                 if (error.response) {
@@ -52,6 +57,7 @@ const LoginScreen = ({ navigation }) => {
                 } else {
                     setError('An error occurred. Please try again.');
                 }
+                setIsLoading(false);
             }
         }
     };
@@ -66,7 +72,6 @@ const LoginScreen = ({ navigation }) => {
             );
             if (response.status === 200) {
                 dispatch(setUserProfile(response.data.data));
-                console.log('User profile:', response.data.data);
             }
         } catch (error) {
             console.error('Error fetching user profile:', error);
@@ -116,8 +121,12 @@ const LoginScreen = ({ navigation }) => {
                     <Text style={styles.forgotPasswordText}>Forgot password?</Text>
                 </TouchableOpacity>
             )}
-            <TouchableOpacity style={styles.button} onPress={handleNext}>
-                <Text style={styles.buttonText}>{step === 1 ? 'Next' : 'Sign in'}</Text>
+            <TouchableOpacity style={styles.button} onPress={handleNext} disabled={isLoading}>
+                {isLoading ? (
+                    <ActivityIndicator color="#FFFFFF" />
+                ) : (
+                    <Text style={styles.buttonText}>{step === 1 ? 'Next' : 'Sign in'}</Text>
+                )}
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.signupButton}
@@ -196,6 +205,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '80%',
+        height: 44, 
         backgroundColor: '#3498db',
         paddingVertical: 10,
         borderRadius: 25,
@@ -205,6 +215,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        justifyContent: 'center', 
+        alignItems: 'center',  
     },
     buttonText: {
         fontSize: 16,

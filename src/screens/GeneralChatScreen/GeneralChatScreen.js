@@ -11,17 +11,18 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import io from 'socket.io-client';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
-import { useSelector } from 'react-redux';
-import {useUnreadMessage} from '../../context/UnreadMessageContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUnreadCount } from '../../store/unreadMessageSlice'; 
 
 const socket = io('https://betmatebackend.onrender.com/');
 // const socket = io('http://172.20.10.3:5001');
 
 const GeneralChatScreen = ({navigation}) => {
+  const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.user.profile);
+  const unreadCount = useSelector((state) => state.unreadMessage.unreadCount);
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
-  const {setUnreadCount, unreadCount} = useUnreadMessage();
   const flatListRef = useRef(null);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const GeneralChatScreen = ({navigation}) => {
       setMessages(prevMessages => [...prevMessages, data.data]);
       // Check if the message was sent by another user
       if (data.data.userId !== userProfile._id) {
-        setUnreadCount(prevCount => prevCount + 1);
+        dispatch(setUnreadCount(unreadCount + 1));
       }
     });
 
@@ -39,7 +40,7 @@ const GeneralChatScreen = ({navigation}) => {
       const unreadMessages = data.data.filter(
         msg => !msg.readBy.includes(userProfile._id),
       );
-      setUnreadCount(unreadMessages.length);
+      dispatch(setUnreadCount(unreadMessages.length));
     });
 
     socket.on('likeUpdated', data => {
@@ -55,7 +56,7 @@ const GeneralChatScreen = ({navigation}) => {
       socket.off('messages');
       socket.off('likeUpdated');
     };
-  }, []);
+  }, [dispatch, userProfile._id]);
 
   useEffect(() => {
     if (unreadCount > 0 && flatListRef.current) {
@@ -83,7 +84,7 @@ const GeneralChatScreen = ({navigation}) => {
         userId: userProfile._id,
         messageIds: unreadMessageIds,
       });
-      setUnreadCount(0);
+      dispatch(setUnreadCount(0));
     }
   };
 
