@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   profile: null,
@@ -16,6 +17,7 @@ export const userSlice = createSlice({
     clearUserProfile: (state) => {
       state.profile = null;
       state.isAuthenticated = false;
+      AsyncStorage.removeItem('user_profile');
     },
   },
 });

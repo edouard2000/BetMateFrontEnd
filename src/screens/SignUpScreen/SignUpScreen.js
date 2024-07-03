@@ -5,77 +5,46 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
-    ActivityIndicator,
+    Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
-import { setUserProfile } from '../../store/userSlice';
+import { registerUser } from '../../store/authSlice';
 
-const LoginScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const [step, setStep] = useState(1);
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleNext = async () => {
-        setError('');
-        if (step === 1) {
-            if (!email) {
-                setError('Please enter your email');
-                return;
-            }
+        setError(''); 
+        if (step === 1 && name) {
             setStep(2);
-        } else {
-            if (!password) {
-                setError('Please enter your password');
-                return;
-            }
-            setIsLoading(true);
+        } else if (step === 2 && email) {
+            setStep(3);
+        } else if (step === 3 && phoneNumber) {
+            setStep(4);
+        } else if (step === 4 && password) {
             try {
-                const response = await axios.post(
-                    'https://betmatebackend.onrender.com/api/users/login',
-                    { email, password }
-                );
-
-                if (response.status === 200) {
-                    await AsyncStorage.setItem('access_token', response.data.data.access_token);
-                    await fetchUserProfile(response.data.data.access_token);
-                    setIsLoading(false);
-                    navigation.navigate('Main');
+                const resultAction = await dispatch(registerUser({ name, email, phoneNumber, password}));
+                if (registerUser.fulfilled.match(resultAction)) {
+                    Alert.alert('Success', `User registered successfully. Check ${email} for verification code.`);
+                    navigation.navigate('EmailVerification', { email });
                 } else {
-                    setError(response.data.message || 'An error occurred during login');
-                    setIsLoading(false);
+                    setError(resultAction.payload.message);
+                    setStep(1);
                 }
             } catch (error) {
-                if (error.response) {
-                    setError(error.response.data.message || 'Invalid email or password');
-                } else {
-                    setError('An error occurred. Please try again.');
-                }
-                setIsLoading(false);
+                console.log('error -- ', error)
+                setError('An error occurred during registration.');
             }
-        }
-    };
-
-    const fetchUserProfile = async (token) => {
-        try {
-            const response = await axios.get(
-                'https://betmatebackend.onrender.com/api/users/profile',
-                {
-                    headers: { Authorization: `Bearer ${token}` }
-                }
-            );
-            if (response.status === 200) {
-                await AsyncStorage.setItem('user_profile', JSON.stringify(response.data.data));
-                dispatch(setUserProfile(response.data.data));
-            }
-        } catch (error) {
-            console.error('Error fetching user profile:', error);
+        } else {
+            setError('Please fill in all fields.');
         }
     };
 
@@ -85,18 +54,28 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={styles.titleBet}>Bet</Text>
                 <Text style={styles.titleMate}>Mate</Text>
             </Text>
-            <Text style={styles.subtitle}>Log in</Text>
+            <Text style={styles.subtitle}>Sign up</Text>
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
             {step === 1 && (
                 <TextInput
-                    placeholder="Enter email"
+                    placeholder="Name"
+                    placeholderTextColor="#AAAAAA"
+                    style={styles.input}
+                    value={name}
+                    onChangeText={setName}
+                />
+            )}
+            {step === 2 && (
+                <TextInput
+                    placeholder="Email"
                     placeholderTextColor="#AAAAAA"
                     style={styles.input}
                     value={email}
                     onChangeText={setEmail}
+                    keyboardType="email-address"
                 />
             )}
-            {step === 2 && (
+            {step === 4 && (
                 <View style={styles.passwordContainer}>
                     <TextInput
                         placeholder="Password"
@@ -117,27 +96,28 @@ const LoginScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             )}
-            {step === 2 && (
-                <TouchableOpacity style={styles.forgotPasswordContainer}>
-                    <Text style={styles.forgotPasswordText}>Forgot password?</Text>
-                </TouchableOpacity>
+            {step === 3 && (
+                <TextInput
+                    placeholder="Phone Number"
+                    placeholderTextColor="#AAAAAA"
+                    style={styles.input}
+                    value={phoneNumber}
+                    onChangeText={setPhoneNumber}
+                    keyboardType="phone-pad"
+                />
             )}
-            <TouchableOpacity style={styles.button} onPress={handleNext} disabled={isLoading}>
-                {isLoading ? (
-                    <ActivityIndicator color="#FFFFFF" />
-                ) : (
-                    <Text style={styles.buttonText}>{step === 1 ? 'Next' : 'Sign in'}</Text>
-                )}
+            <TouchableOpacity style={styles.button} onPress={handleNext}>
+                <Text style={styles.buttonText}>{step === 4 ? 'Sign up' : 'Next'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.signupButton}
-                onPress={() => navigation.navigate('SignUp')}>
-                <Text style={styles.signupText}>Sign up</Text>
+                onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.signupText}>Sign in</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.arrowContainer}
                 onPress={() => navigation.goBack()}>
-                <Icon name="arrow-back-outline" size={30} color="#3498db" />
+                <Text style={styles.arrow}>←</Text>
             </TouchableOpacity>
         </View>
     );
@@ -173,7 +153,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         marginBottom: 20,
-        paddingLeft: 10,
+        paddingLeft: 20,
         color: '#FFFFFF',
     },
     passwordContainer: {
@@ -195,18 +175,8 @@ const styles = StyleSheet.create({
     iconContainer: {
         padding: 10,
     },
-    forgotPasswordContainer: {
-        alignSelf: 'flex-start',
-        marginLeft: '35%',
-        marginBottom: 20,
-    },
-    forgotPasswordText: {
-        color: '#3498db',
-        fontSize: 14,
-    },
     button: {
         width: '80%',
-        height: 44, 
         backgroundColor: '#3498db',
         paddingVertical: 10,
         borderRadius: 25,
@@ -216,8 +186,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        justifyContent: 'center', 
-        alignItems: 'center',  
     },
     buttonText: {
         fontSize: 16,
@@ -249,4 +217,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LoginScreen;
+export default SignUpScreen;

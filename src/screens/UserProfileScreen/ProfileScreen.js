@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './ProfileScreenStyles';
+import { useDispatch } from 'react-redux';
+import { clearUserProfile } from '../../store/userSlice';
+import { logout } from '../../store/authSlice';
 
 const generateAvatarUrl = name => {
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(
@@ -31,14 +34,21 @@ const dummyUser = {
   currentBalance: '$500.00',
 };
 
-const ProfileScreen = ({navigation}) => {
+const ProfileScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const user = dummyUser;
+
+  const handleLogout = async () => {
+    dispatch(logout());
+    dispatch(clearUserProfile());
+    navigation.navigate('Login');
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={{uri: user.profilePicture}}
+          source={{ uri: user.profilePicture }}
           style={styles.profileImage}
         />
         <View style={styles.headerDetails}>
@@ -155,7 +165,7 @@ const ProfileScreen = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.settingsItem}
-            onPress={() => navigation.navigate('LogOut')}>
+            onPress={handleLogout}>
             <Icon name="log-out-outline" size={20} color="#1E88E5" />
             <Text style={[styles.logout]}>Log Out</Text>
           </TouchableOpacity>
