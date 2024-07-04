@@ -16,37 +16,24 @@ import DropdownMenu from '../../components/DropdownMenu/DropdownMenu';
 import DropdownAdd from '../../components/DropdownMenu/DropdownAdd';
 import styles from './styles';
 import bets from './bet';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchUnreadCount } from '../../store/unreadMessageSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchUnreadCount} from '../../store/unreadMessageSlice';
 
 const {width} = Dimensions.get('window');
 
 const MainScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { unreadCount } = useSelector((state) => state.unreadMessage);
-  const userProfile = useSelector((state) => state.user.profile);
+  const {unreadCount} = useSelector(state => state.unreadMessage);
+  const userProfile = useSelector(state => state.user.profile);
   const [menuDropdownVisible, setMenuDropdownVisible] = useState(false);
   const [addDropdownVisible, setAddDropdownVisible] = useState(false);
   const [selectedTrending, setSelectedTrending] = useState('Bets');
-  const [selectedCategory, setSelectedCategory] = useState('All Bets');
   const [searchQuery, setSearchQuery] = useState('');
   const [isTrendingOn, setIsTrendingOn] = useState(false);
   const [activePage, setActivePage] = useState({});
 
-
-  const gameCategories = [
-    'All Bets',
-    'Soccer',
-    'Basketball',
-    'Tennis',
-    'Volleyball',
-  ];
-
-  const filteredBets =
-    selectedCategory === 'All Bets'
-      ? bets
-      : bets.filter(bet => bet.category === selectedCategory);
+  const filteredBets = bets;
 
   const handleScroll = (event, rowIndex) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -114,7 +101,10 @@ const MainScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>BetMate</Text>
+        <Text style={styles.title}>
+          <Text style={styles.titleBet}>Bet</Text>
+          <Text style={styles.titleMate}>Mate</Text>
+        </Text>
         <View style={styles.headerRight}>
           <TouchableOpacity
             style={styles.createBetButton}
@@ -219,28 +209,6 @@ const MainScreen = () => {
           )}
         </View>
       )}
-      <View style={styles.categoryHeader}>
-        <ScrollView horizontal style={styles.categoryList}>
-          {gameCategories.map((category, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => setSelectedCategory(category)}
-              style={styles.categoryTitle}>
-              <Text
-                style={
-                  selectedCategory === category
-                    ? styles.categoryTextActive
-                    : styles.categoryText
-                }>
-                {category}
-              </Text>
-              {selectedCategory === category && (
-                <View style={styles.activeCategoryIndicator} />
-              )}
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         horizontal={false}

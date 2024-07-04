@@ -7,20 +7,20 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import io from 'socket.io-client';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
-import { useSelector, useDispatch } from 'react-redux';
-import { setUnreadCount } from '../../store/unreadMessageSlice'; 
+import {useSelector, useDispatch} from 'react-redux';
+import {setUnreadCount} from '../../store/unreadMessageSlice';
 
 const socket = io('https://betmatebackend.onrender.com/');
-// const socket = io('http://172.20.10.3:5001');
 
 const GeneralChatScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const userProfile = useSelector((state) => state.user.profile);
-  const unreadCount = useSelector((state) => state.unreadMessage.unreadCount);
+  const userProfile = useSelector(state => state.user.profile);
+  const unreadCount = useSelector(state => state.unreadMessage.unreadCount);
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const flatListRef = useRef(null);
@@ -28,7 +28,6 @@ const GeneralChatScreen = ({navigation}) => {
   useEffect(() => {
     socket.on('NEW_GLOBAL_MESSAGE', data => {
       setMessages(prevMessages => [...prevMessages, data.data]);
-      // Check if the message was sent by another user
       if (data.data.userId !== userProfile._id) {
         dispatch(setUnreadCount(unreadCount + 1));
       }
@@ -44,10 +43,8 @@ const GeneralChatScreen = ({navigation}) => {
     });
 
     socket.on('likeUpdated', data => {
-      setMessages(prevMessages => 
-        prevMessages.map(msg => 
-          msg._id === data.data._id ? data.data : msg
-        )
+      setMessages(prevMessages =>
+        prevMessages.map(msg => (msg._id === data.data._id ? data.data : msg)),
       );
     });
 
@@ -88,15 +85,17 @@ const GeneralChatScreen = ({navigation}) => {
     }
   };
 
-  const toggleLike = (messageId) => {
+  const toggleLike = messageId => {
     socket.emit('toggleLike', {
       userId: userProfile._id,
-      messageId: messageId
+      messageId: messageId,
     });
   };
 
   const renderMessage = ({item, index}) => {
-    const isFirstUnread = (index === messages.length - unreadCount) && (item.userId._id !== userProfile._id);
+    const isFirstUnread =
+      index === messages.length - unreadCount &&
+      item.userId._id !== userProfile._id;
     return (
       <>
         {isFirstUnread && (
@@ -119,11 +118,19 @@ const GeneralChatScreen = ({navigation}) => {
                   minute: '2-digit',
                 })}
               </Text>
-              <TouchableOpacity onPress={() => toggleLike(item._id)} style={styles.likeButton}>
-                <Icon 
-                  name={item.likes.includes(userProfile._id) ? "heart" : "heart-outline"} 
-                  size={20} 
-                  color={item.likes.includes(userProfile._id) ? "#ff0000" : "#888"} 
+              <TouchableOpacity
+                onPress={() => toggleLike(item._id)}
+                style={styles.likeButton}>
+                <Icon
+                  name={
+                    item.likes.includes(userProfile._id)
+                      ? 'heart'
+                      : 'heart-outline'
+                  }
+                  size={20}
+                  color={
+                    item.likes.includes(userProfile._id) ? '#ff0000' : '#888'
+                  }
                 />
                 <Text style={styles.likeCount}>{item.likes.length}</Text>
               </TouchableOpacity>
@@ -135,12 +142,12 @@ const GeneralChatScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color="#FFFFFF" />
+          <Icon name="arrow-back" size={24} color="#1E90FF" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>General Chat</Text>
       </View>
@@ -166,10 +173,10 @@ const GeneralChatScreen = ({navigation}) => {
           placeholderTextColor="#666"
         />
         <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
-          <Icon name="send" size={24} color="#1E90FF" />
+          <Icon name="send" size={20} color="#1A1A1A" />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -181,8 +188,11 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    paddingVertical: 5,
     backgroundColor: '#1E1E1E',
+    marginTop: 10,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   backButton: {
     padding: 10,
@@ -229,25 +239,26 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'row',
-    padding: 10,
-    backgroundColor: '#1E1E1E',
+    paddingVertical: 5,
   },
   input: {
     flex: 1,
     backgroundColor: '#2A2A2A',
-    borderRadius: 20,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: Platform.OS === 'android' ? 5 : 10,
     color: '#FFFFFF',
     marginRight: 10,
   },
   sendButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#2A2A2A',
+    width: 40,
+    height: 40,
+    backgroundColor: '#1E90FF',
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
   },
   unreadBanner: {
     backgroundColor: '#1E90FF',

@@ -15,7 +15,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+  },
+  titleBet: {
     color: '#FFFFFF',
+  },
+  titleMate: {
+    color: '#1E88E5',
   },
   headerRight: {
     flexDirection: 'row',
@@ -94,7 +99,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   switch: {
-    transform: [{scaleX: 0.8}, {scaleY: 0.8}],
+    transform: [
+      {scaleX: Platform.OS === 'android' ? 0.9 : 0.6},
+      {scaleY: Platform.OS === 'android' ? 0.9 : 0.6},
+    ],
   },
   trendingSection: {
     paddingHorizontal: 10,
@@ -137,46 +145,6 @@ const styles = StyleSheet.create({
   betsList: {
     paddingLeft: 10,
     marginTop: 10,
-  },
-  categoryHeader: {
-    position: 'sticky',
-    top: 0,
-    zIndex: 10,
-    backgroundColor: '#000000',
-    paddingVertical: 10,
-  },
-  categoryList: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  categoryTitle: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    marginHorizontal: 5,
-  },
-  categoryTitleActive: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#1E88E5',
-  },
-  categoryText: {
-    color: '#AAAAAA',
-    fontSize: 16,
-  },
-  categoryTextActive: {
-    color: '#FFFFFF',
-    fontSize: 16,
-  },
-  activeCategoryIndicator: {
-    width: 50,
-    height: 2,
-    backgroundColor: '#1E88E5',
-    marginTop: 5,
-    alignSelf: 'center',
   },
   content: {
     flex: 1,
