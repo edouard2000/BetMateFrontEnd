@@ -1,10 +1,10 @@
 // src/navigation/AppNavigator.js
-import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useEffect} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setUserProfile } from '../store/userSlice';
+import {setUserProfile} from '../store/userSlice';
 
 import MainScreen from '../screens/MainScreen';
 import UserDashboard from '../screens/DashboardScreen';
@@ -18,12 +18,13 @@ import MarketScreen from '../screens/MarketScreen/MarketScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import EmailVerificationScreen from '../screens/EmailVerificationScreen';
+import AddFixtureScreen from '../screens/MainScreen/CreateBet/AddFixtureScreen';
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const dispatch = useDispatch();
-  const { isAuthenticated, profile } = useSelector(state => state.user);
+  const {isAuthenticated, profile} = useSelector(state => state.user);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -58,20 +59,30 @@ const AppNavigator = () => {
             <Stack.Screen name="SocialScreen" component={SocialScreen} />
             <Stack.Screen name="BetList" component={BetListScreen} />
             <Stack.Screen name="Chat" component={Chat} />
-            <Stack.Screen name="GeneralChatScreen" component={GeneralChatScreen} />
-            <Stack.Screen name="P2PBettingScreen" component={P2PBettingScreen} />
+            <Stack.Screen
+              name="AddFixtureScreen"
+              component={AddFixtureScreen}
+            />
+            <Stack.Screen
+              name="GeneralChatScreen"
+              component={GeneralChatScreen}
+            />
+            <Stack.Screen
+              name="P2PBettingScreen"
+              component={P2PBettingScreen}
+            />
             <Stack.Screen name="MarketScreen" component={MarketScreen} />
-            {/* Add other authenticated screens here */}
           </>
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
-            <Stack.Screen name="EmailVerification" component={EmailVerificationScreen} />
+            <Stack.Screen
+              name="EmailVerification"
+              component={EmailVerificationScreen}
+            />
           </>
         )}
-
-
       </Stack.Navigator>
     </NavigationContainer>
   );
