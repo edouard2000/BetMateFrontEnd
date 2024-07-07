@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   headerGameCount: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 14,
   },
 });
 

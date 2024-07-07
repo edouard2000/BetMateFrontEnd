@@ -9,13 +9,15 @@ const DropdownAdd = ({navigation, visible, setVisible, toggleModal}) => {
     return null;
   }
 
+  const dummyUserName = 'John Doe'; // Dummy username
+
   return (
     <View style={DropdownAddStyles.dropdownMenu}>
       <TouchableOpacity
         style={DropdownAddStyles.dropdownMenuItem}
         onPress={() => {
           setVisible(false);
-          toggleModal(); // Show CreateBetModal for "Create Bet"
+          toggleModal();
         }}>
         <Icon name="create-outline" size={20} color="#FFFFFF" />
         <Text style={DropdownAddStyles.dropdownMenuItemText}>Create Bet</Text>
@@ -24,7 +26,10 @@ const DropdownAdd = ({navigation, visible, setVisible, toggleModal}) => {
         style={DropdownAddStyles.dropdownMenuItem}
         onPress={() => {
           setVisible(false);
-          navigation.navigate('AddFixtureScreen', {mode: 'predict'});
+          navigation.navigate('AddFixtureScreen', {
+            mode: 'predict',
+            userName: dummyUserName,
+          });
         }}>
         <Icon name="bulb-outline" size={20} color="#FFFFFF" />
         <Text style={DropdownAddStyles.dropdownMenuItemText}>Predict</Text>

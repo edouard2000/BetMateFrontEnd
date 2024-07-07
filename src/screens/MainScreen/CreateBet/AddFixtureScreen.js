@@ -12,7 +12,7 @@ import BetInfoCard from './BetInfoCard';
 import LeagueList from './LeagueList';
 
 const AddFixtureScreen = ({route, navigation}) => {
-  const {betName, balance, mode} = route.params;
+  const {betName, balance, mode, userName} = route.params;
   const [teamCount, setTeamCount] = useState(0);
 
   const leagues = [
@@ -99,6 +99,7 @@ const AddFixtureScreen = ({route, navigation}) => {
         balance={balance}
         teamCount={teamCount}
         mode={mode}
+        userName={userName}
         onSavePress={() => alert('Save pressed')}
         onNextPress={() => alert('Next pressed')}
       />
