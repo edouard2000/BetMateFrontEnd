@@ -17,7 +17,12 @@ const LeagueItem = ({league, navigation, addTeamToBet}) => {
           <Text style={styles.countryName}>{league.country}</Text>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('LeagueDetail', {league})}>
+          onPress={() =>
+            navigation.navigate('LeagueDetailScreen', {
+              league,
+              addTeamToBet,
+            })
+          }>
           <Icon name="chevron-forward-outline" size={20} color="#3498db" />
         </TouchableOpacity>
       </View>

@@ -30,25 +30,32 @@ const AddFixtureScreen = ({route, navigation}) => {
           awayTeam: 'Paraguay',
           awayLogo: 'https://link-to-team-logo.png',
         },
-      ],
-    },
-    {
-      name: 'Europa League',
-      country: 'Portugal',
-      countryLogo: 'https://link-to-country-logo.png',
-      games: [
         {
-          time: '21:00',
-          homeTeam: 'Portugal',
+          time: '23:15',
+          homeTeam: 'Uruguay',
           homeLogo: 'https://link-to-team-logo.png',
-          awayTeam: 'Spain',
+          awayTeam: 'Chile',
           awayLogo: 'https://link-to-team-logo.png',
         },
         {
-          time: '23:45',
-          homeTeam: 'France',
+          time: '22:45',
+          homeTeam: 'Bolivia',
           homeLogo: 'https://link-to-team-logo.png',
-          awayTeam: 'Germany',
+          awayTeam: 'Venezuela',
+          awayLogo: 'https://link-to-team-logo.png',
+        },
+        {
+          time: '22:15',
+          homeTeam: 'Peru',
+          homeLogo: 'https://link-to-team-logo.png',
+          awayTeam: 'Colombia',
+          awayLogo: 'https://link-to-team-logo.png',
+        },
+        {
+          time: '21:45',
+          homeTeam: 'Paraguay',
+          homeLogo: 'https://link-to-team-logo.png',
+          awayTeam: 'Bolivia',
           awayLogo: 'https://link-to-team-logo.png',
         },
       ],
@@ -59,38 +66,38 @@ const AddFixtureScreen = ({route, navigation}) => {
       countryLogo: 'https://link-to-country-logo.png',
       games: [
         {
-          time: '21:00',
-          homeTeam: 'England',
+          time: '20:00',
+          homeTeam: 'Chelsea',
           homeLogo: 'https://link-to-team-logo.png',
-          awayTeam: 'Spain',
+          awayTeam: 'Arsenal',
           awayLogo: 'https://link-to-team-logo.png',
         },
         {
-          time: '23:45',
-          homeTeam: 'France',
+          time: '22:30',
+          homeTeam: 'Manchester City',
           homeLogo: 'https://link-to-team-logo.png',
-          awayTeam: 'Germany',
+          awayTeam: 'Liverpool',
           awayLogo: 'https://link-to-team-logo.png',
         },
       ],
     },
     {
-      name: 'La Liga',
-      country: 'Spain',
+      name: 'Serie A',
+      country: 'Italy',
       countryLogo: 'https://link-to-country-logo.png',
       games: [
         {
-          time: '21:00',
-          homeTeam: 'Spain',
+          time: '19:45',
+          homeTeam: 'Juventus',
           homeLogo: 'https://link-to-team-logo.png',
-          awayTeam: 'Germany',
+          awayTeam: 'Roma',
           awayLogo: 'https://link-to-team-logo.png',
         },
         {
-          time: '23:45',
-          homeTeam: 'France',
+          time: '22:15',
+          homeTeam: 'Inter Milan',
           homeLogo: 'https://link-to-team-logo.png',
-          awayTeam: 'England',
+          awayTeam: 'Lazio',
           awayLogo: 'https://link-to-team-logo.png',
         },
       ],
@@ -115,7 +122,7 @@ const AddFixtureScreen = ({route, navigation}) => {
         navigation={navigation}
         addTeamToBet={addTeamToBet}
       />
-      <View style={styles.backButtonContainer}>
+      <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Icon name="arrow-undo-outline" size={30} color="#3498db" />
         </TouchableOpacity>
@@ -128,6 +135,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#000000',
+    paddingVertical: 5,
+    alignItems: 'center',
   },
   backButtonContainer: {
     position: 'absolute',

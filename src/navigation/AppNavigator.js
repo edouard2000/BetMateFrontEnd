@@ -19,6 +19,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import EmailVerificationScreen from '../screens/EmailVerificationScreen';
 import AddFixtureScreen from '../screens/MainScreen/CreateBet/AddFixtureScreen';
+import LeagueDetailScreen from '../screens/MainScreen/CreateBet/LeagueDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -59,6 +60,10 @@ const AppNavigator = () => {
             <Stack.Screen name="SocialScreen" component={SocialScreen} />
             <Stack.Screen name="BetList" component={BetListScreen} />
             <Stack.Screen name="Chat" component={Chat} />
+            <Stack.Screen
+              name="LeagueDetailScreen"
+              component={LeagueDetailScreen}
+            />
             <Stack.Screen
               name="AddFixtureScreen"
               component={AddFixtureScreen}
