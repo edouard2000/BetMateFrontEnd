@@ -1,10 +1,8 @@
-// components/GameItem.js
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import generateAvatarUrl from '../../../utils/generateAvatarUrl';
 
-const GameItem = ({game, addTeamToBet}) => {
+const GameItem = ({game, addTeamToBet, predictTeam, mode}) => {
   const homeLogo = generateAvatarUrl(game.homeTeam) || game.homeLogo;
   const awayLogo = generateAvatarUrl(game.awayTeam) || game.awayLogo;
 
@@ -21,9 +19,16 @@ const GameItem = ({game, addTeamToBet}) => {
           <Text style={styles.teamName}>{game.awayTeam}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.addButton} onPress={addTeamToBet}>
-        <Icon name="add-circle-outline" size={20} color="#3498db" />
-      </TouchableOpacity>
+      {mode === 'bet' && (
+        <TouchableOpacity style={styles.addButton} onPress={addTeamToBet}>
+          <Text style={styles.addButtonText}>Add</Text>
+        </TouchableOpacity>
+      )}
+      {mode === 'predict' && (
+        <TouchableOpacity style={styles.predictButton} onPress={predictTeam}>
+          <Text style={styles.predictButtonText}>Predict</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -34,8 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
+    padding: 10,
     backgroundColor: '#121212',
     borderRadius: 10,
   },
@@ -61,7 +65,26 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   addButton: {
-    marginLeft: 10,
+    backgroundColor: '#3498db',
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginLeft: 5,
+  },
+  addButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  predictButton: {
+    backgroundColor: '#E74C3C',
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginLeft: 5,
+  },
+  predictButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
 });
 

@@ -1,30 +1,34 @@
 // components/BetInfoCard.js
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 const BetInfoCard = ({
   betName,
   balance,
   teamCount,
+  mode,
   onSavePress,
   onNextPress,
 }) => {
   return (
-    <View style={styles.cardContainer}>
+    <View style={styles.card}>
       <View style={styles.infoRow}>
-        <Text style={styles.infoLabel}>Name:</Text>
-        <Text style={styles.infoValue}>{betName}</Text>
+        <Text style={styles.label}>Teams:</Text>
+        <Text style={styles.value}>{teamCount}</Text>
       </View>
-      <View style={styles.infoRow}>
-        <Text style={styles.infoLabel}>Balance:</Text>
-        <Text style={styles.infoValue}>${balance}</Text>
-      </View>
-      <View style={styles.infoRow}>
-        <Text style={styles.infoLabel}>Teams:</Text>
-        <Text style={styles.infoValue}>{teamCount}</Text>
-      </View>
-      <View style={styles.buttonRow}>
+      {mode === 'bet' && (
+        <>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Bet Name:</Text>
+            <Text style={styles.value}>{betName}</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Balance:</Text>
+            <Text style={styles.value}>${balance}</Text>
+          </View>
+        </>
+      )}
+      <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.saveButton} onPress={onSavePress}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
@@ -37,50 +41,44 @@ const BetInfoCard = ({
 };
 
 const styles = StyleSheet.create({
-  cardContainer: {
+  card: {
+    padding: 10,
     backgroundColor: '#151515',
     borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    elevation: 10,
-    marginBottom: 10,
   },
   infoRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 5,
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
-  infoLabel: {
-    color: '#AAAAAA',
+  label: {
+    color: '#FFFFFF',
     fontSize: 16,
   },
-  infoValue: {
-    color: 'white',
-    fontSize: 12,
-    marginLeft: 'auto',
+  value: {
+    color: '#FFFFFF',
+    fontSize: 16,
   },
-  buttonRow: {
+  buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 15,
+  },
+  saveButton: {
+    backgroundColor: '#3498db',
+    paddingVertical: 3,
+    paddingHorizontal: 5,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  nextButton: {
+    backgroundColor: '#d35400',
+    paddingVertical: 3,
+    paddingHorizontal: 5,
+    borderRadius: 5,
   },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 16,
-  },
-  nextButton: {
-    backgroundColor: '#3498db',
-    paddingVertical: 2,
-    paddingHorizontal: 5,
-    borderRadius: 5,
-    marginLeft: 10,
-  },
-  saveButton: {
-    backgroundColor: '#CC5500',
-    paddingVertical: 2,
-    paddingHorizontal: 5,
-    borderRadius: 5,
-    marginLeft: 10,
   },
 });
 

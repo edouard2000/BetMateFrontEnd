@@ -9,10 +9,13 @@ import {
   Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const CreateBetModal = ({visible, onClose}) => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const mode = route.params?.mode || 'bet'; // Default to 'bet' if not provided
+
   const [step, setStep] = useState(1);
   const [betName, setBetName] = useState('');
   const [balance, setBalance] = useState('');
@@ -21,7 +24,7 @@ const CreateBetModal = ({visible, onClose}) => {
     if (step === 1 && betName) {
       setStep(2);
     } else if (step === 2 && balance) {
-      navigation.navigate('AddFixtureScreen', {betName, balance});
+      navigation.navigate('AddFixtureScreen', {betName, balance, mode});
       onClose();
     } else {
       alert('Please fill in all fields.');

@@ -92,6 +92,7 @@ const MainScreen = () => {
         navigation={navigation}
         visible={addDropdownVisible}
         setVisible={setAddDropdownVisible}
+        toggleModal={toggleModal} // Pass the toggleModal function
       />
       <CreateBetModal visible={modalVisible} onClose={toggleModal} />
     </SafeAreaView>
