@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import generateAvatarUrl from '../../../utils/generateAvatarUrl';
 
-const GameItem = ({game}) => {
+const GameItem = ({game, addTeamToBet}) => {
   const homeLogo = generateAvatarUrl(game.homeTeam) || game.homeLogo;
   const awayLogo = generateAvatarUrl(game.awayTeam) || game.awayLogo;
 
@@ -21,7 +21,7 @@ const GameItem = ({game}) => {
           <Text style={styles.teamName}>{game.awayTeam}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity style={styles.addButton} onPress={addTeamToBet}>
         <Icon name="add-circle-outline" size={20} color="#3498db" />
       </TouchableOpacity>
     </View>

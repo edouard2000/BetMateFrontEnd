@@ -2,17 +2,12 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Header from './Header';
-import SearchBar from './SearchBar';
+import BetInfoCard from './BetInfoCard';
 import LeagueList from './LeagueList';
 
-const AddFixtureScreen = ({navigation}) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-
-  const toggleSearch = () => {
-    setIsSearchVisible(!isSearchVisible);
-  };
+const AddFixtureScreen = ({route, navigation}) => {
+  const {betName, balance} = route.params;
+  const [teamCount, setTeamCount] = useState(0);
 
   const leagues = [
     // Sample data, replace with real data
@@ -37,19 +32,89 @@ const AddFixtureScreen = ({navigation}) => {
         },
       ],
     },
+    {
+      name: 'Europa League',
+      country: 'Portugal',
+      countryLogo: 'https://link-to-country-logo.png',
+      games: [
+        {
+          time: '21:00',
+          homeTeam: 'Portugal',
+          homeLogo: 'https://link-to-team-logo.png',
+          awayTeam: 'Spain',
+          awayLogo: 'https://link-to-team-logo.png',
+        },
+        {
+          time: '23:45',
+          homeTeam: 'France',
+          homeLogo: 'https://link-to-team-logo.png',
+          awayTeam: 'Germany',
+          awayLogo: 'https://link-to-team-logo.png',
+        },
+      ],
+    },
+    {
+      name: 'Premier League',
+      country: 'England',
+      countryLogo: 'https://link-to-country-logo.png',
+      games: [
+        {
+          time: '21:00',
+          homeTeam: 'England',
+          homeLogo: 'https://link-to-team-logo.png',
+          awayTeam: 'Spain',
+          awayLogo: 'https://link-to-team-logo.png',
+        },
+        {
+          time: '23:45',
+          homeTeam: 'France',
+          homeLogo: 'https://link-to-team-logo.png',
+          awayTeam: 'Germany',
+          awayLogo: 'https://link-to-team-logo.png',
+        },
+      ],
+    },
+    {
+      name: 'La Liga',
+      country: 'Spain',
+      countryLogo: 'https://link-to-country-logo.png',
+      games: [
+        {
+          time: '21:00',
+          homeTeam: 'Spain',
+          homeLogo: 'https://link-to-team-logo.png',
+          awayTeam: 'Germany',
+          awayLogo: 'https://link-to-team-logo.png',
+        },
+        {
+          time: '23:45',
+          homeTeam: 'France',
+          homeLogo: 'https://link-to-team-logo.png',
+          awayTeam: 'England',
+          awayLogo: 'https://link-to-team-logo.png',
+        },
+      ],
+    },
   ];
+
+  const addTeamToBet = () => {
+    setTeamCount(teamCount + 1);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header
-        onSearchPress={toggleSearch}
+      <BetInfoCard
+        betName={betName}
+        balance={balance}
+        teamCount={teamCount}
         onSavePress={() => alert('Save pressed')}
         onNextPress={() => alert('Next pressed')}
       />
-      {isSearchVisible && (
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      )}
-      <LeagueList leagues={leagues} navigation={navigation} />
+      <LeagueList
+        leagues={leagues}
+        navigation={navigation}
+        addTeamToBet={addTeamToBet}
+      />
       <View style={styles.backButtonContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Icon name="arrow-undo-outline" size={30} color="#3498db" />

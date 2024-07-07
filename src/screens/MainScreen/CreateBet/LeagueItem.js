@@ -5,7 +5,7 @@ import GameItem from './GameItem';
 import Icon from 'react-native-vector-icons/Ionicons';
 import generateAvatarUrl from '../../../utils/generateAvatarUrl';
 
-const LeagueItem = ({league, navigation}) => {
+const LeagueItem = ({league, navigation, addTeamToBet}) => {
   const countryLogo = generateAvatarUrl(league.country) || league.countryLogo;
 
   return (
@@ -22,7 +22,7 @@ const LeagueItem = ({league, navigation}) => {
         </TouchableOpacity>
       </View>
       {league.games.slice(0, 5).map((game, index) => (
-        <GameItem key={index} game={game} />
+        <GameItem key={index} game={game} addTeamToBet={addTeamToBet} />
       ))}
     </View>
   );
