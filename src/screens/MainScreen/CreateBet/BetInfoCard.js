@@ -1,4 +1,3 @@
-// components/BetInfoCard.js
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import generateAvatarUrl from '../../../utils/generateAvatarUrl';
@@ -43,10 +42,11 @@ const BetInfoCard = ({
 const styles = StyleSheet.create({
   card: {
     paddingHorizontal: 15,
-    backgroundColor: '#1A1A1A',
-    borderRadius: 10,
+    backgroundColor: '#121212',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
     marginBottom: 10,
-    paddingVertical: 8,
+    paddingVertical: 12,
   },
   infoRow: {
     flexDirection: 'row',
@@ -85,21 +85,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   saveButton: {
-    backgroundColor: '#3498db',
-    paddingVertical: 3,
-    paddingHorizontal: 5,
+    backgroundColor: '#d35400',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
     borderRadius: 5,
-    marginHorizontal: 8,
+    marginHorizontal: 15,
   },
   nextButton: {
-    backgroundColor: '#d35400',
-    paddingVertical: 3,
-    paddingHorizontal: 8,
+    backgroundColor: '#1E88E5',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
     borderRadius: 5,
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 12,
+    fontSize: 13,
   },
 });
 

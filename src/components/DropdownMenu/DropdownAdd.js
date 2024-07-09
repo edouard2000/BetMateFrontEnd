@@ -19,7 +19,7 @@ const DropdownAdd = ({navigation, visible, setVisible, toggleModal}) => {
           setVisible(false);
           toggleModal();
         }}>
-        <Icon name="create-outline" size={20} color="#FFFFFF" />
+        <Icon name="create-outline" size={20} color="#1E88E5" />
         <Text style={DropdownAddStyles.dropdownMenuItemText}>Create Bet</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -31,7 +31,7 @@ const DropdownAdd = ({navigation, visible, setVisible, toggleModal}) => {
             userName: dummyUserName,
           });
         }}>
-        <Icon name="bulb-outline" size={20} color="#FFFFFF" />
+        <Icon name="bulb-outline" size={20} color="#1E88E5" />
         <Text style={DropdownAddStyles.dropdownMenuItemText}>Predict</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -40,7 +40,7 @@ const DropdownAdd = ({navigation, visible, setVisible, toggleModal}) => {
           setVisible(false);
           navigation.navigate('AddBalance');
         }}>
-        <Icon name="wallet-outline" size={20} color="#FFFFFF" />
+        <Icon name="wallet-outline" size={20} color="#1E88E5" />
         <Text style={DropdownAddStyles.dropdownMenuItemText}>Add Balance</Text>
       </TouchableOpacity>
     </View>

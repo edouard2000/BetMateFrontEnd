@@ -11,6 +11,15 @@ const dummyUser = {
   totalEarnings: 2000,
   losses: 100,
   profits: 100,
+  totalPredictions: 25,
+  subscriptions: 50,
+  reBets: 30,
+  bettings: 10,
+  playerShares: 5,
+  teamShares: 5,
+  invested: 300,
+  p2pSent: 100,
+  p2pReceived: 200,
 };
 
 export default dummyUser;

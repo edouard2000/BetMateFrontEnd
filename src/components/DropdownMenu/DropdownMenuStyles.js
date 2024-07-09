@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const DropdownMenuStyles = StyleSheet.create({
   dropdownMenu: {
@@ -6,10 +6,10 @@ const DropdownMenuStyles = StyleSheet.create({
     bottom: 60,
     right: 10,
     width: 200,
-    backgroundColor: '#151515',
+    backgroundColor: '#1A1A1A',
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,

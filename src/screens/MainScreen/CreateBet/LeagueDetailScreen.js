@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,13 +9,21 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import GameItem from './GameItem';
+import SearchBar from './SearchBar';
 
 const LeagueDetailScreen = ({route, navigation}) => {
   const {league, mode} = route.params;
+  const [searchQuery, setSearchQuery] = useState('');
 
   const addTeamToBet = () => {};
 
   const predictTeam = () => {};
+
+  const filteredGames = league.games.filter(
+    game =>
+      game.homeTeam.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      game.awayTeam.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,8 +38,9 @@ const LeagueDetailScreen = ({route, navigation}) => {
           <Text style={styles.headerGameCount}>{league.games.length}</Text>
         </View>
       </View>
+      <SearchBar placeholder="Search games..." onChangeText={setSearchQuery} />
       <FlatList
-        data={league.games}
+        data={filteredGames}
         renderItem={({item}) => (
           <GameItem
             game={item}

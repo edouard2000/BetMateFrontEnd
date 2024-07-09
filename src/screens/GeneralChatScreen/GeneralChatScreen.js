@@ -147,9 +147,9 @@ const GeneralChatScreen = ({navigation}) => {
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color="#1E90FF" />
+          <Icon name="chevron-back-outline" size={30} color="#3498db" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>General Chat</Text>
+        <Text style={styles.headerTitle}>Chat</Text>
       </View>
       <FlatList
         ref={flatListRef}
@@ -173,7 +173,7 @@ const GeneralChatScreen = ({navigation}) => {
           placeholderTextColor="#666"
         />
         <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
-          <Icon name="send" size={20} color="#1A1A1A" />
+          <Icon name="send" size={30} color="#3498db" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -183,19 +183,18 @@ const GeneralChatScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: 'black',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 5,
     backgroundColor: '#1E1E1E',
     marginTop: 10,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
   backButton: {
-    padding: 10,
+    padding: 5,
   },
   headerTitle: {
     color: '#FFFFFF',
@@ -239,7 +238,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'row',
-    paddingVertical: 5,
   },
   input: {
     flex: 1,
@@ -247,18 +245,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderBottomLeftRadius: 15,
     paddingHorizontal: 15,
-    paddingVertical: Platform.OS === 'android' ? 5 : 10,
+    paddingVertical: Platform.OS === 'android' ? 3 : 5,
     color: '#FFFFFF',
-    marginRight: 10,
+    marginRight: 5,
   },
   sendButton: {
     justifyContent: 'center',
-    alignItems: 'center',
-    width: 40,
-    height: 40,
-    backgroundColor: '#1E90FF',
-    borderTopRightRadius: 15,
-    borderBottomRightRadius: 15,
   },
   unreadBanner: {
     backgroundColor: '#1E90FF',

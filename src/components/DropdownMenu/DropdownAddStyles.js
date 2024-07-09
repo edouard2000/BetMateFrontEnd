@@ -7,7 +7,7 @@ const DropdownAddStyles = StyleSheet.create({
     left: '50%',
     transform: [{translateX: -100}],
     width: 200,
-    backgroundColor: '#151515',
+    backgroundColor: '#1A1A1A',
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},

@@ -16,16 +16,16 @@ const DropdownMenu = ({navigation, visible, setVisible}) => {
           setVisible(false);
           navigation.navigate('Profile');
         }}>
-        <Icon name="person-outline" size={20} color="#FFFFFF" />
+        <Icon name="person-outline" size={20} color="#1E88E5" />
         <Text style={DropdownMenuStyles.dropdownMenuItemText}>Profile</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={DropdownMenuStyles.dropdownMenuItem}
         onPress={() => {
           setVisible(false);
-          navigation.navigate('Dashboard');
+          navigation.navigate('UserDashboard');
         }}>
-        <Icon name="home-outline" size={20} color="#FFFFFF" />
+        <Icon name="home-outline" size={20} color="#1E88E5" />
         <Text style={DropdownMenuStyles.dropdownMenuItemText}>Dashboard</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -34,7 +34,7 @@ const DropdownMenu = ({navigation, visible, setVisible}) => {
           setVisible(false);
           navigation.navigate('MarketScreen');
         }}>
-        <Icon name="trending-up-outline" size={20} color="#FFFFFF" />
+        <Icon name="trending-up-outline" size={20} color="#1E88E5" />
 
         <Text style={DropdownMenuStyles.dropdownMenuItemText}>Market</Text>
       </TouchableOpacity>
