@@ -23,13 +23,11 @@ const UserStats = ({balance, following, followers}) => {
 const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    flex: 1,
   },
   stat: {
-    alignItems: 'center',
-    marginHorizontal: 10,
+    alignItems: 'flex-start',
+    marginRight: 20,
   },
   label: {
     color: '#AAAAAA',

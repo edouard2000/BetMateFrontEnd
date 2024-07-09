@@ -3,43 +3,48 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: '#000000', // Pure black
   },
   scrollView: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: '#000000', // Pure black
   },
   footer: {
     backgroundColor: '#000000',
     padding: 10,
     alignItems: 'center',
   },
+  sectionContainer: {
+    paddingVertical: 10,
+  },
   section: {
-    padding: 15,
-    marginVertical: 10,
-    backgroundColor: '#151515',
-    borderRadius: 10,
+    marginBottom: 20,
+    backgroundColor: '#000000',
     shadowColor: '#000',
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    marginHorizontal: 10,
+    padding: 10,
   },
-  personalInfoSection: {
-    backgroundColor: '#151515',
+  sectionHeader: {
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
   },
-  paymentMethodsSection: {
-    backgroundColor: '#151515',
-  },
-  settingsSection: {
-    backgroundColor: '#151515',
+  sectionContent: {
+    padding: 10,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 'bold',
-    color: '#E0E0E0',
-    fontFamily: 'Roboto-Bold',
-    marginBottom: 10,
+    color: '#1E88E5',
+    fontFamily: 'Roboto',
+  },
+  editText: {
+    fontSize: 12,
+    color: '#1E88E5',
   },
   infoRow: {
     flexDirection: 'row',
@@ -47,20 +52,28 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   infoLabel: {
-    fontSize: 14,
-    color: '#E0E0E0',
+    fontSize: 12,
+    color: 'white',
     flex: 2,
-    textAlign: 'left',
+    fontFamily: 'Roboto',
     marginLeft: 10,
-    fontFamily: 'Roboto-Medium',
   },
   infoValue: {
     fontSize: 12,
-    color: '#ffffff',
+    color: 'white',
     flex: 3,
-    textAlign: 'left',
+    fontFamily: 'Roboto',
+  },
+  verifyText: {
+    fontSize: 12,
+    color: '#1E88E5',
     marginLeft: 10,
-    fontFamily: 'Roboto-Regular',
+  },
+  verifyButton: {
+    fontSize: 12,
+    color: '#1E88E5',
+    marginLeft: 10,
+    textDecorationLine: 'underline',
   },
   settingsItem: {
     flexDirection: 'row',
@@ -68,8 +81,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   settingsText: {
-    fontSize: 14,
-    color: '#E0E0E0',
+    fontSize: 12,
+    color: 'white',
     marginLeft: 10,
     fontFamily: 'Roboto-Medium',
   },
@@ -84,7 +97,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,
-    marginHorizontal: 20,
   },
   dot: {
     width: 5,

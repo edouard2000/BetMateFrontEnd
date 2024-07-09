@@ -6,12 +6,12 @@ import UserStats from './UserStats';
 const UserProfileHeader = ({user}) => {
   return (
     <View style={styles.headerContainer}>
-      <UserAvatar profilePicture={user.profilePicture} name={user.name} />
       <UserStats
         balance={user.currentBalance}
         following={user.following}
         followers={user.followers}
       />
+      <UserAvatar profilePicture={user.profilePicture} />
     </View>
   );
 };
@@ -20,15 +20,15 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
     marginBottom: 20,
+    backgroundColor: '#000000',
     shadowColor: '#000',
     shadowOpacity: 0.8,
     shadowRadius: 2,
+    borderRadius: 10,
   },
 });
 
