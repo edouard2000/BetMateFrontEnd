@@ -1,51 +1,18 @@
-import { StyleSheet, Platform } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0A0A0A',
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    backgroundColor: '#151515',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
-    marginHorizontal: 10,
-  },
-  headerDetails: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#E0E0E0',
-    fontFamily: 'Roboto-Bold',
-  },
-  headerSubtitle: {
-    fontSize: 12,
-    color: '#E0E0E0',
-    fontFamily: 'Roboto-Regular',
-  },
-  profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 50,
-  },
-  headerIcon: {
-    marginHorizontal: 5,
-  },
   scrollView: {
     flex: 1,
     backgroundColor: '#0A0A0A',
+  },
+  footer: {
+    backgroundColor: '#000000',
+    padding: 10,
+    alignItems: 'center',
   },
   section: {
     padding: 15,
