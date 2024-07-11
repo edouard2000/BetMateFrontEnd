@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 25,
     marginHorizontal: 10,
   },
   card: {
