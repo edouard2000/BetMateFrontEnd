@@ -7,7 +7,7 @@ const UserProfileHeader = ({user}) => {
   return (
     <View style={styles.headerContainer}>
       <UserStats
-        balance={user.currentBalance}
+        Scores={user.Scores}
         following={user.following}
         followers={user.followers}
       />
@@ -22,13 +22,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 15,
-    paddingVertical: 10,
-    marginBottom: 20,
+    paddingVertical: 5,
+    marginBottom: 10,
     backgroundColor: '#000000',
     shadowColor: '#000',
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    borderRadius: 10,
   },
 });
 

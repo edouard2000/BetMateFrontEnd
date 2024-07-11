@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './ProfileScreenStyles';
 
-const SettingsSection = ({navigation, handleLogout}) => {
+const SettingsSection = ({ navigation, handleLogout }) => {
   return (
     <View style={[styles.section, styles.settingsSection]}>
       <View style={styles.sectionHeader}>
@@ -35,7 +35,7 @@ const SettingsSection = ({navigation, handleLogout}) => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.settingsItem} onPress={handleLogout}>
         <Icon name="log-out-outline" size={20} color="#1E88E5" />
-        <Text style={[styles.logout]}>Log Out</Text>
+        <Text style={styles.logout}>Log Out</Text>
       </TouchableOpacity>
     </View>
   );

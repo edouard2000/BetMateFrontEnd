@@ -12,7 +12,7 @@ const dummyUser = {
   about:
     'This is a dummy user profile for John Doe. He is an avid sports enthusiast and loves to place bets on various games.',
   dateJoined: 'Joined: January 1, 2020',
-  currentBalance: '$500.00',
+  Scores: 300,
   following: 350,
   followers: 500,
   mateCash: '$168.68',

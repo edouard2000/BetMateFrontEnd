@@ -3,11 +3,11 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000', // Pure black
+    backgroundColor: '#000000',
   },
   scrollView: {
     flex: 1,
-    backgroundColor: '#000000', // Pure black
+    backgroundColor: '#000000',
   },
   footer: {
     backgroundColor: '#000000',
@@ -19,15 +19,15 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 20,
-    backgroundColor: '#000000',
+    backgroundColor: '#0D0D0D',
+    borderRadius: 10,
+    padding: 15,
     shadowColor: '#000',
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    padding: 10,
   },
   sectionHeader: {
-    padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -40,10 +40,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     color: '#1E88E5',
-    fontFamily: 'Roboto',
   },
   editText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#1E88E5',
   },
   infoRow: {
@@ -52,25 +51,23 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   infoLabel: {
-    fontSize: 12,
-    color: 'white',
+    fontSize: 10,
+    color: '#CCCCCC',
     flex: 2,
-    fontFamily: 'Roboto',
     marginLeft: 10,
   },
   infoValue: {
-    fontSize: 12,
-    color: 'white',
+    fontSize: 8,
+    color: '#FFFFFF',
     flex: 3,
-    fontFamily: 'Roboto',
   },
   verifyText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#1E88E5',
     marginLeft: 10,
   },
   verifyButton: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#1E88E5',
     marginLeft: 10,
     textDecorationLine: 'underline',
@@ -81,28 +78,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   settingsText: {
-    fontSize: 12,
-    color: 'white',
+    fontSize: 10,
+    color: '#CCCCCC',
     marginLeft: 10,
-    fontFamily: 'Roboto-Medium',
   },
   logout: {
     fontSize: 14,
     color: '#1E88E5',
     marginLeft: 10,
-    fontFamily: 'Roboto-Medium',
-  },
-  divider: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  dot: {
-    width: 5,
-    height: 5,
-    borderRadius: 5,
-    backgroundColor: '#1E88E5',
   },
   horizontalLine: {
     width: '80%',

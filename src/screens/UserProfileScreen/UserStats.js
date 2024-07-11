@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-const UserStats = ({balance, following, followers}) => {
+const UserStats = ({ Scores, following, followers }) => {
   return (
     <View style={styles.statsContainer}>
       <View style={styles.stat}>
-        <Text style={styles.label}>Balance</Text>
-        <Text style={styles.value}>{balance}</Text>
+        <Text style={styles.label}>Scores</Text>
+        <Text style={styles.value}>{Scores}</Text>
       </View>
       <View style={styles.stat}>
         <Text style={styles.label}>Following</Text>
@@ -24,14 +24,15 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 10,
   },
   stat: {
     alignItems: 'flex-start',
     marginRight: 20,
   },
   label: {
-    color: '#AAAAAA',
-    fontSize: 14,
+    color: '#CCCCCC',
+    fontSize: 12,
   },
   value: {
     color: '#1E88E5',

@@ -1,2 +1,2 @@
-import UserDashboard from "./UserDashboard";
-export default UserDashboard;
+import DashboardScreen from './DashboardScreen';
+export default DashboardScreen;

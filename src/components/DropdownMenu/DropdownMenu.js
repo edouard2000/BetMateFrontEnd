@@ -23,7 +23,7 @@ const DropdownMenu = ({navigation, visible, setVisible}) => {
         style={DropdownMenuStyles.dropdownMenuItem}
         onPress={() => {
           setVisible(false);
-          navigation.navigate('UserDashboard');
+          navigation.navigate('DashboardScreen');
         }}>
         <Icon name="home-outline" size={20} color="#1E88E5" />
         <Text style={DropdownMenuStyles.dropdownMenuItemText}>Dashboard</Text>

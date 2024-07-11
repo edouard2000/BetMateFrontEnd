@@ -1,15 +1,14 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './ProfileScreenStyles';
 
-const PaymentMethodsSection = ({user, navigation}) => {
+const PaymentMethodsSection = ({ user, navigation }) => {
   return (
     <View style={[styles.section, styles.paymentMethodsSection]}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Payment Methods</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('EditPaymentMethods')}>
+        <TouchableOpacity onPress={() => navigation.navigate('EditPaymentMethods')}>
           <Text style={styles.editText}>Edit</Text>
         </TouchableOpacity>
       </View>

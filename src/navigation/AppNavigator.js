@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setUserProfile} from '../store/userSlice';
 
 import MainScreen from '../screens/MainScreen';
-import UserDashboard from '../screens/DashboardScreen';
+import DashboardScreen from '../screens/DashboardScreen/DashboardScreen';
 import ProfileScreen from '../screens/UserProfileScreen';
 import SocialScreen from '../screens/SocialScreen';
 import BetListScreen from '../screens/BetListScreen';
@@ -55,7 +55,7 @@ const AppNavigator = () => {
         {isAuthenticated ? (
           <>
             <Stack.Screen name="Main" component={MainScreen} />
-            <Stack.Screen name="UserDashboard" component={UserDashboard} />
+            <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="SocialScreen" component={SocialScreen} />
             <Stack.Screen name="BetList" component={BetListScreen} />

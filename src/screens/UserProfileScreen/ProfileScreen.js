@@ -27,17 +27,7 @@ const ProfileScreen = ({navigation}) => {
       <ScrollView style={styles.scrollView}>
         <View style={styles.sectionContainer}>
           <PersonalInfoSection user={user} navigation={navigation} />
-          <View style={styles.divider}>
-            <View style={styles.dot} />
-            <View style={styles.horizontalLine} />
-            <View style={styles.dot} />
-          </View>
           <PaymentMethodsSection user={user} navigation={navigation} />
-          <View style={styles.divider}>
-            <View style={styles.dot} />
-            <View style={styles.horizontalLine} />
-            <View style={styles.dot} />
-          </View>
           <SettingsSection
             navigation={navigation}
             handleLogout={handleLogout}
@@ -46,7 +36,7 @@ const ProfileScreen = ({navigation}) => {
       </ScrollView>
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('Main')}>
-          <Icon name="arrow-undo-outline" size={30} color="#3498db" />
+          <Icon name="arrow-undo-outline" size={30} color="#1E88E5" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
