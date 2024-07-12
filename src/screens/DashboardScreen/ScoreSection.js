@@ -38,9 +38,9 @@ const ScoreSection = ({score}) => {
             x="50"
             y="60"
             textAnchor="middle"
-            dy="0.3em"
-            fontSize="10"
-            fill="#1E88E5"
+            dy="0.7em"
+            fontSize="8"
+            fill="white"
             transform="rotate(90, 50, 50)">
             Score
           </SvgText>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 5,
+    marginVertical: 25,
   },
 });
 

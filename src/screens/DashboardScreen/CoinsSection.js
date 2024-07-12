@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 const CoinSection = () => {
   return (
@@ -54,25 +54,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   card: {
-    backgroundColor: '#000000',
-    paddingVertical: 5,
-    borderRadius: 10,
+    backgroundColor: '#1A1A1A',
+    paddingVertical: 25,
+    borderRadius: 15,
     width: '48%',
     alignItems: 'center',
-    shadowColor: '#1E88E5',
-    shadowOpacity: 0.4,
-    shadowRadius: 30,
-    elevation: 70,
-    borderColor: '#3498DB',
   },
   coinText: {
     color: '#CCCCCC',
-    fontSize: 12,
+    fontSize: 13,
     marginBottom: 15,
   },
   coinValue: {
-    color: '#FFFFFF',
-    fontSize: 15,
+    color: '#1E88E5',
+    fontSize: 18,
     fontWeight: 'bold',
     marginTop: 5,
   },
@@ -82,7 +77,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   smallButton: {
-    paddingVertical: 6,
+    paddingVertical: 10,
     paddingHorizontal: 6,
     borderRadius: 5,
     alignItems: 'center',
@@ -104,6 +99,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: 10,
+    fontWeight: 'bold',
   },
 });
 
