@@ -15,6 +15,7 @@ import {fetchUnreadCount} from '../../store/unreadMessageSlice';
 import CreateBetModal from '../MainScreen/CreateBet/CreateBetModal';
 import styles from './styles';
 import bets from './bet';
+import BetDetailInfoScreen from '../../components/BetInformation/BetDetailInfoScreen';
 
 const {width} = Dimensions.get('window');
 
@@ -92,7 +93,7 @@ const MainScreen = () => {
         navigation={navigation}
         visible={addDropdownVisible}
         setVisible={setAddDropdownVisible}
-        toggleModal={toggleModal} 
+        toggleModal={toggleModal}
       />
       <CreateBetModal visible={modalVisible} onClose={toggleModal} />
     </SafeAreaView>
