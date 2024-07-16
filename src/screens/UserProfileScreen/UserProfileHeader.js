@@ -22,12 +22,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 15,
-    paddingVertical: 5,
+    paddingVertical: 10,
     marginBottom: 10,
-    backgroundColor: '#000000',
-    shadowColor: '#000',
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    backgroundColor: '#0D0D0D',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
 });
 

@@ -4,11 +4,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './ProfileScreenStyles';
 
 const PersonalInfoSection = ({ user, navigation }) => {
-  const isVerified = false; // Change this value to test the "Verified" or "Verify" text
+  const isVerified = false; 
 
   return (
     <View style={[styles.section, styles.personalInfoSection]}>
-      <View style={styles.sectionHeader}>
+      <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Personal Information</Text>
         <TouchableOpacity onPress={() => navigation.navigate('EditPersonalInfo')}>
           <Text style={styles.editText}>Edit</Text>

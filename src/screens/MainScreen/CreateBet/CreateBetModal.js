@@ -1,4 +1,3 @@
-// components/CreateBetModal.js
 import React, {useState} from 'react';
 import {
   View,
@@ -14,7 +13,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 const CreateBetModal = ({visible, onClose}) => {
   const navigation = useNavigation();
   const route = useRoute();
-  const mode = route.params?.mode || 'bet'; // Default to 'bet' if not provided
+  const mode = route.params?.mode || 'bet';
 
   const [step, setStep] = useState(1);
   const [betName, setBetName] = useState('');
@@ -43,7 +42,12 @@ const CreateBetModal = ({visible, onClose}) => {
     <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Create Bet</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.modalTitle}>Create Bet</Text>
+            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+              <Icon name="close-outline" size={30} color="#3498db" />
+            </TouchableOpacity>
+          </View>
           {step === 1 && (
             <TextInput
               placeholder="Bet Name"
@@ -63,6 +67,14 @@ const CreateBetModal = ({visible, onClose}) => {
               keyboardType="numeric"
             />
           )}
+          <View style={styles.progressContainer}>
+            <View
+              style={[styles.progressStep, step >= 1 && styles.progressActive]}
+            />
+            <View
+              style={[styles.progressStep, step >= 2 && styles.progressActive]}
+            />
+          </View>
           <View style={step > 1 ? styles.buttonContainer : styles.buttonSingle}>
             {step > 1 && (
               <TouchableOpacity style={styles.button} onPress={handleBack}>
@@ -73,9 +85,6 @@ const CreateBetModal = ({visible, onClose}) => {
               <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Icon name="close-outline" size={30} color="#FFFFFF" />
-          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -91,16 +100,26 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '80%',
-    backgroundColor: '#151515',
-    borderRadius: 10,
+    backgroundColor: '#1E1E1E',
+    borderRadius: 20,
     padding: 20,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    width: '100%',
+    marginBottom: 20,
   },
   modalTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 20,
+    color: '#3498db',
   },
   input: {
     width: '100%',
@@ -109,8 +128,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 20,
-    paddingLeft: 20,
+    paddingLeft: 15,
     color: '#FFFFFF',
+    backgroundColor: '#2C2C2C',
+  },
+  progressContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  progressStep: {
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    backgroundColor: '#555',
+    marginHorizontal: 5,
+  },
+  progressActive: {
+    backgroundColor: '#3498db',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -122,11 +158,10 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: 'rgba(52, 152, 219, 0.3)',
-    paddingVertical: 10,
+    backgroundColor: '#3498db',
+    paddingVertical: 3,
     borderRadius: 25,
-    marginTop: 10,
-    width: '45%',
+    width: '35%',
     alignItems: 'center',
   },
   buttonText: {
@@ -135,9 +170,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   closeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
+    marginHorizontal: 5,
   },
 });
 

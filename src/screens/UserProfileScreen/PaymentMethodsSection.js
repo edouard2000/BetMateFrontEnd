@@ -6,7 +6,7 @@ import styles from './ProfileScreenStyles';
 const PaymentMethodsSection = ({ user, navigation }) => {
   return (
     <View style={[styles.section, styles.paymentMethodsSection]}>
-      <View style={styles.sectionHeader}>
+      <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Payment Methods</Text>
         <TouchableOpacity onPress={() => navigation.navigate('EditPaymentMethods')}>
           <Text style={styles.editText}>Edit</Text>

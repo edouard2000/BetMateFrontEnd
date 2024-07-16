@@ -19,13 +19,30 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 20,
-    backgroundColor: '#0D0D0D',
+    backgroundColor: '#121212',
     borderRadius: 10,
     padding: 15,
     shadowColor: '#000',
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+  },
+  sectionTitleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#1E88E5',
+    textAlign: 'left',
+    paddingLeft: 5,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -35,11 +52,6 @@ const styles = StyleSheet.create({
   },
   sectionContent: {
     padding: 10,
-  },
-  sectionTitle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#1E88E5',
   },
   editText: {
     fontSize: 14,
@@ -51,13 +63,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   infoLabel: {
-    fontSize: 10,
+    fontSize: 13,
     color: '#CCCCCC',
     flex: 2,
     marginLeft: 10,
   },
   infoValue: {
-    fontSize: 8,
+    fontSize: 12,
     color: '#FFFFFF',
     flex: 3,
   },
@@ -78,7 +90,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   settingsText: {
-    fontSize: 10,
+    fontSize: 12,
     color: '#CCCCCC',
     marginLeft: 10,
   },

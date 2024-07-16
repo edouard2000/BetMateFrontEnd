@@ -6,7 +6,7 @@ import styles from './ProfileScreenStyles';
 const SettingsSection = ({ navigation, handleLogout }) => {
   return (
     <View style={[styles.section, styles.settingsSection]}>
-      <View style={styles.sectionHeader}>
+      <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Settings</Text>
       </View>
       <TouchableOpacity
