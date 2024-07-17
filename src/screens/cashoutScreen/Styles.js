@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0D0D0D',
+    backgroundColor: 'black',
   },
   filterContainer: {
     flexDirection: 'row',
@@ -108,7 +108,7 @@ export default StyleSheet.create({
   footerNav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    paddingVertical: 8,
   },
   switchButton: {
     paddingVertical: 10,

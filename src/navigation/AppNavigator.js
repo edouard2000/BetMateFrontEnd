@@ -23,6 +23,7 @@ import BetDetailInfoScreen from '../components/BetInformation/BetDetailInfoScree
 import CashoutScreen from '../screens/cashoutScreen/CashoutScreen';
 import BetListScreen from '../screens/BetFixtureList/BetListScreen';
 import BetsParticipatedScreen from '../screens/betting/BetsParticipatedScreen';
+import MyBets from '../screens/MyBets/MyBets';
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,7 @@ const AppNavigator = () => {
               name="GeneralChatScreen"
               component={GeneralChatScreen}
             />
+            <Stack.Screen name="MyBets" component={MyBets} />
             <Stack.Screen name="CashoutScreen" component={CashoutScreen} />
             <Stack.Screen
               name="P2PBettingScreen"

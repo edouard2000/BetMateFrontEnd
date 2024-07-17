@@ -10,7 +10,7 @@ const ActivityManage = ({navigation}) => {
           <Text style={styles.title}>Bet</Text>
           <Text style={styles.description}>Manage your bets</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('#')}>
+        <TouchableOpacity onPress={() => navigation.navigate('MyBets')}>
           <Icon name="chevron-forward-outline" size={30} color="#3498db" />
         </TouchableOpacity>
       </View>
