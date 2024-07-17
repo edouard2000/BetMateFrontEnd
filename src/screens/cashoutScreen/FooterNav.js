@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './Styles';
 
 const FooterNav = ({navigation, requestType, setRequestType}) => (
   <View style={styles.footerNav}>
     <TouchableOpacity onPress={() => navigation.navigate('DashboardScreen')}>
-      <Icon name="arrow-undo-outline" size={20} color="#3498db" />
+      <Text style={styles.switchText}>Back</Text>
     </TouchableOpacity>
     <TouchableOpacity
       onPress={() => setRequestType('sent')}

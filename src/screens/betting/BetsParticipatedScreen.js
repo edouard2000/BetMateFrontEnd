@@ -92,7 +92,7 @@ const BetsParticipatedScreen = ({navigation}) => {
         ))}
       </ScrollView>
       <View style={styles.footerContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('UserDashboard')}>
+        <TouchableOpacity onPress={() => navigation.navigate('DashboardScreen')}>
           <Icon name="arrow-undo-outline" size={30} color="#3498db" />
         </TouchableOpacity>
       </View>
