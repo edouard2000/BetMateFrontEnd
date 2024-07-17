@@ -10,7 +10,7 @@ const ActivityManage = ({navigation}) => {
           <Text style={styles.title}>Bet</Text>
           <Text style={styles.description}>Manage your bets</Text>
         </View>
-        <TouchableOpacity onPress={() => alert('Navigate to Bets')}>
+        <TouchableOpacity onPress={() => navigation.navigate('#')}>
           <Icon name="chevron-forward-outline" size={30} color="#3498db" />
         </TouchableOpacity>
       </View>
@@ -19,7 +19,8 @@ const ActivityManage = ({navigation}) => {
           <Text style={styles.title}>Betting</Text>
           <Text style={styles.description}>Manage your bettings</Text>
         </View>
-        <TouchableOpacity onPress={() => alert('Navigate to Betting')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('BetsParticipatedScreen')}>
           <Icon name="chevron-forward-outline" size={30} color="#3498db" />
         </TouchableOpacity>
       </View>
@@ -28,7 +29,7 @@ const ActivityManage = ({navigation}) => {
           <Text style={styles.title}>Cash Out</Text>
           <Text style={styles.description}>Manage your cash outs</Text>
         </View>
-        <TouchableOpacity onPress={() => alert('Navigate to Cash Out')}>
+        <TouchableOpacity onPress={() => navigation.navigate('CashoutScreen')}>
           <Icon name="chevron-forward-outline" size={30} color="#3498db" />
         </TouchableOpacity>
       </View>

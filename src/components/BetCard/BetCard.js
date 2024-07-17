@@ -12,6 +12,10 @@ const BetCard = ({bet}) => {
     navigation.navigate('BetDetail', {bet});
   };
 
+  const handleBetNow = () => {
+    navigation.navigate('BetListScreen');
+  };
+
   return (
     <TouchableOpacity onPress={handleCardPress} style={styles.cardContainer}>
       <View style={styles.headerSection}>
@@ -62,7 +66,7 @@ const BetCard = ({bet}) => {
         </View>
       </View>
       <View style={styles.footerSection}>
-        <TouchableOpacity style={styles.betNowButton} onPress={handleCardPress}>
+        <TouchableOpacity style={styles.betNowButton} onPress={handleBetNow}>
           <Text style={styles.betNowButtonText}>Bet Now</Text>
         </TouchableOpacity>
         <View style={styles.footerIcons}>

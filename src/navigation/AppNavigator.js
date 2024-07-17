@@ -10,7 +10,6 @@ import MainScreen from '../screens/MainScreen';
 import DashboardScreen from '../screens/DashboardScreen/DashboardScreen';
 import ProfileScreen from '../screens/UserProfileScreen';
 import SocialScreen from '../screens/SocialScreen';
-import BetListScreen from '../screens/BetListScreen';
 import Chat from '../screens/Chat';
 import GeneralChatScreen from '../screens/GeneralChatScreen';
 import P2PBettingScreen from '../screens/P2P/P2PBettingScreen';
@@ -21,12 +20,15 @@ import EmailVerificationScreen from '../screens/EmailVerificationScreen';
 import AddFixtureScreen from '../screens/MainScreen/CreateBet/AddFixtureScreen';
 import LeagueDetailScreen from '../screens/MainScreen/CreateBet/LeagueDetailScreen';
 import BetDetailInfoScreen from '../components/BetInformation/BetDetailInfoScreen';
+import CashoutScreen from '../screens/cashoutScreen/CashoutScreen';
+import BetListScreen from '../screens/BetFixtureList/BetListScreen';
+import BetsParticipatedScreen from '../screens/betting/BetsParticipatedScreen';
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const dispatch = useDispatch();
-  const {isAuthenticated, profile} = useSelector(state => state.user);
+  const {isAuthenticated} = useSelector(state => state.user);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -62,6 +64,7 @@ const AppNavigator = () => {
             <Stack.Screen name="BetList" component={BetListScreen} />
             <Stack.Screen name="Chat" component={Chat} />
             <Stack.Screen name="BetDetail" component={BetDetailInfoScreen} />
+
             <Stack.Screen
               name="LeagueDetailScreen"
               component={LeagueDetailScreen}
@@ -74,11 +77,14 @@ const AppNavigator = () => {
               name="GeneralChatScreen"
               component={GeneralChatScreen}
             />
+            <Stack.Screen name="CashoutScreen" component={CashoutScreen} />
             <Stack.Screen
               name="P2PBettingScreen"
               component={P2PBettingScreen}
             />
+            <Stack.Screen name="BetListScreen" component={BetListScreen} />
             <Stack.Screen name="MarketScreen" component={MarketScreen} />
+            <Stack.Screen name="BetsParticipatedScreen" component={BetsParticipatedScreen} />
           </>
         ) : (
           <>
