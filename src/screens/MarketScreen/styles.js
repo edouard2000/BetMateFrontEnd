@@ -99,14 +99,34 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   footer: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
+    paddingVertical: 10,
     backgroundColor: '#0D0D0D',
   },
-  homeButton: {
-    padding: 10,
+  footerButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+    backgroundColor: '#222222',
+    marginHorizontal: 5,
+  },
+  backButton: {
+    backgroundColor: '#1A1A1A',
+  },
+  withdrawButton: {
+    backgroundColor: '#1A1A1A',
+  },
+  depositButton: {
+    backgroundColor: '#1E88E5',
+  },
+  footerButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    marginLeft: 5,
   },
 });
 

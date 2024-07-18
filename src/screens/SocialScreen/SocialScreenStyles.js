@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   navContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 2,
     backgroundColor: '#151515',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -16,8 +15,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     elevation: 5,
-    borderWidth: 1,
-    borderColor: '#1E88E5',
   },
   navButton: {
     paddingBottom: 6,
@@ -38,16 +35,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#1A1A1A',
     borderRadius: 10,
-    marginHorizontal: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    marginHorizontal: 10,
+    paddingHorizontal: 15,
+    height: 40,
     marginBottom: 20,
-    marginTop: 10,
   },
   searchInput: {
     flex: 1,
     color: '#E0E0E0',
-    fontSize: 16,
+    fontSize: 14,
     marginLeft: 10,
   },
   contentContainer: {

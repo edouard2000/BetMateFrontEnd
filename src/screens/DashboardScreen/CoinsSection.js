@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const CoinSection = () => {
   return (
@@ -12,12 +13,14 @@ const CoinSection = () => {
             <TouchableOpacity
               style={[styles.smallButton, styles.withdrawButton]}
               onPress={() => alert('Withdraw MateCash')}>
-              <Text style={styles.buttonText}>Withdraw</Text>
+              <Icon name="chevron-down-outline" size={15} color="#1E88E5" />
+              <Text style={styles.buttonText}>Claim</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.smallButton, styles.rechargeButton]}
               onPress={() => alert('Recharge MateCash')}>
-              <Text style={styles.buttonText}>Recharge</Text>
+              <Icon name="chevron-up-outline" size={12} color="#FFFFFF" />
+              <Text style={styles.buttonText}>Deposit</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -28,11 +31,13 @@ const CoinSection = () => {
             <TouchableOpacity
               style={[styles.smallButton, styles.buyButton]}
               onPress={() => alert('Buy MateCoins')}>
+              <Icon name="chevron-up-outline" size={15} color="#1E88E5" />
               <Text style={styles.buttonText}>Buy</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.smallButton, styles.convertButton]}
               onPress={() => alert('Convert MateCoins')}>
+              <Icon name="chevron-down-outline" size={15} color="#FFFFFF" />
               <Text style={styles.buttonText}>Convert</Text>
             </TouchableOpacity>
           </View>
@@ -51,10 +56,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 10,
     marginBottom: 25,
-    marginHorizontal: 10,
+    paddingHorizontal: 5,
   },
   card: {
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#0D0D0D',
     paddingVertical: 25,
     borderRadius: 15,
     width: '48%',
@@ -77,29 +82,32 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   smallButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 6,
-    borderRadius: 5,
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 9,
+    borderRadius: 5,
     flex: 1,
-    marginHorizontal: 10,
+    marginHorizontal: 8,
   },
   rechargeButton: {
     backgroundColor: '#1E88E5',
   },
   withdrawButton: {
-    backgroundColor: 'rgba(128, 128, 128, 0.5)',
+    backgroundColor: '#161616',
   },
   buyButton: {
-    backgroundColor: 'rgba(128, 128, 128, 0.5)',
+    backgroundColor: '#161616',
   },
   convertButton: {
     backgroundColor: '#1E88E5',
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 'bold',
+    marginLeft: 5,
   },
 });
 

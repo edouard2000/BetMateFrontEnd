@@ -9,11 +9,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 10,
     position: 'relative',
-    backgroundColor: '#121212',
+    backgroundColor: '#1A1A1A',
     borderRadius: 10,
     padding: 10,
-    borderColor: '#1E88E5',
-    borderWidth: 0.5,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -50,10 +48,8 @@ const styles = StyleSheet.create({
   predictionItem: {
     borderRadius: 10,
     padding: 10,
-    backgroundColor: '#151515',
+    backgroundColor: 'black',
     marginBottom: 10,
-    borderWidth: 0.4,
-    borderColor: '#1E88E5',
   },
   gameInfo: {
     flexDirection: 'row',

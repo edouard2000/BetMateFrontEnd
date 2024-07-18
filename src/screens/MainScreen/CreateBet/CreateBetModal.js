@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '80%',
-    backgroundColor: '#1E1E1E',
+    backgroundColor: '#161616',
     borderRadius: 20,
     padding: 20,
     shadowColor: '#000',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingLeft: 15,
     color: '#FFFFFF',
-    backgroundColor: '#2C2C2C',
+    backgroundColor: '#161616',
   },
   progressContainer: {
     flexDirection: 'row',

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: 200,
     margin: 10,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#0D0D0D',
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: Platform.OS === 'android' ? 5 : 5},
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#151515',
+    backgroundColor: '#0D0D0D',
   },
   avatar: {
     width: 30,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   bodySection: {
     padding: 10,
-    backgroundColor: '#151515',
+    backgroundColor: '#0D0D0D',
   },
   bodyItem: {
     flexDirection: 'row',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 6,
-    backgroundColor: '#151515',
+    backgroundColor: '#0D0D0D',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },

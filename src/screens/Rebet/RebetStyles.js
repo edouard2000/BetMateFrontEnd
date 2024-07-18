@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   betCard: {
     marginHorizontal: 10,
     marginVertical: 10,
-    backgroundColor: '#121212',
+    backgroundColor: '#1A1A1A',
     borderRadius: 10,
     padding: 15,
     elevation: 5,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   teamItem: {
-    backgroundColor: '#151515',
+    backgroundColor: 'black',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   betTerm: {
-    fontSize: 10,
+    fontSize: 14,
     color: '#1E88E5',
     fontWeight: 'bold',
     paddingHorizontal: 6,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 10,
     padding: 8,
-    backgroundColor: '#121212',
+    backgroundColor: '#1A1A1A',
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
   },
