@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 5,
-    backgroundColor: '#1e1e1e',
+    backgroundColor: '#0D0D0D',
   },
   activeFilterButton: {
     backgroundColor: '#1E88E5',
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   card: {
-    backgroundColor: '#121212',
+    backgroundColor: '#0D0D0D',
     borderRadius: 10,
     padding: 15,
     marginVertical: 10,

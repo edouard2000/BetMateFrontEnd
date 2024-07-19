@@ -3,12 +3,11 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0D0D0D',
+    backgroundColor: 'black',
   },
   betCard: {
-    marginHorizontal: 10,
     marginVertical: 10,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#0D0D0D',
     borderRadius: 10,
     padding: 15,
     elevation: 5,
@@ -39,6 +38,7 @@ const styles = StyleSheet.create({
   time: {
     fontSize: 12,
     color: '#B0B0B0',
+    textAlign: 'left',
   },
   status: {
     fontSize: 10,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   teamItem: {
-    backgroundColor: 'black',
+    backgroundColor: '#0D0D0D',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
@@ -78,11 +78,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 5,
   },
+  teamContainer: {
+    alignItems: 'center',
+  },
   teamAvatar: {
     width: 20,
     height: 20,
     borderRadius: 10,
-    marginHorizontal: 15,
+  },
+  teamName: {
+    fontSize: 12,
+    color: '#E0E0E0',
+    fontWeight: 'bold',
+    marginTop: 5,
+    textAlign: 'center',
+  },
+  vsText: {
+    fontSize: 14,
+    color: '#E0E0E0',
+    fontWeight: 'bold',
+    marginHorizontal: 5,
   },
   gameText: {
     fontSize: 12,
@@ -91,14 +106,10 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
   },
-  gameTimeContainer: {
-    alignItems: 'center',
-    marginTop: 5,
-  },
   gameTime: {
     fontSize: 10,
     color: '#B0B0B0',
-    textAlign: 'center',
+    textAlign: 'left',
   },
   betTerm: {
     fontSize: 14,
@@ -112,14 +123,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
-    padding: 8,
+  },
+  oddBox: {
     backgroundColor: '#1A1A1A',
-    borderBottomEndRadius: 10,
-    borderBottomStartRadius: 10,
+    borderRadius: 10,
+    padding: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '30%',
   },
   oddText: {
     fontSize: 12,
     color: '#E0E0E0',
+    fontWeight: 'bold',
+  },
+  oddValue: {
+    fontSize: 12,
+    color: '#1E88E5',
     fontWeight: 'bold',
   },
   footer: {
@@ -127,7 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingTop: 10,
     marginTop: 10,
-    backgroundColor: '#151515',
+    backgroundColor: '#0D0D0D',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     padding: 10,
@@ -144,7 +165,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
   },
   dot: {
     width: 5,
@@ -154,9 +174,15 @@ const styles = StyleSheet.create({
   },
   horizontalLine: {
     width: '80%',
-    height: 2,
+    height: 1,
     backgroundColor: '#1E88E5',
     marginHorizontal: 5,
+  },
+  blackHorizontalLine: {
+    width: '100%',
+    height: 2,
+    backgroundColor: '#000',
+    marginVertical: 5,
   },
 });
 

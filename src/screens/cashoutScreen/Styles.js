@@ -16,7 +16,7 @@ export default StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 5,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#0D0D0D',
   },
   activeFilterButton: {
     backgroundColor: '#1E88E5',
@@ -37,7 +37,7 @@ export default StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 15,
     marginVertical: 8,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#0D0D0D',
     borderRadius: 15,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},

@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   card: {
-    backgroundColor: '#121212',
+    backgroundColor: '#0D0D0D',
     borderRadius: 10,
     padding: 15,
     marginVertical: 10,
@@ -79,7 +79,7 @@ export default StyleSheet.create({
   bodyLabel: {
     fontSize: 14,
     color: '#FFFFFF',
-    marginRight: 20, // Add margin to space out the labels
+    marginRight: 20, 
   },
   bodyValue: {
     color: '#1E88E5',

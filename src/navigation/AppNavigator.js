@@ -24,6 +24,7 @@ import CashoutScreen from '../screens/cashoutScreen/CashoutScreen';
 import BetListScreen from '../screens/BetFixtureList/BetListScreen';
 import BetsParticipatedScreen from '../screens/betting/BetsParticipatedScreen';
 import MyBets from '../screens/MyBets/MyBets';
+import ManagePredictionsScreen from '../screens/managePredictions/ManagePredictionsScreen';
 
 const Stack = createStackNavigator();
 
@@ -87,6 +88,7 @@ const AppNavigator = () => {
             <Stack.Screen name="BetListScreen" component={BetListScreen} />
             <Stack.Screen name="MarketScreen" component={MarketScreen} />
             <Stack.Screen name="BetsParticipatedScreen" component={BetsParticipatedScreen} />
+            <Stack.Screen name="ManagePredictionsScreen" component={ManagePredictionsScreen} />
           </>
         ) : (
           <>

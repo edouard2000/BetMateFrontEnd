@@ -38,7 +38,8 @@ const ActivityManage = ({navigation}) => {
           <Text style={styles.title}>Predictions</Text>
           <Text style={styles.description}>Manage your predictions</Text>
         </View>
-        <TouchableOpacity onPress={() => alert('Navigate to Predictions')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ManagePredictionsScreen')}>
           <Icon name="chevron-forward-outline" size={30} color="#3498db" />
         </TouchableOpacity>
       </View>

@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0D0D0D',
+    backgroundColor: 'black',
   },
   filterContainer: {
     flexDirection: 'row',
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 5,
-    backgroundColor: '#1e1e1e',
+    backgroundColor: '#0D0D0D',
   },
   activeFilterButton: {
     backgroundColor: '#1E88E5',

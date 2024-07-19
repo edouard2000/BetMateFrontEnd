@@ -6,19 +6,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   predictionCardContainer: {
+    marginHorizontal: 10,
     marginVertical: 10,
     position: 'relative',
     backgroundColor: '#0D0D0D',
     borderRadius: 10,
-    padding: 10,
+    paddingHorizontal: 10,
   },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   avatar: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     borderRadius: 20,
     marginRight: 10,
   },
@@ -42,17 +43,19 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   cardBody: {
-    marginTop: 10,
+    marginTop: 5,
   },
   predictionItem: {
     borderRadius: 10,
-    padding: 10,
     backgroundColor: '#0D0D0D',
     marginBottom: 10,
   },
   gameInfo: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  teamContainer: {
     alignItems: 'center',
   },
   gameText: {
@@ -60,14 +63,19 @@ const styles = StyleSheet.create({
     color: '#E0E0E0',
     fontWeight: 'bold',
     fontStyle: 'italic',
-    flex: 1,
-    textAlign: 'center',
+    marginTop: 5,
+  },
+  vsText: {
+    fontSize: 16,
+    color: '#E0E0E0',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    marginHorizontal: 10,
   },
   teamAvatar: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    marginHorizontal: 20,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   resultText: {
     fontSize: 14,
@@ -75,7 +83,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 5,
     overflow: 'hidden',
-    marginRight: 10,
     fontStyle: 'italic',
   },
   statusText: {
@@ -84,12 +91,12 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     flex: 1,
     textAlign: 'right',
+    marginTop: 5,
   },
   gameTime: {
     fontSize: 12,
     color: '#757575',
     marginTop: 5,
-    marginBottom: 10,
     fontStyle: 'italic',
     textAlign: 'left',
   },
@@ -161,18 +168,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingTop: 10,
     marginTop: 15,
-    borderTopWidth: 2,
+    borderTopWidth: 1,
     borderColor: '#000',
     backgroundColor: '#0D0D0D',
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
     padding: 10,
-  },
-  blackHorizontalLine: {
-    width: '100%',
-    height: 2,
-    backgroundColor: '#000',
-    marginVertical: 5,
   },
   footerButton: {
     flexDirection: 'row',
@@ -190,7 +191,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#0D0D0D',
   },
   filterButton: {
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
     borderRadius: 5,
     backgroundColor: '#0D0D0D',
   },
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-
+    marginVertical: 10,
   },
   dot: {
     width: 5,
@@ -220,7 +222,7 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 1,
     backgroundColor: '#1E88E5',
-    marginVertical: 5,
+    marginHorizontal: 5,
   },
   bottomNav: {
     flexDirection: 'row',
