@@ -1,11 +1,8 @@
-// components/BetRows.js
 import React from 'react';
-// Import Dimensions from 'react-native'
 import {View, ScrollView, Dimensions} from 'react-native';
 import BetCard from '../../components/BetCard/BetCard';
 import styles from './styles';
 
-// Get window width from Dimensions
 const {width} = Dimensions.get('window');
 
 const BetRows = ({bets, handleScroll, activePage, navigation}) => {
@@ -16,7 +13,8 @@ const BetRows = ({bets, handleScroll, activePage, navigation}) => {
         pagingEnabled
         onScroll={event => handleScroll(event, rowIndex)}
         scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}>
         {bets.map((bet, index) => (
           <View key={index} style={styles.betCardContainer}>
             <BetCard

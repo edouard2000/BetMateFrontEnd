@@ -18,6 +18,8 @@ const bets = [
     cashOut: true,
     logo: null,
     isAdmin: true,
+    clonedCount: 20,
+    visitedCount: 300,
   },
   {
     name: 'Bet 2',
@@ -38,6 +40,8 @@ const bets = [
     cashOut: true,
     logo: null,
     isAdmin: false,
+    clonedCount: 15,
+    visitedCount: 250,
   },
   {
     name: 'Bet 3',
@@ -58,6 +62,8 @@ const bets = [
     cashOut: false,
     logo: null,
     isAdmin: false,
+    clonedCount: 18,
+    visitedCount: 220,
   },
   {
     name: 'Bet 4',
@@ -78,6 +84,8 @@ const bets = [
     cashOut: true,
     logo: null,
     isAdmin: false,
+    clonedCount: 25,
+    visitedCount: 310,
   },
   {
     name: 'Bet 5',
@@ -98,6 +106,8 @@ const bets = [
     cashOut: false,
     logo: null,
     isAdmin: false,
+    clonedCount: 30,
+    visitedCount: 350,
   },
   {
     name: 'Bet 6',
@@ -118,6 +128,8 @@ const bets = [
     cashOut: true,
     logo: null,
     isAdmin: false,
+    clonedCount: 10,
+    visitedCount: 180,
   },
   {
     name: 'Bet 7',
@@ -138,6 +150,8 @@ const bets = [
     cashOut: false,
     logo: null,
     isAdmin: false,
+    clonedCount: 22,
+    visitedCount: 270,
   },
   {
     name: 'Bet 8',
@@ -158,6 +172,8 @@ const bets = [
     cashOut: true,
     logo: null,
     isAdmin: false,
+    clonedCount: 28,
+    visitedCount: 290,
   },
   {
     name: 'Bet 9',
@@ -178,6 +194,8 @@ const bets = [
     cashOut: false,
     logo: null,
     isAdmin: false,
+    clonedCount: 12,
+    visitedCount: 210,
   },
 ];
 

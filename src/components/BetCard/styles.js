@@ -107,8 +107,9 @@ const styles = StyleSheet.create({
   },
   footerIcons: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 80,
+  },
+  footerIcon: {
+    marginLeft: 15,
   },
   categoryIcons: {
     flexDirection: 'row',

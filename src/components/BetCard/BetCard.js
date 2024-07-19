@@ -3,11 +3,11 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
-import formatTime from '../../utils/formatTime';
 import styles from './styles';
 
 const BetCard = ({bet}) => {
   const navigation = useNavigation();
+
   const handleCardPress = () => {
     navigation.navigate('BetDetail', {bet});
   };
@@ -56,12 +56,10 @@ const BetCard = ({bet}) => {
           </Text>
         </View>
         <View style={styles.bodyItem}>
-          <Icon name="time" size={20} color="#3498db" />
+          <Icon name="people-circle" size={20} color="#3498db" />
           <Text style={styles.bodyText}>
-            Last Bet:{' '}
-            <Text style={styles.highlightedText}>
-              {formatTime(bet.lastFixture)}
-            </Text>
+            Betted:{' '}
+            <Text style={styles.highlightedText}>{bet.peopleBetted}</Text>
           </Text>
         </View>
       </View>
@@ -70,14 +68,11 @@ const BetCard = ({bet}) => {
           <Text style={styles.betNowButtonText}>Bet Now</Text>
         </TouchableOpacity>
         <View style={styles.footerIcons}>
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.footerIcon}>
             <Icon name="copy-outline" size={20} color="#3498db" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.footerIcon}>
             <Icon name="chatbubble-outline" size={20} color="#3498db" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon name="share-social-outline" size={20} color="#3498db" />
           </TouchableOpacity>
         </View>
       </View>

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 20,
-    backgroundColor: '#121212',
+    backgroundColor: '#0D0D0D',
     borderRadius: 10,
     padding: 15,
     shadowColor: '#000',

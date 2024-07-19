@@ -98,6 +98,10 @@ const BetDetailInfoScreen = ({route, navigation}) => {
               <Text style={styles.infoLabel}>Average Bet:</Text>
               <Text style={styles.infoValue}>{bet.averageBet || 'N/A'}</Text>
             </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Cloned Count:</Text>
+              <Text style={styles.infoValue}>{bet.clonedCount || 'N/A'}</Text>
+            </View>
           </View>
         </View>
       </ScrollView>

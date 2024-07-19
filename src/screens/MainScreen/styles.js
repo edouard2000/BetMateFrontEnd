@@ -3,7 +3,7 @@ import {StyleSheet, Platform} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: 'black',
   },
   header: {
     flexDirection: 'row',
@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     marginHorizontal: -10,
+    backgroundColor: '#0D0D0D',
   },
   title: {
     fontSize: 24,
@@ -69,12 +70,12 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#0D0D0D',
+    backgroundColor: 'black',
     borderRadius: 10,
-    marginHorizontal: 10,
     paddingHorizontal: 15,
     height: 40,
     marginBottom: 20,
+    marginTop: 10,
   },
   searchInput: {
     flex: 1,
