@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#0D0D0D',
   },
   itemContainer: {
     flexDirection: 'row',
@@ -13,10 +13,11 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginVertical: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    marginHorizontal: 20,
   },
   avatar: {
     width: 30,
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   detailButton: {
-    backgroundColor: '#1E88E5',
+    backgroundColor: '#424242',
     paddingVertical: 2.5,
     paddingHorizontal: 8,
     borderRadius: 5,
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   buyButton: {
-    backgroundColor: '#B71C1C',
+    backgroundColor: '#1E88E5',
     paddingVertical: 2.5,
     paddingHorizontal: 8,
     borderRadius: 5,

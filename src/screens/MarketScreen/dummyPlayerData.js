@@ -29,6 +29,36 @@ const dummyPlayerData = [
     sharePrice: 1230.45,
     isIncrease: false,
   },
+  {
+    id: '3',
+    name: 'Player 3',
+    shareValue: '1000.00',
+    recentChange: '+3.45%',
+    imageUrl: 'https://via.placeholder.com/150',
+    team: 'Team A',
+    age: 32,
+    position: 'Defender',
+    goals: 15,
+    availableShares: 80,
+    soldShares: 40,
+    sharePrice: 1000.00,
+    isIncrease: true,
+  },
+  {
+    id: '4',
+    name: 'Player 4',
+    shareValue: '800.75',
+    recentChange: '-3.75%',
+    imageUrl: 'https://via.placeholder.com/150',
+    team: 'Team B',
+    age: 27,
+    position: 'Goalkeeper',
+    goals: 5,
+    availableShares: 150,
+    soldShares: 75,
+    sharePrice: 800.75,
+    isIncrease: false,
+  }
 ];
 
 export default dummyPlayerData;

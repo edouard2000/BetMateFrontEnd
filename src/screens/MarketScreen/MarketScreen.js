@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
+  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
@@ -13,7 +13,7 @@ import TeamShareList from './TeamShareList';
 import StockList from './StockList';
 import ActivitiesList from './ActivitiesList';
 
-const MarketScreen = ({navigation}) => {
+const MarketScreen = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState('Assets');
 
   const tabs = ['Assets', 'Players', 'Teams', 'Activities'];
@@ -82,11 +82,7 @@ const MarketScreen = ({navigation}) => {
             key={tab}
             onPress={() => setSelectedTab(tab)}
             style={styles.tab}>
-            <View
-              style={[
-                styles.tabWrapper,
-                selectedTab === tab && styles.tabActive,
-              ]}>
+            <View style={[styles.tabWrapper, selectedTab === tab]}>
               <Text
                 style={
                   selectedTab === tab ? styles.tabTextActive : styles.tabText
@@ -98,9 +94,10 @@ const MarketScreen = ({navigation}) => {
         ))}
       </View>
 
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <View style={styles.listContainer}>
         {renderContent()}
-      </ScrollView>
+      </View>
+
       <View style={styles.footer}>
         <TouchableOpacity
           style={[styles.footerButton, styles.backButton]}

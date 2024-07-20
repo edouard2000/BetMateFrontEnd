@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000', // Ensure background color matches the theme
+    backgroundColor: '#0D0D0D',
   },
   itemContainer: {
     flexDirection: 'row',
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    marginHorizontal: 20,
   },
   avatar: {
     width: 30,

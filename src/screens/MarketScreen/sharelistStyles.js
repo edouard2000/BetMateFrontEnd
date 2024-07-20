@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#0D0D0D',
     borderRadius: 6,
     marginVertical: 5,
-
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    marginHorizontal: 20,
   },
   avatar: {
     width: 30,

@@ -25,6 +25,9 @@ import BetListScreen from '../screens/BetFixtureList/BetListScreen';
 import BetsParticipatedScreen from '../screens/betting/BetsParticipatedScreen';
 import MyBets from '../screens/MyBets/MyBets';
 import ManagePredictionsScreen from '../screens/managePredictions/ManagePredictionsScreen';
+import StockDetailScreen from '../screens/MarketScreen/component/StockDetailScreen';
+import ShareDetailScreen from '../screens/MarketScreen/component/ShareDetailScreen';
+import ActivityDetailScreen from '../screens/MarketScreen/component/ActivityDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -87,8 +90,26 @@ const AppNavigator = () => {
             />
             <Stack.Screen name="BetListScreen" component={BetListScreen} />
             <Stack.Screen name="MarketScreen" component={MarketScreen} />
-            <Stack.Screen name="BetsParticipatedScreen" component={BetsParticipatedScreen} />
-            <Stack.Screen name="ManagePredictionsScreen" component={ManagePredictionsScreen} />
+            <Stack.Screen
+              name="BetsParticipatedScreen"
+              component={BetsParticipatedScreen}
+            />
+            <Stack.Screen
+              name="ManagePredictionsScreen"
+              component={ManagePredictionsScreen}
+            />
+            <Stack.Screen
+              name="StockDetailScreen"
+              component={StockDetailScreen}
+            />
+            <Stack.Screen
+              name="ShareDetailScreen"
+              component={ShareDetailScreen}
+            />
+            <Stack.Screen
+              name="ActivityDetailScreen"
+              component={ActivityDetailScreen}
+            />
           </>
         ) : (
           <>

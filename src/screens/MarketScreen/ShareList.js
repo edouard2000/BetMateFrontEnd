@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
-import styles from './stocklistStyles';
-import dummyData from './dummyData';
+import styles from './sharelistStyles';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
 
-const StockList = ({navigation}) => {
+const ShareList = ({data, renderItemDetail, type}) => {
   const handleItemPress = item => {
-    navigation.navigate('StockDetailScreen', {stock: item});
+    renderItemDetail(item);
   };
 
   const renderItem = ({item}) => (
@@ -17,21 +16,25 @@ const StockList = ({navigation}) => {
         source={{uri: generateAvatarUrl(item.name) || item.imageUrl}}
         style={styles.avatar}
       />
-      <View style={styles.infoContainer}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.shares}>{item.shares} Shares</Text>
-        <Text style={styles.shareValue}>${item.shareValue}</Text>
-        <TouchableOpacity style={styles.sellButton}>
-          <Text style={styles.sellButtonText}>Trade</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.name}>{item.name}</Text>
+      <Text style={styles.shareValue}>${item.shareValue}</Text>
+      <Text
+        style={[
+          styles.recentChange,
+          {color: item.isIncrease ? 'green' : 'red'},
+        ]}>
+        {item.recentChange}
+      </Text>
+      <TouchableOpacity style={styles.buyButton}>
+        <Text style={styles.buyButtonText}>Buy</Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={dummyData}
+        data={data}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
@@ -39,4 +42,4 @@ const StockList = ({navigation}) => {
   );
 };
 
-export default StockList;
+export default ShareList;

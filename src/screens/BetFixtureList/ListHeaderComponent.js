@@ -1,38 +1,32 @@
 import React from 'react';
+import {useRoute, useNavigation} from '@react-navigation/native';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './Styles';
 
-const ListHeaderComponent = ({
-  name,
-  owner,
-  avatar,
-  onAvatarPress,
-  balance,
-  isFull,
-}) => (
-  <View style={styles.headerCard}>
-    <View style={styles.headerLeft}>
-      <TouchableOpacity onPress={onAvatarPress}>
-        <Image source={{uri: avatar}} style={styles.avatar} />
+const ListHeaderComponent = ({name, avatar, onAvatarPress}) => {
+  const route = useRoute();
+  const {bet} = route.params || {};
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.headerCard}>
+      <View style={styles.headerLeft}>
+        <TouchableOpacity onPress={onAvatarPress}>
+          <Image source={{uri: avatar}} style={styles.avatar} />
+        </TouchableOpacity>
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.betName}>{name}</Text>
+        </View>
+      </View>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('BetDetail', {bet});
+        }}>
+        <Icon name="chevron-forward-outline" size={25} color="#3498db" />
       </TouchableOpacity>
-      <View style={styles.headerTextContainer}>
-        <Text style={styles.betName}>{name}</Text>
-        <Text style={styles.ownerName}>{owner}</Text>
-      </View>
     </View>
-    <View style={styles.headerRight}>
-      <View style={styles.statusBalanceContainer}>
-        <Text
-          style={[
-            styles.statusText,
-            isFull ? styles.fullStatus : styles.openStatus,
-          ]}>
-          Status: {isFull ? 'Full' : 'Open'}
-        </Text>
-        <Text style={styles.balanceText}>Balance: {balance}</Text>
-      </View>
-    </View>
-  </View>
-);
+  );
+};
 
 export default ListHeaderComponent;

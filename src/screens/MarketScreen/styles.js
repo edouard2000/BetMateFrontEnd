@@ -3,7 +3,7 @@ import {StyleSheet, Platform} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#0D0D0D',
   },
   headerContainer: {
     flexDirection: 'row',
@@ -74,29 +74,30 @@ const styles = StyleSheet.create({
   tabsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginBottom: 10,
   },
   tab: {
-    padding: 10,
+    padding: 5,
   },
   tabWrapper: {
     alignItems: 'center',
   },
-  tabActive: {
-    borderBottomWidth: 2,
-    borderBottomColor: '#1E88E5',
-  },
   tabText: {
-    color: '#AAAAAA',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 12,
   },
   tabTextActive: {
     color: '#1E88E5',
-    fontSize: 14,
+    fontSize: 12,
+  },
+  listContainer: {
+    flex: 1,
+    marginTop: 10,
   },
   contentContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 20,
+    paddingHorizontal: 10,
   },
   footer: {
     flexDirection: 'row',
@@ -107,11 +108,10 @@ const styles = StyleSheet.create({
   footerButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 10,
-    backgroundColor: '#222222',
-    marginHorizontal: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 3,
+    borderRadius: 5,
+    backgroundColor: '#0D0D0D',
   },
   backButton: {
     backgroundColor: '#0D0D0D',
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0D0D0D',
   },
   depositButton: {
-    backgroundColor: '#1E88E5',
+    backgroundColor: 'green',
   },
   footerButtonText: {
     color: '#FFFFFF',

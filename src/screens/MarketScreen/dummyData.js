@@ -9,6 +9,13 @@ const dummyData = [
     originalPrice: '450.00',
     value: '500.54',
     shares: 10,
+    availableShares: 5,
+    demand: 'high',
+    player: {
+      name: 'Player 1',
+      league: 'Premier League',
+      rating: 'A',
+    },
   },
   {
     id: '2',
@@ -20,8 +27,15 @@ const dummyData = [
     originalPrice: '800.00',
     value: '723.45',
     shares: 20,
+    availableShares: 10,
+    demand: 'medium',
+    player: {
+      name: 'Player 2',
+      league: 'La Liga',
+      rating: 'B',
+    },
   },
-  // Add more items as needed
+  // ... more stocks
 ];
 
 export default dummyData;

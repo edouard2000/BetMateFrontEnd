@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
   },
   predictionItem: {
     borderRadius: 10,
-    padding: 10,
     backgroundColor: '#0D0D0D',
     marginBottom: 10,
   },

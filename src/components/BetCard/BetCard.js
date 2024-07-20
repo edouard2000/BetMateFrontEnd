@@ -47,19 +47,19 @@ const BetCard = ({bet}) => {
           </Text>
         </View>
         <View style={styles.bodyItem}>
+          <Icon name="people-circle" size={20} color="#3498db" />
+          <Text style={styles.bodyText}>
+            Betted:{' '}
+            <Text style={styles.highlightedText}>{bet.peopleBetted}</Text>
+          </Text>
+        </View>
+        <View style={styles.bodyItem}>
           <Icon name="checkmark-circle" size={20} color="#3498db" />
           <Text style={styles.bodyText}>
             Status:{' '}
             <Text style={styles.highlightedText}>
               {bet.isFull ? 'Full' : 'Open'}
             </Text>
-          </Text>
-        </View>
-        <View style={styles.bodyItem}>
-          <Icon name="people-circle" size={20} color="#3498db" />
-          <Text style={styles.bodyText}>
-            Betted:{' '}
-            <Text style={styles.highlightedText}>{bet.peopleBetted}</Text>
           </Text>
         </View>
       </View>

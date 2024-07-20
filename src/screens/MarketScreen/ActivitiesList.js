@@ -1,24 +1,12 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  FlatList,
-  Modal,
-} from 'react-native';
+import React from 'react';
+import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 import styles from './activitiesListStyles';
 import dummyDataActivities from './dummyDataActivities';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
-import StockDetail from './StockDetail';
 
 const ActivitiesList = ({navigation}) => {
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-
   const handleDetailPress = item => {
-    setSelectedItem(item);
-    setModalVisible(true);
+    navigation.navigate('ActivityDetailScreen', {item});
   };
 
   const renderItem = ({item}) => (
@@ -34,7 +22,7 @@ const ActivitiesList = ({navigation}) => {
       <TouchableOpacity
         style={styles.detailButton}
         onPress={() => handleDetailPress(item)}>
-        <Text style={styles.detailButtonText}>Detail</Text>
+        <Text style={styles.detailButtonText}>More</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buyButton}>
         <Text style={styles.buyButtonText}>Buy</Text>
@@ -49,17 +37,6 @@ const ActivitiesList = ({navigation}) => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-      {selectedItem && (
-        <Modal
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}>
-          <StockDetail
-            item={selectedItem}
-            onClose={() => setModalVisible(false)}
-          />
-        </Modal>
-      )}
     </View>
   );
 };

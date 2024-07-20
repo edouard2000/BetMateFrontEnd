@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
@@ -8,19 +8,19 @@ export default StyleSheet.create({
   headerCard: {
     padding: 8,
     marginBottom: 10,
+    marginHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#1c1c1c',
-    borderRadius: 10,
+    backgroundColor: '#0D0D0D',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
     margin: 10,
-    borderWidth: 2,
-    borderColor: '#3498db',
   },
   headerLeft: {
     flexDirection: 'row',
@@ -32,37 +32,19 @@ export default StyleSheet.create({
   avatar: {
     width: 30,
     height: 30,
-    borderRadius: 15,
+    borderRadius: 20,
   },
   betName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-  ownerName: {
-    fontSize: 10,
-    color: '#FFF',
+    fontSize: 14,
+    color: 'white',
+    marginLeft: 10,
+    fontFamily: "bold",
   },
   headerRight: {
     alignItems: 'flex-end',
   },
-  statusText: {
-    fontSize: 10,
-    color: '#FFF',
-    marginBottom: 4,
-  },
-  openStatus: {
-    color: '#00FF00',
-  },
-  fullStatus: {
-    color: '#FF0000',
-  },
-  balanceText: {
-    fontSize: 12,
-    color: '#FFD700',
-  },
   betCard: {
-    backgroundColor: '#1c1c1c',
+    backgroundColor: '#0D0D0D',
     padding: 15,
     marginVertical: 10,
     marginHorizontal: 20,
@@ -74,8 +56,6 @@ export default StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    borderWidth: 1,
-    borderColor: '#3498db',
   },
   headerRow: {
     flexDirection: 'row',
@@ -100,25 +80,26 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 20,
-    marginHorizontal: 25,
+    marginTop: 20,
+    marginBottom: 10,
+    marginHorizontal: 20,
   },
   team: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
   },
   teamName: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#FFF',
-    marginLeft: 5,
+    marginTop: 5,
   },
   teamIcon: {
-    width: 15,
-    height: 15,
-    borderRadius: 10,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
   },
-  vsText: {
+  statusText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#A5D6A7',
@@ -128,6 +109,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginVertical: 10,
+    marginHorizontal: 20,
   },
   multiplierBox: {
     alignItems: 'center',
@@ -141,68 +123,41 @@ export default StyleSheet.create({
     fontSize: 12,
     color: '#A5D6A7',
   },
-  actionsContainer: {
+  moreButtonText: {
+    color: '#3498db',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  moreButton: {
+    marginTop: 10,
+    alignSelf: 'flex-start',
+  },
+  bottomNav: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+  },
+  navButton: {
+    flexDirection: 'row',
     alignItems: 'center',
+  },
+  navButtonText: {
+    color: '#3498db',
+    fontSize: 16,
+    marginLeft: 5,
+    marginRight: 5,
   },
   addButton: {
     backgroundColor: '#3498db',
-    paddingVertical: 5,
+    paddingVertical: 3,
     paddingHorizontal: 10,
     borderRadius: 5,
-  },
-  removeButton: {
-    backgroundColor: '#FF0000',
   },
   addButtonText: {
     fontSize: 14,
     color: '#FFF',
   },
-  betTime: {
-    fontSize: 14,
-    color: '#FFF',
-  },
-  moreButton: {
-    marginHorizontal: 10,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'black',
-    borderRadius: 10,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFF',
-    marginBottom: 15,
-  },
-  detailText: {
-    fontSize: 16,
-    color: '#FFF',
-    marginVertical: 5,
-  },
-  closeButton: {
-    marginTop: 15,
-    padding: 10,
-    backgroundColor: '#3498db',
-    borderRadius: 5,
-  },
-  closeButtonText: {
-    fontSize: 16,
-    color: '#FFF',
-    textAlign: 'center',
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 5,
-  },
 });
+
+export default styles;
