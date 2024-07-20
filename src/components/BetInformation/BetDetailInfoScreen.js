@@ -112,7 +112,7 @@ const BetDetailInfoScreen = ({route, navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.footerButton, styles.footerButtonRight]}
-          onPress={() => navigation.navigate('BetListScreen')}>
+          onPress={() => navigation.navigate('BetListScreen', {bet})}>
           <Icon name="chevron-forward-outline" size={20} color="#e74c3c" />
           <Text style={styles.footerButtonText}>Bet Now</Text>
         </TouchableOpacity>

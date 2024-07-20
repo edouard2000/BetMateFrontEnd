@@ -37,13 +37,13 @@ const BetCard = ({bet}) => {
         <View style={styles.bodyItem}>
           <Icon name="wallet" size={20} color="#3498db" />
           <Text style={styles.bodyText}>
-            Balance: <Text style={styles.highlightedText}>{bet.allocated}</Text>
+            Balance: <Text style={styles.highlightedText}>{bet.balance}</Text>
           </Text>
         </View>
         <View style={styles.bodyItem}>
           <Icon name="people" size={20} color="#3498db" />
           <Text style={styles.bodyText}>
-            Teams: <Text style={styles.highlightedText}>{bet.fixtures}</Text>
+            Teams: <Text style={styles.highlightedText}>{bet.teams}</Text>
           </Text>
         </View>
         <View style={styles.bodyItem}>
