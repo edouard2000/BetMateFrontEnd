@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
 import styles from './styles';
 
@@ -13,7 +13,7 @@ const BetCard = ({bet}) => {
   };
 
   const handleBetNow = () => {
-    navigation.navigate('BetListScreen');
+    navigation.navigate('BetListScreen', {bet});
   };
 
   return (

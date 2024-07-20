@@ -6,15 +6,16 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
+import {useRoute, useNavigation} from '@react-navigation/native';
 import ListHeaderComponent from './ListHeaderComponent';
 import BetItem from './BetItem';
 import styles from './Styles';
 
-import bets from './bets';
-
-
-const BetListScreen = ({navigation}) => {
+const BetListScreen = () => {
   const [activePage, setActivePage] = useState({});
+  const route = useRoute();
+  const navigation = useNavigation();
+  const {bet} = route.params || {};
 
   const handleScroll = (event, rowIndex) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -26,7 +27,7 @@ const BetListScreen = ({navigation}) => {
   };
 
   const handleAvatarPress = bet => {
-    navigation.navigate('BetDetailScreen', {bet});
+    navigation.navigate('BetDetail', {bet});
   };
 
   const handleBack = () => {
@@ -34,22 +35,20 @@ const BetListScreen = ({navigation}) => {
   };
 
   const handleNext = () => {
-    // Add your next button logic here
+    navigation.navigate('BetDetail', {bet});
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={bets}
+        data={[bet]}
         keyExtractor={item => item.id}
         ListHeaderComponent={
-          bets.length ? (
-            <ListHeaderComponent
-              name={bets[0].name}
-              avatar={bets[0].avatar}
-              onAvatarPress={() => handleAvatarPress(bets[0])}
-            />
-          ) : null
+          <ListHeaderComponent
+            name={bet.name}
+            avatar={bet.avatar}
+            onAvatarPress={() => handleAvatarPress(bet)}
+          />
         }
         renderItem={({item}) => <BetItem item={item} navigation={navigation} />}
       />

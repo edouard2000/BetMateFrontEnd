@@ -12,9 +12,6 @@ import generateAvatarUrl from '../../utils/generateAvatarUrl';
 import styles from './styles';
 
 const BetDetailInfoScreen = ({route, navigation}) => {
-  const handleBetNow = () => {
-    navigation.navigate('BetListScreen');
-  };
   const {bet} = route.params;
 
   return (
@@ -115,7 +112,7 @@ const BetDetailInfoScreen = ({route, navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.footerButton, styles.footerButtonRight]}
-          onPress={handleBetNow}>
+          onPress={() => navigation.navigate('BetListScreen')}>
           <Icon name="chevron-forward-outline" size={20} color="#e74c3c" />
           <Text style={styles.footerButtonText}>Bet Now</Text>
         </TouchableOpacity>
