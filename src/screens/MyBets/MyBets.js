@@ -1,44 +1,15 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  View,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import styles from './styles';
 import BetCard from './BetCard';
 import FilterButton from './FilterButton';
-
-const dummyBets = [
-  {
-    id: '1',
-    name: 'Weekend Football',
-    status: 'Active',
-    people: 5,
-    numberOfTeams: 2,
-    dateCreated: '2024-06-10',
-    allocatedAmount: '$100',
-    remainingAmount: '$50',
-    outcome: '+$150',
-  },
-  {
-    id: '2',
-    name: 'Champions League',
-    status: 'Pending',
-    people: 10,
-    numberOfTeams: 4,
-    dateCreated: '2024-06-08',
-    allocatedAmount: '$200',
-    remainingAmount: '$0',
-    outcome: '+$200',
-  },
-  {
-    id: '3',
-    name: 'World Cup Finals',
-    status: 'Completed',
-    people: 15,
-    numberOfTeams: 2,
-    dateCreated: '2024-06-01',
-    allocatedAmount: '$500',
-    outcome: '+$300',
-  },
-];
+import dummyBets from './dummyBets';
 
 const MyBets = ({navigation}) => {
   const [filteredStatus, setFilteredStatus] = useState('All');
@@ -68,14 +39,29 @@ const MyBets = ({navigation}) => {
           <BetCard
             key={bet.id}
             bet={bet}
-            onCardPress={() => navigation.navigate('BestGamesList')}
+            onCardPress={() =>
+              navigation.navigate('FixtureDetailScreen', {
+                fixtures: bet.fixtures,
+              })
+            }
             isLast={index === filteredBets.length - 1}
           />
         ))}
       </ScrollView>
       <View style={styles.footerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-undo-outline" size={25} color="#3498db" />
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.footerButton}>
+          <Text style={[styles.footerButtonText, {color: '#1E88E5'}]}>
+            Back
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SavedBetsScreen')}
+          style={styles.footerButton}>
+          <Text style={[styles.footerButtonText, {color: '#1E88E5'}]}>
+            Saved
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

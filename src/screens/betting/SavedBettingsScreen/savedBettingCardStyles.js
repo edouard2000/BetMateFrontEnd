@@ -30,11 +30,10 @@ export default StyleSheet.create({
     marginLeft: 10,
   },
   betName: {
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#E0E0E0',
     fontStyle: 'italic',
-    paddingTop: 15,
   },
   date: {
     color: '#B0B0B0',
@@ -45,19 +44,11 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
   },
   status: {
-    fontSize: 10,
+    fontSize: 14,
+    fontWeight: 'bold',
     fontStyle: 'italic',
   },
-  statusWon: {
-    color: '#3498db',
-  },
-  statusLost: {
-    color: '#3498db',
-  },
-  statusPending: {
-    color: '#3498db',
-  },
-  statusDefault: {
+  statusSaved: {
     color: '#3498db',
   },
   amount: {
@@ -77,8 +68,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   bodyLabel: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 14,
+    color: '#FFFFFF',
     marginRight: 20,
   },
   bodyValue: {
@@ -94,11 +85,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 5,
   },
-  footerButtonLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 5,
-  },
   footerButtonsRight: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -106,20 +92,20 @@ export default StyleSheet.create({
   marginLeft: {
     marginLeft: 10,
   },
+  betButtonText: {
+    marginLeft: 5,
+    fontWeight: 'bold',
+    color: '#2ECC71',
+  },
   editButtonText: {
     marginLeft: 5,
+    fontWeight: 'bold',
     color: 'orange',
-    fontSize: 12,
   },
-  cancelButtonText: {
+  deleteButtonText: {
     marginLeft: 5,
+    fontWeight: 'bold',
     color: 'red',
-    fontSize: 12,
-  },
-  cashoutButtonText: {
-    color: '#3498db',
-    fontSize: 12,
-    fontStyle: 'italic',
   },
   lineContainer: {
     flexDirection: 'row',

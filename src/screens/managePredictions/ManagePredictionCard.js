@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PredictionItem from './PredictionItem';
 import styles from './PredictionsScreenStyles';
 
-const ManagePredictionCard = ({prediction, onDeletePress}) => {
+const ManagePredictionCard = ({ prediction, onDeletePress }) => {
   return (
     <View style={styles.predictionCardContainer}>
       <View style={styles.cardBody}>

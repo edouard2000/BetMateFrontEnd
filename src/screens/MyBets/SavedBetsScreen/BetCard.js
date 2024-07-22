@@ -3,23 +3,10 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
-import generateAvatarUrl from '../../utils/generateAvatarUrl';
+import generateAvatarUrl from '../../../utils/generateAvatarUrl';
 
 const BetCard = ({bet, isLast}) => {
   const navigation = useNavigation();
-
-  const getStatusStyle = status => {
-    switch (status) {
-      case 'Active':
-        return styles.statusActive;
-      case 'Pending':
-        return styles.statusPending;
-      case 'Completed':
-        return styles.statusCompleted;
-      default:
-        return styles.statusDefault;
-    }
-  };
 
   const handleCardPress = () => {
     navigation.navigate('FixtureDetailScreen', {bet});
@@ -37,9 +24,7 @@ const BetCard = ({bet, isLast}) => {
             <Text style={styles.betName}>{bet.name}</Text>
           </View>
           <View style={styles.headerRight}>
-            <Text style={[styles.status, getStatusStyle(bet.status)]}>
-              {bet.status}
-            </Text>
+            <Text style={styles.status}>Saved</Text>
             <Text style={styles.amount}>{bet.allocatedAmount}</Text>
           </View>
         </View>
@@ -48,10 +33,10 @@ const BetCard = ({bet, isLast}) => {
             Teams: <Text style={styles.bodyValue}>{bet.numberOfTeams}</Text>
           </Text>
           <Text style={styles.bodyLabel}>
-            People: <Text style={styles.bodyValue}>{bet.people}</Text>
+            People: <Text style={styles.bodyValue}>0</Text>
           </Text>
           <Text style={styles.bodyLabel}>
-            Outcome: <Text style={styles.bodyValue}>{bet.outcome}</Text>
+            Outcome: <Text style={styles.bodyValue}>0</Text>
           </Text>
         </View>
         <View style={styles.cardFooter}>
@@ -68,9 +53,9 @@ const BetCard = ({bet, isLast}) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.footerButton}>
-            <Icon name="eye-off-outline" size={18} color="#FF0000" />
-            <Text style={[styles.footerButtonText, styles.unpublishButtonText]}>
-              Unpublish
+            <Icon name="eye-outline" size={18} color="#FF0000" />
+            <Text style={[styles.footerButtonText, styles.publishButtonText]}>
+              Publish
             </Text>
           </TouchableOpacity>
         </View>

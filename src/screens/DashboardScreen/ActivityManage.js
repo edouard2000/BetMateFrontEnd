@@ -50,7 +50,7 @@ const ActivityManage = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    marginBottom: 20,
+    marginTop: 20,
   },
   row: {
     flexDirection: 'row',
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#1E88E5',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
   description: {
     color: '#CCCCCC',
-    fontSize: 12,
+    fontSize: 10,
   },
 });
 

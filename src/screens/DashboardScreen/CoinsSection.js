@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 const CoinSection = () => {
   return (
@@ -13,13 +12,11 @@ const CoinSection = () => {
             <TouchableOpacity
               style={[styles.smallButton, styles.withdrawButton]}
               onPress={() => alert('Withdraw MateCash')}>
-              <Icon name="chevron-down-outline" size={15} color="#1E88E5" />
-              <Text style={styles.buttonText}>Claim</Text>
+              <Text style={styles.buttonText}>Withdraw</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.smallButton, styles.rechargeButton]}
               onPress={() => alert('Recharge MateCash')}>
-              <Icon name="chevron-up-outline" size={12} color="#FFFFFF" />
               <Text style={styles.buttonText}>Deposit</Text>
             </TouchableOpacity>
           </View>
@@ -31,13 +28,11 @@ const CoinSection = () => {
             <TouchableOpacity
               style={[styles.smallButton, styles.buyButton]}
               onPress={() => alert('Buy MateCoins')}>
-              <Icon name="chevron-up-outline" size={15} color="#1E88E5" />
-              <Text style={styles.buttonText}>Buy</Text>
+              <Text style={styles.buttonText}>Recharge</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.smallButton, styles.convertButton]}
               onPress={() => alert('Convert MateCoins')}>
-              <Icon name="chevron-down-outline" size={15} color="#FFFFFF" />
               <Text style={styles.buttonText}>Convert</Text>
             </TouchableOpacity>
           </View>
@@ -85,8 +80,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: 9,
+    paddingVertical: 8,
+    paddingHorizontal: 3,
     borderRadius: 5,
     flex: 1,
     marginHorizontal: 8,
@@ -95,10 +90,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#1E88E5',
   },
   withdrawButton: {
-    backgroundColor: '#161616',
+    backgroundColor: '#2C2C2C',
   },
   buyButton: {
-    backgroundColor: '#161616',
+    backgroundColor: '#2C2C2C',
   },
   convertButton: {
     backgroundColor: '#1E88E5',

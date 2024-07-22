@@ -1,6 +1,15 @@
 import {StyleSheet} from 'react-native';
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0D0D0D',
+  },
+  scrollView: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
   card: {
     backgroundColor: '#0D0D0D',
     borderRadius: 10,
@@ -26,43 +35,22 @@ export default StyleSheet.create({
     height: 30,
     borderRadius: 15,
   },
-  headerTextContainer: {
-    marginLeft: 10,
-  },
   betName: {
     fontSize: 12,
     fontWeight: 'bold',
     color: '#E0E0E0',
-    fontStyle: 'italic',
-    paddingTop: 15,
-  },
-  date: {
-    color: '#B0B0B0',
-    fontSize: 12,
-    fontStyle: 'italic',
+    marginLeft: 10,
   },
   headerRight: {
     alignItems: 'flex-end',
   },
   status: {
-    fontSize: 10,
-    fontStyle: 'italic',
-  },
-  statusWon: {
-    color: '#3498db',
-  },
-  statusLost: {
-    color: '#3498db',
-  },
-  statusPending: {
-    color: '#3498db',
-  },
-  statusDefault: {
+    fontSize: 12,
     color: '#3498db',
   },
   amount: {
-    fontSize: 14,
-    color: '#E0E0E0',
+    fontSize: 10,
+    color: 'gray',
     fontWeight: 'bold',
   },
   bodySection: {
@@ -70,11 +58,6 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
-  },
-  bodyTextContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
   },
   bodyLabel: {
     fontSize: 12,
@@ -93,33 +76,21 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 5,
+    borderRadius: 5,
   },
-  footerButtonLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 5,
+  footerButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    marginLeft: 5,
   },
-  footerButtonsRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  marginLeft: {
-    marginLeft: 10,
+  chatButtonText: {
+    color: '#1E88E5',
   },
   editButtonText: {
-    marginLeft: 5,
-    color: 'orange',
-    fontSize: 12,
+    color: '#FFA500',
   },
-  cancelButtonText: {
-    marginLeft: 5,
-    color: 'red',
-    fontSize: 12,
-  },
-  cashoutButtonText: {
-    color: '#3498db',
-    fontSize: 12,
-    fontStyle: 'italic',
+  publishButtonText: {
+    color: '#FF0000',
   },
   lineContainer: {
     flexDirection: 'row',
@@ -139,4 +110,19 @@ export default StyleSheet.create({
     backgroundColor: '#1E88E5',
     marginHorizontal: 5,
   },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  navButton: {
+    padding: 10,
+  },
+  navButtonText: {
+    color: '#1E88E5',
+    fontSize: 16,
+  },
 });
+
+export default styles;

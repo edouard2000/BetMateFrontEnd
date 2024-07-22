@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, View, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import FilterButton from './FilterButton';
 import ManagePredictionCard from './ManagePredictionCard';
 import dummyPredictions from './dummyPredictions';
@@ -49,19 +54,33 @@ const ManagePredictionsScreen = ({navigation}) => {
         ))}
       </View>
       <ScrollView style={styles.scrollView}>
-        {filteredPredictions().map(prediction => (
-          <ManagePredictionCard
-            key={prediction.id}
-            prediction={prediction}
-            onEditPress={() => handleEditPress(prediction.id)}
-            onDeletePress={() => handleDeletePress(prediction.id)}
-          />
+        {filteredPredictions().map((prediction, index) => (
+          <View key={prediction.id}>
+            <ManagePredictionCard
+              prediction={prediction}
+              onEditPress={() => handleEditPress(prediction.id)}
+              onDeletePress={() => handleDeletePress(prediction.id)}
+            />
+            {index < filteredPredictions().length - 1 && (
+              <View style={styles.lineContainer}>
+                <View style={styles.dot} />
+                <View style={styles.horizontalLine} />
+                <View style={styles.dot} />
+              </View>
+            )}
+          </View>
         ))}
       </ScrollView>
       <View style={styles.bottomNav}>
         <TouchableOpacity
+          style={styles.bottomNavButton}
           onPress={() => navigation.navigate('DashboardScreen')}>
-          <Icon name="arrow-undo-outline" size={25} color="#1E88E5" />
+          <Text style={styles.bottomNavButtonText}>Back</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.bottomNavButton}
+          onPress={() => console.log('Predict button pressed')}>
+          <Text style={styles.bottomNavButtonText}>Predict</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

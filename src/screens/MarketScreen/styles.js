@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
   footerButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 5,
-    paddingVertical: 3,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
     borderRadius: 5,
     backgroundColor: '#0D0D0D',
   },
@@ -117,10 +117,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#0D0D0D',
   },
   withdrawButton: {
-    backgroundColor: '#0D0D0D',
+    backgroundColor: '#2C2C2C',
   },
   depositButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#1E88E5',
   },
   footerButtonText: {
     color: '#FFFFFF',

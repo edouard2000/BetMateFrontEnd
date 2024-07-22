@@ -11,11 +11,13 @@ const PredictionsScreen = () => {
         userPrediction.predictions.map((prediction, predIndex) => (
           <View key={`${userIndex}-${predIndex}`}>
             <PredictionCard userPrediction={userPrediction} prediction={prediction} />
-            <View style={styles.lineContainer}>
-              <View style={styles.dot} />
-              <View style={styles.horizontalLine} />
-              <View style={styles.dot} />
-            </View>
+            {predIndex < userPrediction.predictions.length - 1 && (
+              <View style={styles.lineContainer}>
+                <View style={styles.dot} />
+                <View style={styles.horizontalLine} />
+                <View style={styles.dot} />
+              </View>
+            )}
           </View>
         )),
       )}

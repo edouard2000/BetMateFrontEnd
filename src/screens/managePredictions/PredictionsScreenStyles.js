@@ -210,26 +210,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
   },
   dot: {
     width: 5,
     height: 5,
     borderRadius: 5,
     backgroundColor: '#1E88E5',
+    marginHorizontal: 5,
   },
   horizontalLine: {
     width: '80%',
     height: 1,
     backgroundColor: '#1E88E5',
-    marginHorizontal: 5,
+    marginVertical: 5,
   },
   bottomNav: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
     backgroundColor: '#0D0D0D',
+  },
+  bottomNavButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  bottomNavButtonText: {
+    color: '#1E88E5',
+    marginLeft: 5,
+    fontStyle: 'italic',
   },
 });
 

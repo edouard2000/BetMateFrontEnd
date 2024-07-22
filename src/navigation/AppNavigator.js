@@ -28,6 +28,11 @@ import ManagePredictionsScreen from '../screens/managePredictions/ManagePredicti
 import StockDetailScreen from '../screens/MarketScreen/component/StockDetailScreen';
 import ShareDetailScreen from '../screens/MarketScreen/component/ShareDetailScreen';
 import ActivityDetailScreen from '../screens/MarketScreen/component/ActivityDetailScreen';
+import FixtureDetailScreen from '../screens/MyBets/fixtureDetailScreen/FixtureDetailScreen';
+import SavedBetsScreen from '../screens/MyBets/SavedBetsScreen/SavedBetsScreen';
+import CustomizeOddsScreen from '../screens/MyBets/CustomizeOddsScreen/CustomizeOddsScreen';
+import BettingFixtureScreen from '../screens/betting/BettingFixtureScreen/BettingFixtureScreen';
+import SavedBettingsScreen from '../screens/betting/SavedBettingsScreen/SavedBettingsScreen';
 
 const Stack = createStackNavigator();
 
@@ -95,6 +100,21 @@ const AppNavigator = () => {
               component={BetsParticipatedScreen}
             />
             <Stack.Screen
+              name="BettingFixtureScreen"
+              component={BettingFixtureScreen}
+            />
+            <Stack.Screen name="SavedBetsScreen" component={SavedBetsScreen} />
+
+            <Stack.Screen
+              name="FixtureDetailScreen"
+              component={FixtureDetailScreen}
+            />
+            <Stack.Screen
+              name="CustomizeOddsScreen"
+              component={CustomizeOddsScreen}
+            />
+
+            <Stack.Screen
               name="ManagePredictionsScreen"
               component={ManagePredictionsScreen}
             />
@@ -106,9 +126,14 @@ const AppNavigator = () => {
               name="ShareDetailScreen"
               component={ShareDetailScreen}
             />
+
             <Stack.Screen
               name="ActivityDetailScreen"
               component={ActivityDetailScreen}
+            />
+            <Stack.Screen
+              name="SavedBettingsScreen"
+              component={SavedBettingsScreen}
             />
           </>
         ) : (

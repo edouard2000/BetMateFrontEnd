@@ -108,13 +108,11 @@ const MarketScreen = ({ navigation }) => {
         <TouchableOpacity
           style={[styles.footerButton, styles.withdrawButton]}
           onPress={() => alert('Withdraw MateCash')}>
-          <Icon name="chevron-down-outline" size={20} color="#1E88E5" />
           <Text style={styles.footerButtonText}>Withdraw</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.footerButton, styles.depositButton]}
           onPress={() => alert('Deposit MateCash')}>
-          <Icon name="chevron-up-outline" size={20} color="#FFFFFF" />
           <Text style={styles.footerButtonText}>Deposit</Text>
         </TouchableOpacity>
       </View>

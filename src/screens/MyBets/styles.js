@@ -110,17 +110,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 5,
+    borderRadius: 5,
   },
   footerButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
     marginLeft: 5,
   },
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
   chatButtonText: {
-    color: '#3498db',
+    color: '#1E88E5',
   },
   editButtonText: {
     color: '#FFA500',
   },
-  declineButtonText: {
+  unpublishButtonText: {
     color: '#FF0000',
   },
   lineContainer: {
@@ -140,10 +149,6 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#1E88E5',
     marginHorizontal: 5,
-  },
-  footerContainer: {
-    alignItems: 'center',
-    padding: 5,
   },
 });
 

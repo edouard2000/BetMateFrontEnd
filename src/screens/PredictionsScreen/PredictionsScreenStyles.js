@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -207,19 +207,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-
+    marginVertical: 5, // Add margin to the lineContainer
   },
   dot: {
     width: 5,
     height: 5,
     borderRadius: 5,
     backgroundColor: '#1E88E5',
+    marginHorizontal: 5, // Add margin to the dot
   },
   horizontalLine: {
     width: '80%',
     height: 1,
     backgroundColor: '#1E88E5',
-    marginVertical: 5,
+    marginVertical: 5, // Add margin to the horizontal line
   },
   bottomNav: {
     flexDirection: 'row',
