@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './Styles';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
-import formatTime from '../../utils/formatTime';
+import formatTime from '../../utils/formatTimeAndDate';
 
 const RequestItem = ({
   request,

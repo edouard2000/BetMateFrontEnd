@@ -1,19 +1,18 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import GameItem from './GameItem';
 import Icon from 'react-native-vector-icons/Ionicons';
-import generateAvatarUrl from '../../../utils/generateAvatarUrl';
+import GameItem from './GameItem';
 
 const LeagueItem = ({league, navigation, addTeamToBet, predictTeam, mode}) => {
-  const countryLogo = generateAvatarUrl(league.country) || league.countryLogo;
+  const leagueLogo = league.logo;
 
   return (
     <View style={styles.leagueContainer}>
       <View style={styles.leagueHeader}>
-        <Image source={{uri: countryLogo}} style={styles.countryLogo} />
+        <Image source={{uri: leagueLogo}} style={styles.leagueLogo} />
         <View style={styles.leagueTitle}>
           <Text style={styles.leagueName}>{league.name}</Text>
-          <Text style={styles.countryName}>{league.country}</Text>
+          <Text style={styles.countryName}>{league.country.name}</Text>
         </View>
         <TouchableOpacity
           onPress={() =>
@@ -22,10 +21,10 @@ const LeagueItem = ({league, navigation, addTeamToBet, predictTeam, mode}) => {
           <Icon name="chevron-forward-outline" size={20} color="#3498db" />
         </TouchableOpacity>
       </View>
-      {league.games.slice(0, 5).map((game, index) => (
+      {league.fixtures.slice(0, 5).map((fixture, index) => (
         <GameItem
           key={index}
-          game={game}
+          game={fixture}
           addTeamToBet={addTeamToBet}
           predictTeam={predictTeam}
           mode={mode}
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
   },
-  countryLogo: {
+  leagueLogo: {
     width: 25,
     height: 25,
     borderRadius: 10,

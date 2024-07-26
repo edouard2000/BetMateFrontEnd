@@ -10,136 +10,103 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import io from 'socket.io-client';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
-import {useSelector, useDispatch} from 'react-redux';
-import {setUnreadCount} from '../../store/unreadMessageSlice';
-
-const socket = io('https://betmatebackend.onrender.com/');
+import dummyUser from './dummyUser';
+import dummyMessages from './dummyMessages';
 
 const GeneralChatScreen = ({navigation}) => {
-  const dispatch = useDispatch();
-  const userProfile = useSelector(state => state.user.profile);
-  const unreadCount = useSelector(state => state.unreadMessage.unreadCount);
-  const [messages, setMessages] = useState([]);
+  const userProfile = dummyUser;
+  const [messages, setMessages] = useState(dummyMessages);
   const [inputText, setInputText] = useState('');
   const flatListRef = useRef(null);
 
   useEffect(() => {
-    socket.on('NEW_GLOBAL_MESSAGE', data => {
-      setMessages(prevMessages => [...prevMessages, data.data]);
-      if (data.data.userId !== userProfile._id) {
-        dispatch(setUnreadCount(unreadCount + 1));
-      }
-    });
-
-    socket.emit('fetchMessages');
-    socket.on('messages', data => {
-      setMessages(data.data);
-      const unreadMessages = data.data.filter(
-        msg => !msg.readBy.includes(userProfile._id),
-      );
-      dispatch(setUnreadCount(unreadMessages.length));
-    });
-
-    socket.on('likeUpdated', data => {
-      setMessages(prevMessages =>
-        prevMessages.map(msg => (msg._id === data.data._id ? data.data : msg)),
-      );
-    });
-
-    return () => {
-      socket.off('NEW_GLOBAL_MESSAGE');
-      socket.off('messages');
-      socket.off('likeUpdated');
+    // Simulate receiving new messages
+    const newMessage = {
+      _id: 'newMessageId',
+      userId: userProfile._id,
+      senderName: userProfile.name,
+      avatar: userProfile.avatar,
+      message: 'Hello, this is a new message!',
+      createdAt: new Date(),
+      likes: [],
+      readBy: [],
     };
-  }, [dispatch, userProfile._id]);
+
+    setMessages(prevMessages => [...prevMessages, newMessage]);
+  }, []);
 
   useEffect(() => {
-    if (unreadCount > 0 && flatListRef.current) {
+    if (flatListRef.current) {
       flatListRef.current.scrollToEnd({animated: true});
     }
-  }, [unreadCount]);
+  }, [messages]);
 
-  const sendMessage = async () => {
+  const sendMessage = () => {
     if (inputText.trim()) {
-      socket.emit('sendMessage', {
+      const newMessage = {
+        _id: 'newMessageId',
         userId: userProfile._id,
+        senderName: userProfile.name,
+        avatar: userProfile.avatar,
         message: inputText,
-      });
+        createdAt: new Date(),
+        likes: [],
+        readBy: [],
+      };
+
+      setMessages(prevMessages => [...prevMessages, newMessage]);
       setInputText('');
     }
   };
 
-  const markMessagesAsRead = () => {
-    const unreadMessageIds = messages
-      .filter(msg => !msg.readBy.includes(userProfile._id))
-      .map(msg => msg._id);
-
-    if (unreadMessageIds.length > 0) {
-      socket.emit('markAsRead', {
-        userId: userProfile._id,
-        messageIds: unreadMessageIds,
-      });
-      dispatch(setUnreadCount(0));
-    }
-  };
-
   const toggleLike = messageId => {
-    socket.emit('toggleLike', {
-      userId: userProfile._id,
-      messageId: messageId,
-    });
-  };
-
-  const renderMessage = ({item, index}) => {
-    const isFirstUnread =
-      index === messages.length - unreadCount &&
-      item.userId._id !== userProfile._id;
-    return (
-      <>
-        {isFirstUnread && (
-          <View style={styles.unreadBanner}>
-            <Text style={styles.unreadBannerText}>New Messages</Text>
-          </View>
-        )}
-        <View style={styles.messageContainer}>
-          <Image
-            source={{uri: item.avatar || generateAvatarUrl(item.senderName)}}
-            style={styles.avatar}
-          />
-          <View style={styles.messageContent}>
-            <Text style={styles.username}>{item.senderName}</Text>
-            <Text style={styles.messageText}>{item.message}</Text>
-            <View style={styles.messageFooter}>
-              <Text style={styles.messageTime}>
-                {new Date(item.createdAt).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </Text>
-              <TouchableOpacity
-                onPress={() => toggleLike(item._id)}
-                style={styles.likeButton}>
-                <Icon
-                  name={
-                    item.likes.includes(userProfile._id)
-                      ? 'heart'
-                      : 'heart-outline'
-                  }
-                  size={20}
-                  color={
-                    item.likes.includes(userProfile._id) ? '#ff0000' : '#888'
-                  }
-                />
-                <Text style={styles.likeCount}>{item.likes.length}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </>
+    setMessages(prevMessages =>
+      prevMessages.map(msg =>
+        msg._id === messageId
+          ? {
+              ...msg,
+              likes: msg.likes.includes(userProfile._id)
+                ? msg.likes.filter(id => id !== userProfile._id)
+                : [...msg.likes, userProfile._id],
+            }
+          : msg,
+      ),
     );
   };
+
+  const renderMessage = ({item}) => (
+    <View style={styles.messageContainer}>
+      <Image
+        source={{uri: item.avatar || generateAvatarUrl(item.senderName)}}
+        style={styles.avatar}
+      />
+      <View style={styles.messageContent}>
+        <Text style={styles.username}>{item.senderName}</Text>
+        <Text style={styles.messageText}>{item.message}</Text>
+        <View style={styles.messageFooter}>
+          <Text style={styles.messageTime}>
+            {new Date(item.createdAt).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </Text>
+          <TouchableOpacity
+            onPress={() => toggleLike(item._id)}
+            style={styles.likeButton}>
+            <Icon
+              name={
+                item.likes.includes(userProfile._id) ? 'heart' : 'heart-outline'
+              }
+              size={20}
+              color={item.likes.includes(userProfile._id) ? '#ff0000' : '#888'}
+            />
+            <Text style={styles.likeCount}>{item.likes.length}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -161,8 +128,6 @@ const GeneralChatScreen = ({navigation}) => {
           flatListRef.current.scrollToEnd({animated: true})
         }
         onLayout={() => flatListRef.current.scrollToEnd({animated: true})}
-        onEndReached={markMessagesAsRead}
-        onEndReachedThreshold={0.1}
       />
       <View style={styles.inputContainer}>
         <TextInput
@@ -245,23 +210,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderBottomLeftRadius: 15,
     paddingHorizontal: 15,
-    paddingVertical: Platform.OS === 'android' ? 3 : 5,
+    paddingVertical: 5,
     color: '#FFFFFF',
     marginRight: 5,
   },
   sendButton: {
     justifyContent: 'center',
-  },
-  unreadBanner: {
-    backgroundColor: '#1E90FF',
-    padding: 5,
-    marginVertical: 10,
-    borderRadius: 5,
-  },
-  unreadBannerText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    fontWeight: 'bold',
   },
   messageFooter: {
     flexDirection: 'row',

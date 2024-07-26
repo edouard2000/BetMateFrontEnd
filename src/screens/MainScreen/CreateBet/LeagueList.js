@@ -1,4 +1,3 @@
-// components/LeagueList.js
 import React from 'react';
 import {ScrollView} from 'react-native';
 import LeagueItem from './LeagueItem';

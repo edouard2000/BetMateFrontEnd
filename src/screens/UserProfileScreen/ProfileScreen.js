@@ -2,9 +2,6 @@ import React from 'react';
 import {View, ScrollView, TouchableOpacity, SafeAreaView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './ProfileScreenStyles';
-import {useDispatch} from 'react-redux';
-import {clearUserProfile} from '../../store/userSlice';
-import {logout} from '../../store/authSlice';
 import UserProfileHeader from './UserProfileHeader';
 import PersonalInfoSection from './PersonalInfoSection';
 import PaymentMethodsSection from './PaymentMethodsSection';
@@ -12,12 +9,10 @@ import SettingsSection from './SettingsSection';
 import dummyUser from './dummyUser';
 
 const ProfileScreen = ({navigation}) => {
-  const dispatch = useDispatch();
   const user = dummyUser;
 
-  const handleLogout = async () => {
-    dispatch(logout());
-    dispatch(clearUserProfile());
+  const handleLogout = () => {
+    // Simulate logout process
     navigation.navigate('Login');
   };
 

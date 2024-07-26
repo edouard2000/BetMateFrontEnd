@@ -1,15 +1,37 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BetInfoCard from './BetInfoCard';
 import LeagueList from './LeagueList';
 import SearchBar from './SearchBar';
-import leagues from './leagues';
+import axios from 'axios';
 
 const AddFixtureScreen = ({route, navigation}) => {
   const {betName, balance, mode, userName} = route.params;
   const [teamCount, setTeamCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [leagues, setLeagues] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchLeagues();
+  }, []);
+
+  const fetchLeagues = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/api/leagues');
+      setLeagues(response.data);
+    } catch (error) {
+      console.error('Error fetching leagues:', error);
+    }
+    setLoading(false);
+  };
 
   const addTeamToBet = () => {
     setTeamCount(teamCount + 1);
@@ -18,6 +40,14 @@ const AddFixtureScreen = ({route, navigation}) => {
   const filteredLeagues = leagues.filter(league =>
     league.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#3498db" />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,6 +84,12 @@ const AddFixtureScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000000',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#000000',
   },
   footer: {

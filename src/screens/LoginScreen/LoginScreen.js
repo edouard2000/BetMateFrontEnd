@@ -8,13 +8,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
-import {setUserProfile} from '../../store/userSlice';
 
 const LoginScreen = ({navigation}) => {
-  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +17,7 @@ const LoginScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleNext = async () => {
+  const handleNext = () => {
     setError('');
     if (step === 1) {
       if (!email) {
@@ -36,52 +31,11 @@ const LoginScreen = ({navigation}) => {
         return;
       }
       setIsLoading(true);
-      try {
-        const response = await axios.post(
-          'https://betmatebackend.onrender.com/api/users/login',
-          {email, password},
-        );
-
-        if (response.status === 200) {
-          await AsyncStorage.setItem(
-            'access_token',
-            response.data.data.access_token,
-          );
-          await fetchUserProfile(response.data.data.access_token);
-          setIsLoading(false);
-          navigation.navigate('Main');
-        } else {
-          setError(response.data.message || 'An error occurred during login');
-          setIsLoading(false);
-        }
-      } catch (error) {
-        if (error.response) {
-          setError(error.response.data.message || 'Invalid email or password');
-        } else {
-          setError('An error occurred. Please try again.');
-        }
+      // Here the server connection would be implemented
+      setTimeout(() => {
         setIsLoading(false);
-      }
-    }
-  };
-
-  const fetchUserProfile = async token => {
-    try {
-      const response = await axios.get(
-        'https://betmatebackend.onrender.com/api/users/profile',
-        {
-          headers: {Authorization: `Bearer ${token}`},
-        },
-      );
-      if (response.status === 200) {
-        await AsyncStorage.setItem(
-          'user_profile',
-          JSON.stringify(response.data.data),
-        );
-        dispatch(setUserProfile(response.data.data));
-      }
-    } catch (error) {
-      console.error('Error fetching user profile:', error);
+        navigation.navigate('Main');
+      }, 2000);
     }
   };
 

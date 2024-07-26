@@ -1,22 +1,25 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import generateAvatarUrl from '../../../utils/generateAvatarUrl';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { formatTime, formatDate } from '../../../utils/formatTimeAndDate';
 
-const GameItem = ({game, addTeamToBet, predictTeam, mode}) => {
-  const homeLogo = generateAvatarUrl(game.homeTeam) || game.homeLogo;
-  const awayLogo = generateAvatarUrl(game.awayTeam) || game.awayLogo;
+const GameItem = ({ game, addTeamToBet, predictTeam, mode }) => {
+  const homeLogo = game.homeTeam.logo;
+  const awayLogo = game.awayTeam.logo;
 
   return (
     <View style={styles.gameContainer}>
-      <Text style={styles.gameTime}>{game.time}</Text>
+      <View>
+        <Text style={styles.gameTime}>{formatTime(game.timestamp)}</Text>
+        <Text style={styles.gameDate}>{formatDate(game.timestamp)}</Text>
+      </View>
       <View style={styles.teamsContainer}>
         <View style={styles.team}>
-          <Image source={{uri: homeLogo}} style={styles.teamLogo} />
-          <Text style={styles.teamName}>{game.homeTeam}</Text>
+          <Image source={{ uri: homeLogo }} style={styles.teamLogo} />
+          <Text style={styles.teamName}>{game.homeTeam.name}</Text>
         </View>
         <View style={styles.team}>
-          <Image source={{uri: awayLogo}} style={styles.teamLogo} />
-          <Text style={styles.teamName}>{game.awayTeam}</Text>
+          <Image source={{ uri: awayLogo }} style={styles.teamLogo} />
+          <Text style={styles.teamName}>{game.awayTeam.name}</Text>
         </View>
       </View>
       {mode === 'bet' && (
@@ -46,6 +49,10 @@ const styles = StyleSheet.create({
   gameTime: {
     color: '#FFFFFF',
     marginRight: 10,
+  },
+  gameDate: {
+    color: 'gray',
+    fontSize: 12,
   },
   teamsContainer: {
     flex: 1,

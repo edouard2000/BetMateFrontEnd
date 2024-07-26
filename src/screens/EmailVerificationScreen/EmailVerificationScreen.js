@@ -1,31 +1,30 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { verifyEmail } from '../../store/authSlice';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const EmailVerificationScreen = ({ route, navigation }) => {
-  const { email } = route.params;
+const EmailVerificationScreen = ({route, navigation}) => {
+  const {email} = route.params;
   const [verificationCode, setVerificationCode] = useState('');
-  const dispatch = useDispatch();
 
-  const handleVerify = async () => {
+  const handleVerify = () => {
     if (verificationCode.length !== 6) {
       Alert.alert('Error', 'Please enter a valid 6-digit code.');
       return;
     }
 
-    try {
-      const resultAction = await dispatch(verifyEmail({ email, code: verificationCode }));
-      if (verifyEmail.fulfilled.match(resultAction)) {
-        Alert.alert('Success', 'Email verified successfully!');
-        navigation.navigate('Login');
-      } else {
-        console.log('resultAction - ', resultAction)
-        Alert.alert('Error', resultAction.payload.message);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'An error occurred during email verification.');
+    // Simulate email verification process
+    if (verificationCode === '123456') {
+      Alert.alert('Success', 'Email verified successfully!');
+      navigation.navigate('Login');
+    } else {
+      Alert.alert('Error', 'Invalid verification code.');
     }
   };
 

@@ -3,12 +3,10 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
 import styles from './styles';
 
 const Header = ({onCreateBetPress}) => {
   const navigation = useNavigation();
-  const {unreadCount} = useSelector(state => state.unreadMessage);
 
   return (
     <View style={styles.header}>
@@ -46,9 +44,9 @@ const Header = ({onCreateBetPress}) => {
               color="#1E88E5"
             />
           </TouchableOpacity>
-          {unreadCount > 0 && (
+          {0 > 0 && (
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>{unreadCount}</Text>
+              <Text style={styles.badgeText}>{0}</Text>
             </View>
           )}
         </View>

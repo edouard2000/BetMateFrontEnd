@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,23 +6,58 @@ import {
   TouchableOpacity,
   Text,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import GameItem from './GameItem';
 import SearchBar from './SearchBar';
+import axios from 'axios';
 
 const LeagueDetailScreen = ({route, navigation}) => {
   const {league, mode} = route.params;
   const [searchQuery, setSearchQuery] = useState('');
+  const [fixtures, setFixtures] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-  const addTeamToBet = () => {};
+  useEffect(() => {
+    fetchFixtures();
+  }, [page]);
 
-  const predictTeam = () => {};
+  const fetchFixtures = async () => {
+    if (loading || !hasMore) return;
 
-  const filteredGames = league.games.filter(
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:5001/api/fixtures?league=${league._id}&page=${page}&limit=10`,
+      );
+      const newFixtures = response.data.fixtures;
+
+      setFixtures(prevFixtures => [...prevFixtures, ...newFixtures]);
+      setHasMore(newFixtures.length > 0);
+    } catch (error) {
+      console.error('Error fetching fixtures:', error);
+    }
+    setLoading(false);
+  };
+
+  const handleLoadMore = () => {
+    if (hasMore) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
+
+  const renderFooter = () => {
+    if (!loading) return null;
+    return <ActivityIndicator style={{margin: 20}} />;
+  };
+
+  const filteredGames = fixtures.filter(
     game =>
-      game.homeTeam.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      game.awayTeam.toLowerCase().includes(searchQuery.toLowerCase()),
+      game.homeTeam.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -35,7 +70,7 @@ const LeagueDetailScreen = ({route, navigation}) => {
           <Text style={styles.headerTitle}>{league.name}</Text>
         </View>
         <View style={styles.headerRight}>
-          <Text style={styles.headerGameCount}>{league.games.length}</Text>
+          <Text style={styles.headerGameCount}>{fixtures.length}</Text>
         </View>
       </View>
       <SearchBar placeholder="Search games..." onChangeText={setSearchQuery} />
@@ -44,12 +79,15 @@ const LeagueDetailScreen = ({route, navigation}) => {
         renderItem={({item}) => (
           <GameItem
             game={item}
-            addTeamToBet={addTeamToBet}
-            predictTeam={predictTeam}
+            addTeamToBet={() => {}}
+            predictTeam={() => {}}
             mode={mode}
           />
         )}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={item => item.id.toString()}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={renderFooter}
       />
     </SafeAreaView>
   );

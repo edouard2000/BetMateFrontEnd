@@ -8,11 +8,8 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useDispatch} from 'react-redux';
-import {registerUser} from '../../store/authSlice';
 
 const SignUpScreen = ({navigation}) => {
-  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -21,7 +18,7 @@ const SignUpScreen = ({navigation}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
-  const handleNext = async () => {
+  const handleNext = () => {
     setError('');
     if (step === 1 && name) {
       setStep(2);
@@ -30,24 +27,12 @@ const SignUpScreen = ({navigation}) => {
     } else if (step === 3 && phoneNumber) {
       setStep(4);
     } else if (step === 4 && password) {
-      try {
-        const resultAction = await dispatch(
-          registerUser({name, email, phoneNumber, password}),
-        );
-        if (registerUser.fulfilled.match(resultAction)) {
-          Alert.alert(
-            'Success',
-            `User registered successfully. Check ${email} for verification code.`,
-          );
-          navigation.navigate('EmailVerification', {email});
-        } else {
-          setError(resultAction.payload.message);
-          setStep(1);
-        }
-      } catch (error) {
-        console.log('error -- ', error);
-        setError('An error occurred during registration.');
-      }
+      // Simulate registration process
+      Alert.alert(
+        'Success',
+        `User registered successfully. Check ${email} for verification code.`,
+      );
+      navigation.navigate('EmailVerification', {email});
     } else {
       setError('Please fill in all fields.');
     }
