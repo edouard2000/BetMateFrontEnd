@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userName: {
-    color: '#1E88E5',
+    color: '#fff',
     fontSize: 16,
   },
   rightContainer: {
