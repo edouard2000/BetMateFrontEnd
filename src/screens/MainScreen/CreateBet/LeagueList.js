@@ -7,7 +7,7 @@ const LeagueList = ({leagues, navigation, addTeamToBet, mode}) => {
     <ScrollView>
       {leagues.map((league, index) => (
         <LeagueItem
-          key={index}
+          key={league._id}
           league={league}
           navigation={navigation}
           addTeamToBet={addTeamToBet}

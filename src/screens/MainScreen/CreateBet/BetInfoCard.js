@@ -12,6 +12,7 @@ const BetInfoCard = ({
   onNextPress,
 }) => {
   const avatarUrl = generateAvatarUrl(mode === 'predict' ? userName : betName);
+  const teamCountBgColor = mode === 'predict' ? '#E74C3C' : '#3498db';
 
   return (
     <View style={styles.card}>
@@ -24,7 +25,11 @@ const BetInfoCard = ({
         </View>
         <View style={styles.rightContainer}>
           {mode === 'bet' && <Text style={styles.value}>{`$${balance}`}</Text>}
-          <View style={styles.teamCountContainer}>
+          <View
+            style={[
+              styles.teamCountContainer,
+              {backgroundColor: teamCountBgColor},
+            ]}>
             <Text style={styles.teamCount}>{teamCount}</Text>
           </View>
           <TouchableOpacity style={styles.saveButton} onPress={onSavePress}>
@@ -79,6 +84,9 @@ const styles = StyleSheet.create({
   },
   teamCountContainer: {
     marginHorizontal: 10,
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 5,
   },
   teamCount: {
     color: '#FFFFFF',
@@ -86,15 +94,15 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     backgroundColor: '#d35400',
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     borderRadius: 5,
     marginHorizontal: 15,
   },
   nextButton: {
     backgroundColor: '#1E88E5',
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     borderRadius: 5,
   },
   buttonText: {

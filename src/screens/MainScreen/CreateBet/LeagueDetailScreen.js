@@ -14,7 +14,8 @@ import SearchBar from './SearchBar';
 import axios from 'axios';
 
 const LeagueDetailScreen = ({route, navigation}) => {
-  const {league, mode} = route.params;
+  const {leagueId, leagueName, mode} = route.params;
+
   const [searchQuery, setSearchQuery] = useState('');
   const [fixtures, setFixtures] = useState([]);
   const [page, setPage] = useState(1);
@@ -31,11 +32,14 @@ const LeagueDetailScreen = ({route, navigation}) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:5001/api/fixtures?league=${league._id}&page=${page}&limit=10`,
+        `http://localhost:5001/api/fixtures/league/${leagueId}?page=${page}&limit=10`,
       );
-      const newFixtures = response.data.fixtures;
+      const newFixtures = response.data.fixtures || [];
+      const uniqueFixtures = newFixtures.filter(
+        newFixture => !fixtures.some(fixture => fixture.id === newFixture.id),
+      );
 
-      setFixtures(prevFixtures => [...prevFixtures, ...newFixtures]);
+      setFixtures(prevFixtures => [...prevFixtures, ...uniqueFixtures]);
       setHasMore(newFixtures.length > 0);
     } catch (error) {
       console.error('Error fetching fixtures:', error);
@@ -60,16 +64,24 @@ const LeagueDetailScreen = ({route, navigation}) => {
       game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
+  const backButtonColor = mode === 'predict' ? '#E74C3C' : '#3498db';
+  const headerRightBgColor = mode === 'predict' ? '#E74C3C' : '#3498db';
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="chevron-back-outline" size={20} color="#3498db" />
+            <Icon
+              name="chevron-back-outline"
+              size={20}
+              color={backButtonColor}
+            />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>{league.name}</Text>
+          <Text style={styles.headerTitle}>{leagueName}</Text>
         </View>
-        <View style={styles.headerRight}>
+        <View
+          style={[styles.headerRight, {backgroundColor: headerRightBgColor}]}>
           <Text style={styles.headerGameCount}>{fixtures.length}</Text>
         </View>
       </View>
@@ -118,9 +130,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   headerRight: {
-    backgroundColor: '#3498db',
     borderRadius: 5,
     paddingHorizontal: 5,
+    paddingVertical: 5,
   },
   headerGameCount: {
     color: '#FFFFFF',

@@ -1,24 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { formatTime, formatDate } from '../../../utils/formatTimeAndDate';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {formatTime, formatDate} from '../../../utils/formatTimeAndDate';
 
-const GameItem = ({ game, addTeamToBet, predictTeam, mode }) => {
+const GameItem = ({game, addTeamToBet, predictTeam, mode}) => {
   const homeLogo = game.homeTeam.logo;
   const awayLogo = game.awayTeam.logo;
 
   return (
     <View style={styles.gameContainer}>
       <View>
-        <Text style={styles.gameTime}>{formatTime(game.timestamp)}</Text>
-        <Text style={styles.gameDate}>{formatDate(game.timestamp)}</Text>
+        <Text style={styles.gameTime}>{formatTime(game.date)}</Text>
+        <Text style={styles.gameDate}>{formatDate(game.date)}</Text>
       </View>
       <View style={styles.teamsContainer}>
         <View style={styles.team}>
-          <Image source={{ uri: homeLogo }} style={styles.teamLogo} />
+          <Image source={{uri: homeLogo}} style={styles.teamLogo} />
           <Text style={styles.teamName}>{game.homeTeam.name}</Text>
         </View>
         <View style={styles.team}>
-          <Image source={{ uri: awayLogo }} style={styles.teamLogo} />
+          <Image source={{uri: awayLogo}} style={styles.teamLogo} />
           <Text style={styles.teamName}>{game.awayTeam.name}</Text>
         </View>
       </View>

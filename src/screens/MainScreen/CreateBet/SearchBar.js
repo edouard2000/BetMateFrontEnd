@@ -14,13 +14,11 @@ const SearchBar = ({placeholder, onChangeText}) => {
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: '#121212',
+    backgroundColor: '#000000',
     borderRadius: 10,
     paddingVertical: Platform.OS === 'ios' ? 10 : 6,
     paddingHorizontal: 10,
     color: '#FFFFFF',
-    marginHorizontal: 5,
-    marginBottom: 10,
   },
 });
 
