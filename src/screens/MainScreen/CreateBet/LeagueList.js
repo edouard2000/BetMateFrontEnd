@@ -1,8 +1,8 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import { ScrollView } from 'react-native';
 import LeagueItem from './LeagueItem';
 
-const LeagueList = ({leagues, navigation, addTeamToBet, mode}) => {
+const LeagueList = ({ leagues, navigation, betId, mode }) => {
   return (
     <ScrollView>
       {leagues.map((league, index) => (
@@ -10,7 +10,7 @@ const LeagueList = ({leagues, navigation, addTeamToBet, mode}) => {
           key={league._id}
           league={league}
           navigation={navigation}
-          addTeamToBet={addTeamToBet}
+          betId={betId} 
           mode={mode}
         />
       ))}

@@ -1,17 +1,68 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 import {formatTime, formatDate} from '../../../utils/formatTimeAndDate';
 
-const LeagueItem = ({league, navigation, addTeamToBet, predictTeam, mode}) => {
+const LeagueItem = ({league, navigation, betId, mode}) => {
   if (!league) return null;
 
   const leagueId = league._id;
   const leagueLogo = league.leagueLogo || '';
   const leagueName = league.leagueName || 'Unknown League';
   const countryName = league.countryName || 'Unknown Country';
-
   const navigationIconColor = mode === 'predict' ? '#E74C3C' : '#3498db';
+
+  const [addedFixtures, setAddedFixtures] = useState([]);
+
+  useEffect(() => {
+    const fetchFixtureStatuses = async () => {
+      const statuses = await Promise.all(
+        league.fixtures.slice(0, 5).map(async fixture => {
+          try {
+            const response = await axios.get(
+              `http://localhost:5001/api/bet/${betId}/fixture/${fixture._id}`,
+            );
+            return {fixtureId: fixture._id, isAdded: response.data.isAdded};
+          } catch (error) {
+            console.error('Error checking fixture status:', error);
+            return {fixtureId: fixture._id, isAdded: false};
+          }
+        }),
+      );
+      setAddedFixtures(statuses);
+    };
+
+    fetchFixtureStatuses();
+  }, [league.fixtures, betId]);
+
+  const handleAddFixture = async fixtureId => {
+    try {
+      await axios.post('http://localhost:5001/api/bet/add-fixture', {
+        betId,
+        fixtureId,
+      });
+      setAddedFixtures(prev =>
+        prev.map(f => (f.fixtureId === fixtureId ? {...f, isAdded: true} : f)),
+      );
+    } catch (error) {
+      console.error('Error adding fixture to bet:', error);
+    }
+  };
+
+  const handleRemoveFixture = async fixtureId => {
+    try {
+      await axios.post('http://localhost:5001/api/bet/remove-fixture', {
+        betId,
+        fixtureId,
+      });
+      setAddedFixtures(prev =>
+        prev.map(f => (f.fixtureId === fixtureId ? {...f, isAdded: false} : f)),
+      );
+    } catch (error) {
+      console.error('Error removing fixture from bet:', error);
+    }
+  };
 
   return (
     <View style={styles.leagueContainer}>
@@ -27,6 +78,7 @@ const LeagueItem = ({league, navigation, addTeamToBet, predictTeam, mode}) => {
               leagueId: leagueId,
               leagueName: leagueName,
               mode,
+              betId,
             });
           }}>
           <Icon
@@ -42,6 +94,10 @@ const LeagueItem = ({league, navigation, addTeamToBet, predictTeam, mode}) => {
           const awayTeamName = fixture.awayTeam?.name || 'Unknown Away Team';
           const homeLogo = fixture.homeTeam?.logo || '';
           const awayLogo = fixture.awayTeam?.logo || '';
+
+          const isFixtureAdded = addedFixtures.find(
+            f => f.fixtureId === fixture._id,
+          )?.isAdded;
 
           return (
             <View key={index} style={styles.gameContainer}>
@@ -61,15 +117,22 @@ const LeagueItem = ({league, navigation, addTeamToBet, predictTeam, mode}) => {
               </View>
               {mode === 'bet' && (
                 <TouchableOpacity
-                  style={styles.addButton}
-                  onPress={addTeamToBet}>
-                  <Text style={styles.addButtonText}>Add</Text>
+                  style={[
+                    styles.button,
+                    isFixtureAdded ? styles.removeButton : styles.addButton,
+                  ]}
+                  onPress={() =>
+                    isFixtureAdded
+                      ? handleRemoveFixture(fixture._id)
+                      : handleAddFixture(fixture._id)
+                  }>
+                  <Text style={styles.buttonText}>
+                    {isFixtureAdded ? 'Remove' : 'Add'}
+                  </Text>
                 </TouchableOpacity>
               )}
               {mode === 'predict' && (
-                <TouchableOpacity
-                  style={styles.predictButton}
-                  onPress={predictTeam}>
+                <TouchableOpacity style={styles.predictButton}>
                   <Text style={styles.predictButtonText}>Predict</Text>
                 </TouchableOpacity>
               )}
@@ -154,14 +217,19 @@ const styles = StyleSheet.create({
   teamName: {
     color: '#FFFFFF',
   },
-  addButton: {
-    backgroundColor: '#3498db',
+  button: {
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginLeft: 5,
   },
-  addButtonText: {
+  addButton: {
+    backgroundColor: '#3498db',
+  },
+  removeButton: {
+    backgroundColor: '#E74C3C',
+  },
+  buttonText: {
     color: '#FFFFFF',
     fontWeight: 'bold',
   },

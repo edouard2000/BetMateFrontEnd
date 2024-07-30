@@ -1,6 +1,5 @@
-// screens/MainScreen.js
 import React, { useState } from 'react';
-import { SafeAreaView, Dimensions } from 'react-native';
+import { SafeAreaView, Dimensions, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from './Header';
 import Search from './Search';

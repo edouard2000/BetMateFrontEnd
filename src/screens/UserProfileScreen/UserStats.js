@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const UserStats = ({ Scores, following, followers }) => {
+const UserStats = ({ scores, following, followers }) => {
   return (
     <View style={styles.statsContainer}>
       <View style={styles.stat}>
         <Text style={styles.label}>Scores</Text>
-        <Text style={styles.value}>{Scores}</Text>
+        <Text style={styles.value}>{scores}</Text>
       </View>
       <View style={styles.stat}>
         <Text style={styles.label}>Following</Text>

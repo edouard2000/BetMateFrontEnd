@@ -1,10 +1,28 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import axios from 'axios';
 import {formatTime, formatDate} from '../../../utils/formatTimeAndDate';
 
-const GameItem = ({game, addTeamToBet, predictTeam, mode}) => {
+const GameItem = ({
+  game,
+  addTeamToBet,
+  removeTeamFromBet,
+  betId,
+  addedFixtures,
+  mode,
+}) => {
   const homeLogo = game.homeTeam.logo;
   const awayLogo = game.awayTeam.logo;
+
+  const isAdded = addedFixtures.find(f => f.fixtureId === game._id)?.isAdded;
+
+  const handleAdd = async () => {
+    await addTeamToBet(game._id);
+  };
+
+  const handleRemove = async () => {
+    await removeTeamFromBet(game._id);
+  };
 
   return (
     <View style={styles.gameContainer}>
@@ -23,12 +41,17 @@ const GameItem = ({game, addTeamToBet, predictTeam, mode}) => {
         </View>
       </View>
       {mode === 'bet' && (
-        <TouchableOpacity style={styles.addButton} onPress={addTeamToBet}>
-          <Text style={styles.addButtonText}>Add</Text>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            isAdded ? styles.removeButton : styles.addButton,
+          ]}
+          onPress={() => (isAdded ? handleRemove() : handleAdd())}>
+          <Text style={styles.buttonText}>{isAdded ? 'Remove' : 'Add'}</Text>
         </TouchableOpacity>
       )}
       {mode === 'predict' && (
-        <TouchableOpacity style={styles.predictButton} onPress={predictTeam}>
+        <TouchableOpacity style={styles.predictButton}>
           <Text style={styles.predictButtonText}>Predict</Text>
         </TouchableOpacity>
       )}
@@ -71,14 +94,19 @@ const styles = StyleSheet.create({
   teamName: {
     color: '#FFFFFF',
   },
-  addButton: {
-    backgroundColor: '#3498db',
+  button: {
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginLeft: 5,
   },
-  addButtonText: {
+  addButton: {
+    backgroundColor: '#3498db',
+  },
+  removeButton: {
+    backgroundColor: '#E74C3C',
+  },
+  buttonText: {
     color: '#FFFFFF',
     fontWeight: 'bold',
   },

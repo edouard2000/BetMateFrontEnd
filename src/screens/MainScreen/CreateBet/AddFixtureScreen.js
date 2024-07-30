@@ -14,7 +14,7 @@ import SearchBar from './SearchBar';
 import axios from 'axios';
 
 const AddFixtureScreen = ({route, navigation}) => {
-  const {betName, balance, mode, userName} = route.params;
+  const {betId, betName, balance, mode, userName} = route.params;
   const [teamCount, setTeamCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [leagues, setLeagues] = useState([]);
@@ -78,7 +78,7 @@ const AddFixtureScreen = ({route, navigation}) => {
       <LeagueList
         leagues={filteredLeagues}
         navigation={navigation}
-        addTeamToBet={addTeamToBet}
+        betId={betId}
         mode={mode}
       />
       <View style={styles.footer}>

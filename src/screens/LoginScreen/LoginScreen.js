@@ -8,42 +8,60 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useAuth} from '../../context/AuthContext';
+import {validateEmail, validatePassword} from '../../utils/validators';
 
-const LoginScreen = ({navigation}) => {
-  const [step, setStep] = useState(1);
+const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigation = useNavigation();
+  const route = useRoute();
+  const {checkAuth} = useAuth();
 
-  const handleNext = () => {
+  const handleSignIn = async () => {
     setError('');
-    if (step === 1) {
-      if (!email) {
-        setError('Please enter your email');
-        return;
-      }
-      setStep(2);
-    } else {
-      if (!password) {
-        setError('Please enter your password');
-        return;
-      }
-      setIsLoading(true);
-      // Here the server connection would be implemented
-      setTimeout(() => {
-        setIsLoading(false);
-        navigation.navigate('Main');
-      }, 2000);
-    }
-  };
+    setLoading(true);
 
-  const handleBack = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    } else {
-      navigation.goBack();
+    // Validate inputs
+    if (!validateEmail(email)) {
+      setError('Invalid email format');
+      setLoading(false);
+      return;
+    }
+    if (!validatePassword(password)) {
+      setError(
+        'Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter',
+      );
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5001/api/login', {
+        email,
+        password,
+      });
+      await AsyncStorage.setItem('token', response.data.token);
+      await checkAuth();
+      console.log('Authenticated');
+      const {targetRoute, targetParams} = route.params || {};
+      navigation.navigate(targetRoute || 'Main', targetParams);
+    } catch (error) {
+      setLoading(false);
+      if (
+        error.response?.data?.error ===
+        'Please verify your email before logging in.'
+      ) {
+        navigation.navigate('EmailVerification', {email});
+      } else {
+        setError(error.response?.data?.error || 'Invalid email or password');
+      }
     }
   };
 
@@ -55,65 +73,54 @@ const LoginScreen = ({navigation}) => {
       </Text>
       <Text style={styles.subtitle}>Log in</Text>
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
-      {step === 1 && (
+      <TextInput
+        placeholder="Enter email"
+        placeholderTextColor="#AAAAAA"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+      />
+      <View style={styles.passwordContainer}>
         <TextInput
-          placeholder="Enter email"
+          placeholder="Password"
           placeholderTextColor="#AAAAAA"
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
+          secureTextEntry={!showPassword}
+          style={styles.passwordInput}
+          value={password}
+          onChangeText={setPassword}
         />
-      )}
-      {step === 2 && (
-        <View style={styles.passwordContainer}>
-          <TextInput
-            placeholder="Password"
-            placeholderTextColor="#AAAAAA"
-            secureTextEntry={!showPassword}
-            style={styles.passwordInput}
-            value={password}
-            onChangeText={setPassword}
+        <TouchableOpacity
+          onPress={() => setShowPassword(!showPassword)}
+          style={styles.iconContainer}>
+          <Icon
+            name={showPassword ? 'eye-off' : 'eye'}
+            size={20}
+            color="#3498db"
           />
-          <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.iconContainer}>
-            <Icon
-              name={showPassword ? 'eye-off' : 'eye'}
-              size={20}
-              color="#3498db"
-            />
-          </TouchableOpacity>
-        </View>
-      )}
-      {step === 2 && (
-        <TouchableOpacity style={styles.forgotPasswordContainer}>
-          <Text style={styles.forgotPasswordText}>Forgot password?</Text>
         </TouchableOpacity>
-      )}
+      </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={handleNext}
-        disabled={isLoading}>
-        {isLoading ? (
+        onPress={handleSignIn}
+        disabled={loading}>
+        {loading ? (
           <ActivityIndicator color="#FFFFFF" />
         ) : (
-          <Text style={styles.buttonText}>
-            {step === 1 ? 'Next' : 'Sign in'}
-          </Text>
+          <Text style={styles.buttonText}>Sign in</Text>
         )}
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.signupButton}
-        onPress={() => navigation.navigate('SignUp')}>
+        onPress={() =>
+          navigation.navigate('SignUp', {
+            targetRoute: route.params?.targetRoute,
+            targetParams: route.params?.targetParams,
+          })
+        }>
         <Text style={styles.signupText}>
           Don't have an account? <Text style={styles.signUpText}>Sign up</Text>
         </Text>
       </TouchableOpacity>
-      {step > 1 && (
-        <TouchableOpacity style={styles.arrowContainer} onPress={handleBack}>
-          <Icon name="arrow-back-outline" size={30} color="#3498db" />
-        </TouchableOpacity>
-      )}
     </View>
   );
 };
@@ -170,14 +177,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     padding: 10,
   },
-  forgotPasswordContainer: {
-    alignSelf: 'center',
-    marginBottom: 20,
-  },
-  forgotPasswordText: {
-    color: '#3498db',
-    fontSize: 14,
-  },
   button: {
     backgroundColor: '#3498db',
     paddingVertical: 10,
@@ -206,10 +205,6 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 16,
     color: '#3498db',
-  },
-  arrowContainer: {
-    marginTop: 30,
-    alignItems: 'center',
   },
   errorText: {
     color: 'red',

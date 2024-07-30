@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import UserAvatar from './UserAvatar';
 import UserStats from './UserStats';
 
-const UserProfileHeader = ({user}) => {
+const UserProfileHeader = ({ user }) => {
   return (
     <View style={styles.headerContainer}>
       <UserStats
-        Scores={user.Scores}
-        following={user.following}
-        followers={user.followers}
+        scores={user.scores}
+        following={user.following.length}
+        followers={user.followers.length}
       />
-      <UserAvatar profilePicture={user.profilePicture} />
+      <UserAvatar user={user} />
     </View>
   );
 };

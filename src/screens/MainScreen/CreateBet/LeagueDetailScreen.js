@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,10 +14,11 @@ import SearchBar from './SearchBar';
 import axios from 'axios';
 
 const LeagueDetailScreen = ({route, navigation}) => {
-  const {leagueId, leagueName, mode} = route.params;
+  const {leagueId, leagueName, mode, betId} = route.params;
 
   const [searchQuery, setSearchQuery] = useState('');
   const [fixtures, setFixtures] = useState([]);
+  const [addedFixtures, setAddedFixtures] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -25,6 +26,12 @@ const LeagueDetailScreen = ({route, navigation}) => {
   useEffect(() => {
     fetchFixtures();
   }, [page]);
+
+  useEffect(() => {
+    if (fixtures.length > 0) {
+      fetchFixtureStatuses();
+    }
+  }, [fixtures]);
 
   const fetchFixtures = async () => {
     if (loading || !hasMore) return;
@@ -47,8 +54,53 @@ const LeagueDetailScreen = ({route, navigation}) => {
     setLoading(false);
   };
 
+  const fetchFixtureStatuses = async () => {
+    const statuses = await Promise.all(
+      fixtures.map(async fixture => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5001/api/bet/${betId}/fixture/${fixture._id}`,
+          );
+          return {fixtureId: fixture._id, isAdded: response.data.isAdded};
+        } catch (error) {
+          console.error('Error checking fixture status:', error);
+          return {fixtureId: fixture._id, isAdded: false};
+        }
+      }),
+    );
+    setAddedFixtures(statuses);
+  };
+
+  const handleAddFixture = async fixtureId => {
+    try {
+      await axios.post('http://localhost:5001/api/bet/add-fixture', {
+        betId,
+        fixtureId,
+      });
+      setAddedFixtures(prev =>
+        prev.map(f => (f.fixtureId === fixtureId ? {...f, isAdded: true} : f)),
+      );
+    } catch (error) {
+      console.error('Error adding fixture to bet:', error);
+    }
+  };
+
+  const handleRemoveFixture = async fixtureId => {
+    try {
+      await axios.post('http://localhost:5001/api/bet/remove-fixture', {
+        betId,
+        fixtureId,
+      });
+      setAddedFixtures(prev =>
+        prev.map(f => (f.fixtureId === fixtureId ? {...f, isAdded: false} : f)),
+      );
+    } catch (error) {
+      console.error('Error removing fixture from bet:', error);
+    }
+  };
+
   const handleLoadMore = () => {
-    if (hasMore) {
+    if (hasMore && !loading) {
       setPage(prevPage => prevPage + 1);
     }
   };
@@ -66,6 +118,20 @@ const LeagueDetailScreen = ({route, navigation}) => {
 
   const backButtonColor = mode === 'predict' ? '#E74C3C' : '#3498db';
   const headerRightBgColor = mode === 'predict' ? '#E74C3C' : '#3498db';
+
+  const renderItem = useCallback(
+    ({item}) => (
+      <GameItem
+        game={item}
+        addTeamToBet={handleAddFixture}
+        removeTeamFromBet={handleRemoveFixture}
+        betId={betId}
+        addedFixtures={addedFixtures}
+        mode={mode}
+      />
+    ),
+    [mode, addedFixtures],
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,15 +154,8 @@ const LeagueDetailScreen = ({route, navigation}) => {
       <SearchBar placeholder="Search games..." onChangeText={setSearchQuery} />
       <FlatList
         data={filteredGames}
-        renderItem={({item}) => (
-          <GameItem
-            game={item}
-            addTeamToBet={() => {}}
-            predictTeam={() => {}}
-            mode={mode}
-          />
-        )}
-        keyExtractor={item => item.id.toString()}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}

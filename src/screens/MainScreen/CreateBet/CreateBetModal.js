@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import axios from 'axios';
 
 const CreateBetModal = ({visible, onClose}) => {
   const navigation = useNavigation();
@@ -18,13 +19,33 @@ const CreateBetModal = ({visible, onClose}) => {
   const [step, setStep] = useState(1);
   const [betName, setBetName] = useState('');
   const [balance, setBalance] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step === 1 && betName) {
       setStep(2);
     } else if (step === 2 && balance) {
-      navigation.navigate('AddFixtureScreen', {betName, balance, mode});
-      onClose();
+      try {
+        setLoading(true);
+        const response = await axios.post('http://localhost:5001/api/bet', {
+          name: betName,
+          amountAllocated: balance,
+        });
+        setLoading(false);
+        const {_id} = response.data;
+        navigation.navigate('AddFixtureScreen', {
+          betId: _id,
+          betName,
+          balance,
+          mode,
+        });
+        onClose();
+      } catch (err) {
+        setLoading(false);
+        setError('Error creating bet');
+        console.error('Error creating bet:', err);
+      }
     } else {
       alert('Please fill in all fields.');
     }
@@ -82,9 +103,14 @@ const CreateBetModal = ({visible, onClose}) => {
               </TouchableOpacity>
             )}
             <TouchableOpacity style={styles.button} onPress={handleNext}>
-              <Text style={styles.buttonText}>Next</Text>
+              {loading ? (
+                <Text style={styles.buttonText}>Loading...</Text>
+              ) : (
+                <Text style={styles.buttonText}>Next</Text>
+              )}
             </TouchableOpacity>
           </View>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
         </View>
       </View>
     </Modal>
@@ -171,6 +197,10 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginHorizontal: 5,
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 10,
   },
 });
 

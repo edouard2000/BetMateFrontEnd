@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,23 +8,64 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const EmailVerificationScreen = ({route, navigation}) => {
-  const {email} = route.params;
+const EmailVerificationScreen = ({ route }) => {
+  const { email } = route.params;
   const [verificationCode, setVerificationCode] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
+  const { checkAuth } = useAuth();
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     if (verificationCode.length !== 6) {
       Alert.alert('Error', 'Please enter a valid 6-digit code.');
       return;
     }
 
-    // Simulate email verification process
-    if (verificationCode === '123456') {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        'http://localhost:5001/api/verify-email',
+        {
+          email,
+          code: verificationCode,
+        },
+      );
+      await AsyncStorage.setItem('token', response.data.token);
+      await checkAuth(); // This will update the user context and set the user as logged in
+      setLoading(false);
       Alert.alert('Success', 'Email verified successfully!');
-      navigation.navigate('Login');
-    } else {
-      Alert.alert('Error', 'Invalid verification code.');
+      navigation.navigate('Main');
+    } catch (error) {
+      setLoading(false);
+      Alert.alert(
+        'Error',
+        error.response?.data?.error || 'Invalid verification code.',
+      );
+    }
+  };
+
+  const handleResendCode = async () => {
+    try {
+      setLoading(true);
+      await axios.post('http://localhost:5001/api/resend-verification-code', {
+        email,
+      });
+      setLoading(false);
+      Alert.alert(
+        'Success',
+        'A new verification code has been sent to your email.',
+      );
+    } catch (error) {
+      setLoading(false);
+      Alert.alert(
+        'Error',
+        'Failed to resend verification code. Please try again later.',
+      );
     }
   };
 
@@ -46,8 +87,21 @@ const EmailVerificationScreen = ({route, navigation}) => {
         keyboardType="number-pad"
         maxLength={6}
       />
-      <TouchableOpacity style={styles.button} onPress={handleVerify}>
-        <Text style={styles.buttonText}>Verify</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleVerify}
+        disabled={loading}>
+        <Text style={styles.buttonText}>
+          {loading ? 'Verifying...' : 'Verify'}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.resendButton}
+        onPress={handleResendCode}
+        disabled={loading}>
+        <Text style={styles.buttonText}>
+          {loading ? 'Resending...' : 'Resend Code'}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.arrowContainer}
@@ -103,6 +157,13 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   button: {
+    width: '80%',
+    backgroundColor: '#3498db',
+    paddingVertical: 12,
+    borderRadius: 25,
+    marginTop: 10,
+  },
+  resendButton: {
     width: '80%',
     backgroundColor: '#3498db',
     paddingVertical: 12,

@@ -5,11 +5,19 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  validateEmail,
+  validatePhoneNumber,
+  validatePassword,
+} from '../../utils/validators';
 
-const SignUpScreen = ({navigation}) => {
+const SignUpScreen = () => {
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,24 +25,58 @@ const SignUpScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const handleSignUp = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const response = await axios.post('http://localhost:5001/api/signup', {
+        name,
+        email,
+        phoneNumber,
+        password,
+      });
+      setLoading(false);
+      navigation.navigate('EmailVerification', {email});
+    } catch (error) {
+      setLoading(false);
+      setError(
+        error.response?.data?.error || 'An error occurred. Please try again.',
+      );
+    }
+  };
 
   const handleNext = () => {
     setError('');
-    if (step === 1 && name) {
-      setStep(2);
-    } else if (step === 2 && email) {
-      setStep(3);
-    } else if (step === 3 && phoneNumber) {
-      setStep(4);
-    } else if (step === 4 && password) {
-      // Simulate registration process
-      Alert.alert(
-        'Success',
-        `User registered successfully. Check ${email} for verification code.`,
-      );
-      navigation.navigate('EmailVerification', {email});
-    } else {
-      setError('Please fill in all fields.');
+    if (step === 1) {
+      if (name) {
+        setStep(2);
+      } else {
+        setError('Please enter your name.');
+      }
+    } else if (step === 2) {
+      if (validateEmail(email)) {
+        setStep(3);
+      } else {
+        setError('Invalid email format.');
+      }
+    } else if (step === 3) {
+      if (validatePhoneNumber(phoneNumber)) {
+        setStep(4);
+      } else {
+        setError('Invalid phone number format.');
+      }
+    } else if (step === 4) {
+      if (validatePassword(password)) {
+        handleSignUp();
+      } else {
+        setError(
+          'Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter.',
+        );
+      }
     }
   };
 
@@ -73,6 +115,16 @@ const SignUpScreen = ({navigation}) => {
           keyboardType="email-address"
         />
       )}
+      {step === 3 && (
+        <TextInput
+          placeholder="Phone Number"
+          placeholderTextColor="#AAAAAA"
+          style={styles.input}
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
+          keyboardType="phone-pad"
+        />
+      )}
       {step === 4 && (
         <View style={styles.passwordContainer}>
           <TextInput
@@ -94,22 +146,20 @@ const SignUpScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       )}
-      {step === 3 && (
-        <TextInput
-          placeholder="Phone Number"
-          placeholderTextColor="#AAAAAA"
-          style={styles.input}
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
-          keyboardType="phone-pad"
-        />
-      )}
-      <TouchableOpacity style={styles.button} onPress={handleNext}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleNext}
+        disabled={loading}>
         <Text style={styles.buttonText}>{step === 4 ? 'Sign up' : 'Next'}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.signupButton}
-        onPress={() => navigation.navigate('Login')}>
+        onPress={() =>
+          navigation.navigate('Login', {
+            targetRoute: route.params?.targetRoute,
+            targetParams: route.params?.targetParams,
+          })
+        }>
         <Text style={styles.signupText}>
           Already have an account? <Text style={styles.logInText}>Log in</Text>
         </Text>
