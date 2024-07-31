@@ -6,11 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {signup} from '../../redux/slices/authSlice'; // Adjust path if necessary
 import {
   validateEmail,
   validatePhoneNumber,
@@ -25,27 +25,24 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
+  const dispatch = useDispatch();
+  const {loading, error: signupError} = useSelector(state => state.auth);
 
   const handleSignUp = async () => {
     setError('');
-    setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5001/api/signup', {
-        name,
-        email,
-        phoneNumber,
-        password,
-      });
-      setLoading(false);
-      navigation.navigate('EmailVerification', {email});
-    } catch (error) {
-      setLoading(false);
-      setError(
-        error.response?.data?.error || 'An error occurred. Please try again.',
+      const resultAction = await dispatch(
+        signup({name, email, phoneNumber, password}),
       );
+      if (signup.fulfilled.match(resultAction)) {
+        navigation.navigate('EmailVerification', {email});
+      } else {
+        setError(resultAction.error.message);
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.');
     }
   };
 
@@ -74,7 +71,7 @@ const SignUpScreen = () => {
         handleSignUp();
       } else {
         setError(
-          'Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter.',
+          'Password must be at least 8 characters long, contain at least one number, one uppercase letter, one lowercase letter, and one special character.',
         );
       }
     }
@@ -95,7 +92,9 @@ const SignUpScreen = () => {
         <Text style={styles.titleMate}>Mate</Text>
       </Text>
       <Text style={styles.subtitle}>Sign up</Text>
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {error || signupError ? (
+        <Text style={styles.errorText}>{error || signupError}</Text>
+      ) : null}
       {step === 1 && (
         <TextInput
           placeholder="Name"

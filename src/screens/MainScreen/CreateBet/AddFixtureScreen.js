@@ -1,47 +1,27 @@
-import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ActivityIndicator,
-  Text,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, StyleSheet, ActivityIndicator, Text, View, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BetInfoCard from './BetInfoCard';
-import LeagueList from './LeagueList';
 import SearchBar from './SearchBar';
-import axios from 'axios';
+import LeagueList from './LeagueList';
+import { fetchLeagues } from '../../../redux/slices/fixtureSlice';
 
-const AddFixtureScreen = ({route, navigation}) => {
-  const {betId, betName, balance, mode, userName} = route.params;
-  const [teamCount, setTeamCount] = useState(0);
+const AddFixtureScreen = ({ route, navigation }) => {
+  const { betId, betName, balance, mode } = route.params;
   const [searchQuery, setSearchQuery] = useState('');
-  const [leagues, setLeagues] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const leagues = useSelector(state => state.fixtures.leagues);
+  const loading = useSelector(state => state.fixtures.status === 'loading');
+  const error = useSelector(state => state.fixtures.error);
+  const userName = useSelector(state => state.auth.user?.name);
 
   useEffect(() => {
-    fetchLeagues();
-  }, []);
-
-  const fetchLeagues = async () => {
-    try {
-      const response = await axios.get('http://localhost:5001/api/leagues');
-      setLeagues(response.data);
-    } catch (error) {
-      setError('Error fetching leagues');
-      console.error('Error fetching leagues:', error);
-    }
-    setLoading(false);
-  };
-
-  const addTeamToBet = () => {
-    setTeamCount(teamCount + 1);
-  };
+    dispatch(fetchLeagues());
+  }, [dispatch]);
 
   const filteredLeagues = leagues.filter(league =>
-    league.leagueName?.toLowerCase().includes(searchQuery.toLowerCase()),
+    league.leagueName?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading) {
@@ -53,9 +33,10 @@ const AddFixtureScreen = ({route, navigation}) => {
   }
 
   if (error) {
+    const errorMessage = error.error || 'Something went wrong';
     return (
       <SafeAreaView style={styles.loadingContainer}>
-        <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.errorText}>{errorMessage}</Text>
       </SafeAreaView>
     );
   }
@@ -65,22 +46,13 @@ const AddFixtureScreen = ({route, navigation}) => {
       <BetInfoCard
         betName={betName}
         balance={balance}
-        teamCount={teamCount}
         mode={mode}
         userName={userName}
         onSavePress={() => alert('Save pressed')}
         onNextPress={() => alert('Next pressed')}
       />
-      <SearchBar
-        placeholder="Search leagues..."
-        onChangeText={setSearchQuery}
-      />
-      <LeagueList
-        leagues={filteredLeagues}
-        navigation={navigation}
-        betId={betId}
-        mode={mode}
-      />
+      <SearchBar placeholder="Search leagues..." onChangeText={setSearchQuery} />
+      <LeagueList leagues={filteredLeagues} navigation={navigation} betId={betId} mode={mode} />
       <View style={styles.footer}>
         <View style={styles.backButtonContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('Main')}>

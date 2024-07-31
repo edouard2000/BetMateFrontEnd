@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-import {formatTime, formatDate} from '../../../utils/formatTimeAndDate';
+import { useSelector, useDispatch } from 'react-redux';
+import { addFixture, removeFixture } from '../../../redux/slices/fixtureSlice';
+import { formatTime, formatDate } from '../../../utils/formatTimeAndDate';
 
-const LeagueItem = ({league, navigation, betId, mode}) => {
+const LeagueItem = ({ league, navigation, betId, mode }) => {
   if (!league) return null;
 
   const leagueId = league._id;
@@ -13,61 +14,21 @@ const LeagueItem = ({league, navigation, betId, mode}) => {
   const countryName = league.countryName || 'Unknown Country';
   const navigationIconColor = mode === 'predict' ? '#E74C3C' : '#3498db';
 
-  const [addedFixtures, setAddedFixtures] = useState([]);
+  const dispatch = useDispatch();
+  const addedFixtures = useSelector(state => state.fixtures.fixtures);
 
-  useEffect(() => {
-    const fetchFixtureStatuses = async () => {
-      const statuses = await Promise.all(
-        league.fixtures.slice(0, 5).map(async fixture => {
-          try {
-            const response = await axios.get(
-              `http://localhost:5001/api/bet/${betId}/fixture/${fixture._id}`,
-            );
-            return {fixtureId: fixture._id, isAdded: response.data.isAdded};
-          } catch (error) {
-            console.error('Error checking fixture status:', error);
-            return {fixtureId: fixture._id, isAdded: false};
-          }
-        }),
-      );
-      setAddedFixtures(statuses);
-    };
-
-    fetchFixtureStatuses();
-  }, [league.fixtures, betId]);
-
-  const handleAddFixture = async fixtureId => {
-    try {
-      await axios.post('http://localhost:5001/api/bet/add-fixture', {
-        betId,
-        fixtureId,
-      });
-      setAddedFixtures(prev =>
-        prev.map(f => (f.fixtureId === fixtureId ? {...f, isAdded: true} : f)),
-      );
-    } catch (error) {
-      console.error('Error adding fixture to bet:', error);
-    }
+  const handleAddFixture = fixtureId => {
+    dispatch(addFixture(fixtureId));
   };
 
-  const handleRemoveFixture = async fixtureId => {
-    try {
-      await axios.post('http://localhost:5001/api/bet/remove-fixture', {
-        betId,
-        fixtureId,
-      });
-      setAddedFixtures(prev =>
-        prev.map(f => (f.fixtureId === fixtureId ? {...f, isAdded: false} : f)),
-      );
-    } catch (error) {
-      console.error('Error removing fixture from bet:', error);
-    }
+  const handleRemoveFixture = fixtureId => {
+    dispatch(removeFixture(fixtureId));
   };
 
   return (
     <View style={styles.leagueContainer}>
       <View style={styles.leagueHeader}>
-        <Image source={{uri: leagueLogo}} style={styles.leagueLogo} />
+        <Image source={{ uri: leagueLogo }} style={styles.leagueLogo} />
         <View style={styles.leagueTitle}>
           <Text style={styles.leagueName}>{leagueName}</Text>
           <Text style={styles.countryName}>{countryName}</Text>
@@ -95,9 +56,7 @@ const LeagueItem = ({league, navigation, betId, mode}) => {
           const homeLogo = fixture.homeTeam?.logo || '';
           const awayLogo = fixture.awayTeam?.logo || '';
 
-          const isFixtureAdded = addedFixtures.find(
-            f => f.fixtureId === fixture._id,
-          )?.isAdded;
+          const isFixtureAdded = addedFixtures[fixture.id]?.added;
 
           return (
             <View key={index} style={styles.gameContainer}>
@@ -107,11 +66,11 @@ const LeagueItem = ({league, navigation, betId, mode}) => {
               </View>
               <View style={styles.teamsContainer}>
                 <View style={styles.team}>
-                  <Image source={{uri: homeLogo}} style={styles.teamLogo} />
+                  <Image source={{ uri: homeLogo }} style={styles.teamLogo} />
                   <Text style={styles.teamName}>{homeTeamName}</Text>
                 </View>
                 <View style={styles.team}>
-                  <Image source={{uri: awayLogo}} style={styles.teamLogo} />
+                  <Image source={{ uri: awayLogo }} style={styles.teamLogo} />
                   <Text style={styles.teamName}>{awayTeamName}</Text>
                 </View>
               </View>
@@ -123,8 +82,8 @@ const LeagueItem = ({league, navigation, betId, mode}) => {
                   ]}
                   onPress={() =>
                     isFixtureAdded
-                      ? handleRemoveFixture(fixture._id)
-                      : handleAddFixture(fixture._id)
+                      ? handleRemoveFixture(fixture.id)
+                      : handleAddFixture(fixture.id)
                   }>
                   <Text style={styles.buttonText}>
                     {isFixtureAdded ? 'Remove' : 'Add'}

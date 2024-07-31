@@ -1,35 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { View, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { checkAuth } from '../redux/slices/authSlice'; // Adjust path if necessary
 
 const ProtectedRoute = ({ children }) => {
-  const { user, checkAuth } = useAuth();
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const authenticate = async () => {
-      try {
-        await checkAuth();
-      } catch (error) {
-        console.error('Authentication error', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    authenticate();
-  }, []);
+    if (!isAuthenticated) {
+      dispatch(checkAuth());
+    }
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !isAuthenticated) {
       navigation.navigate('Login', {
         targetRoute: route.name,
         targetParams: route.params,
       });
     }
-  }, [loading, user, navigation, route]);
+  }, [loading, isAuthenticated, navigation, route]);
 
   if (loading) {
     return (
@@ -39,7 +33,7 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  return user ? children : null;
+  return isAuthenticated ? children : null;
 };
 
 export default ProtectedRoute;

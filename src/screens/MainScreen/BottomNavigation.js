@@ -2,11 +2,11 @@ import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
-import {useAuth} from '../../context/AuthContext';
+import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 const BottomNavigation = ({toggleAddDropdown, toggleMenuDropdown}) => {
-  const {user} = useAuth();
+  const user = useSelector(state => state.auth.user);
   const navigation = useNavigation();
 
   const handleNavigate = screen => {

@@ -1,15 +1,16 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 import AppNavigator from './src/navigation/AppNavigator';
 import StatusBarManager from './src/utils/StatusBarManager';
-import { AuthProvider } from './src/context/AuthContext';
 
 const App = () => {
   return (
-    <AuthProvider>
+    <Provider store={store}>
       <StatusBarManager>
         <AppNavigator />
       </StatusBarManager>
-    </AuthProvider>
+    </Provider>
   );
 };
 

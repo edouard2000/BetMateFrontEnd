@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,19 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../context/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {
+  verifyEmail,
+  resendVerificationCode,
+} from '../../redux/slices/authSlice'; 
 
-const EmailVerificationScreen = ({ route }) => {
-  const { email } = route.params;
+const EmailVerificationScreen = ({route}) => {
+  const {email} = route.params;
   const [verificationCode, setVerificationCode] = useState('');
-  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const { checkAuth } = useAuth();
+  const dispatch = useDispatch();
+  const {loading, error} = useSelector(state => state.auth);
 
   const handleVerify = async () => {
     if (verificationCode.length !== 6) {
@@ -26,42 +28,32 @@ const EmailVerificationScreen = ({ route }) => {
       return;
     }
 
-    setLoading(true);
     try {
-      const response = await axios.post(
-        'http://localhost:5001/api/verify-email',
-        {
-          email,
-          code: verificationCode,
-        },
+      const resultAction = await dispatch(
+        verifyEmail({email, code: verificationCode}),
       );
-      await AsyncStorage.setItem('token', response.data.token);
-      await checkAuth(); // This will update the user context and set the user as logged in
-      setLoading(false);
-      Alert.alert('Success', 'Email verified successfully!');
-      navigation.navigate('Main');
+      if (verifyEmail.fulfilled.match(resultAction)) {
+        Alert.alert('Success', 'Email verified successfully!');
+        navigation.navigate('Main');
+      } else {
+        Alert.alert(
+          'Error',
+          resultAction.error.message || 'Invalid verification code.',
+        );
+      }
     } catch (error) {
-      setLoading(false);
-      Alert.alert(
-        'Error',
-        error.response?.data?.error || 'Invalid verification code.',
-      );
+      Alert.alert('Error', 'An error occurred. Please try again.');
     }
   };
 
   const handleResendCode = async () => {
     try {
-      setLoading(true);
-      await axios.post('http://localhost:5001/api/resend-verification-code', {
-        email,
-      });
-      setLoading(false);
+      await dispatch(resendVerificationCode({email}));
       Alert.alert(
         'Success',
         'A new verification code has been sent to your email.',
       );
     } catch (error) {
-      setLoading(false);
       Alert.alert(
         'Error',
         'Failed to resend verification code. Please try again later.',

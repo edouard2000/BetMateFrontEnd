@@ -1,28 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import axios from 'axios';
 import {formatTime, formatDate} from '../../../utils/formatTimeAndDate';
 
-const GameItem = ({
-  game,
-  addTeamToBet,
-  removeTeamFromBet,
-  betId,
-  addedFixtures,
-  mode,
-}) => {
+const GameItem = ({game, mode}) => {
   const homeLogo = game.homeTeam.logo;
   const awayLogo = game.awayTeam.logo;
-
-  const isAdded = addedFixtures.find(f => f.fixtureId === game._id)?.isAdded;
-
-  const handleAdd = async () => {
-    await addTeamToBet(game._id);
-  };
-
-  const handleRemove = async () => {
-    await removeTeamFromBet(game._id);
-  };
 
   return (
     <View style={styles.gameContainer}>
@@ -41,13 +23,8 @@ const GameItem = ({
         </View>
       </View>
       {mode === 'bet' && (
-        <TouchableOpacity
-          style={[
-            styles.button,
-            isAdded ? styles.removeButton : styles.addButton,
-          ]}
-          onPress={() => (isAdded ? handleRemove() : handleAdd())}>
-          <Text style={styles.buttonText}>{isAdded ? 'Remove' : 'Add'}</Text>
+        <TouchableOpacity style={[styles.button, styles.addButton]}>
+          <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
       )}
       {mode === 'predict' && (
@@ -102,9 +79,6 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: '#3498db',
-  },
-  removeButton: {
-    backgroundColor: '#E74C3C',
   },
   buttonText: {
     color: '#FFFFFF',

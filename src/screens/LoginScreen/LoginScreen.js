@@ -1,67 +1,40 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {useAuth} from '../../context/AuthContext';
-import {validateEmail, validatePassword} from '../../utils/validators';
+import { login } from '../../redux/slices/authSlice'; // Adjust path if necessary
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { validateEmail, validatePassword } from '../../utils/validators';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
-  const {checkAuth} = useAuth();
+  const { loading, error } = useSelector(state => state.auth);
 
   const handleSignIn = async () => {
-    setError('');
-    setLoading(true);
-
-    // Validate inputs
     if (!validateEmail(email)) {
-      setError('Invalid email format');
-      setLoading(false);
+      alert('Invalid email format');
       return;
     }
     if (!validatePassword(password)) {
-      setError(
-        'Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter',
-      );
-      setLoading(false);
+      alert('Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter');
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5001/api/login', {
-        email,
-        password,
-      });
-      await AsyncStorage.setItem('token', response.data.token);
-      await checkAuth();
-      console.log('Authenticated');
-      const {targetRoute, targetParams} = route.params || {};
-      navigation.navigate(targetRoute || 'Main', targetParams);
-    } catch (error) {
-      setLoading(false);
-      if (
-        error.response?.data?.error ===
-        'Please verify your email before logging in.'
-      ) {
-        navigation.navigate('EmailVerification', {email});
+      const resultAction = await dispatch(login({ email, password }));
+      if (login.fulfilled.match(resultAction)) {
+        const { targetRoute, targetParams } = route.params || {};
+        navigation.navigate(targetRoute || 'Main', targetParams);
       } else {
-        setError(error.response?.data?.error || 'Invalid email or password');
+        alert('Invalid email or password');
       }
+    } catch (error) {
+      console.error('Failed to login', error);
     }
   };
 
@@ -92,11 +65,7 @@ const LoginScreen = () => {
         <TouchableOpacity
           onPress={() => setShowPassword(!showPassword)}
           style={styles.iconContainer}>
-          <Icon
-            name={showPassword ? 'eye-off' : 'eye'}
-            size={20}
-            color="#3498db"
-          />
+          <Icon name={showPassword ? 'eye-off' : 'eye'} size={20} color="#3498db" />
         </TouchableOpacity>
       </View>
       <TouchableOpacity
@@ -183,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginTop: 5,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,

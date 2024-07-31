@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,20 @@ import {
   Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import axios from 'axios';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBetName, setBalance, createBet } from '../../../redux/slices/betSlice';
 
-const CreateBetModal = ({visible, onClose}) => {
+const CreateBetModal = ({ visible, onClose }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const mode = route.params?.mode || 'bet';
 
+  const dispatch = useDispatch();
+  const betName = useSelector(state => state.bet.betName);
+  const balance = useSelector(state => state.bet.balance);
+  const userId = useSelector(state => state.auth.user?._id); 
   const [step, setStep] = useState(1);
-  const [betName, setBetName] = useState('');
-  const [balance, setBalance] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -26,20 +29,17 @@ const CreateBetModal = ({visible, onClose}) => {
     if (step === 1 && betName) {
       setStep(2);
     } else if (step === 2 && balance) {
+      if (!userId) {
+        setError('User not logged in');
+        return;
+      }
       try {
         setLoading(true);
-        const response = await axios.post('http://localhost:5001/api/bet', {
-          name: betName,
-          amountAllocated: balance,
-        });
+        await dispatch(
+          createBet({ name: betName, amountAllocated: balance, userId }),
+        ).unwrap();
         setLoading(false);
-        const {_id} = response.data;
-        navigation.navigate('AddFixtureScreen', {
-          betId: _id,
-          betName,
-          balance,
-          mode,
-        });
+        navigation.navigate('AddFixtureScreen', { betName, balance, mode });
         onClose();
       } catch (err) {
         setLoading(false);
@@ -75,7 +75,7 @@ const CreateBetModal = ({visible, onClose}) => {
               placeholderTextColor="#AAAAAA"
               style={styles.input}
               value={betName}
-              onChangeText={setBetName}
+              onChangeText={text => dispatch(setBetName(text))}
             />
           )}
           {step === 2 && (
@@ -84,7 +84,7 @@ const CreateBetModal = ({visible, onClose}) => {
               placeholderTextColor="#AAAAAA"
               style={styles.input}
               value={balance}
-              onChangeText={setBalance}
+              onChangeText={text => dispatch(setBalance(text))}
               keyboardType="numeric"
             />
           )}
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
     elevation: 5,

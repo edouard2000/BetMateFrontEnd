@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,129 +8,57 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import GameItem from './GameItem';
 import SearchBar from './SearchBar';
-import axios from 'axios';
 
-const LeagueDetailScreen = ({route, navigation}) => {
-  const {leagueId, leagueName, mode, betId} = route.params;
-
+const LeagueDetailScreen = ({ route, navigation }) => {
+  const { leagueId, leagueName, mode } = route.params;
+  const fixtures = useSelector(state => state.fixtures.fixtures);
   const [searchQuery, setSearchQuery] = useState('');
-  const [fixtures, setFixtures] = useState([]);
-  const [addedFixtures, setAddedFixtures] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [filteredFixtures, setFilteredFixtures] = useState([]);
+  const [visibleFixtures, setVisibleFixtures] = useState([]);
 
   useEffect(() => {
-    fetchFixtures();
-  }, [page]);
-
-  useEffect(() => {
-    if (fixtures.length > 0) {
-      fetchFixtureStatuses();
-    }
-  }, [fixtures]);
-
-  const fetchFixtures = async () => {
-    if (loading || !hasMore) return;
-
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `http://localhost:5001/api/fixtures/league/${leagueId}?page=${page}&limit=10`,
-      );
-      const newFixtures = response.data.fixtures || [];
-      const uniqueFixtures = newFixtures.filter(
-        newFixture => !fixtures.some(fixture => fixture.id === newFixture.id),
-      );
-
-      setFixtures(prevFixtures => [...prevFixtures, ...uniqueFixtures]);
-      setHasMore(newFixtures.length > 0);
-    } catch (error) {
-      console.error('Error fetching fixtures:', error);
-    }
-    setLoading(false);
-  };
-
-  const fetchFixtureStatuses = async () => {
-    const statuses = await Promise.all(
-      fixtures.map(async fixture => {
-        try {
-          const response = await axios.get(
-            `http://localhost:5001/api/bet/${betId}/fixture/${fixture._id}`,
-          );
-          return {fixtureId: fixture._id, isAdded: response.data.isAdded};
-        } catch (error) {
-          console.error('Error checking fixture status:', error);
-          return {fixtureId: fixture._id, isAdded: false};
-        }
-      }),
+    const leagueFixtures = Object.values(fixtures).filter(
+      fixture => fixture.leagueId === leagueId
     );
-    setAddedFixtures(statuses);
-  };
+    setFilteredFixtures(leagueFixtures);
+    setVisibleFixtures(leagueFixtures.slice(0, 10));
+  }, [fixtures, leagueId]);
 
-  const handleAddFixture = async fixtureId => {
-    try {
-      await axios.post('http://localhost:5001/api/bet/add-fixture', {
-        betId,
-        fixtureId,
-      });
-      setAddedFixtures(prev =>
-        prev.map(f => (f.fixtureId === fixtureId ? {...f, isAdded: true} : f)),
-      );
-    } catch (error) {
-      console.error('Error adding fixture to bet:', error);
-    }
-  };
-
-  const handleRemoveFixture = async fixtureId => {
-    try {
-      await axios.post('http://localhost:5001/api/bet/remove-fixture', {
-        betId,
-        fixtureId,
-      });
-      setAddedFixtures(prev =>
-        prev.map(f => (f.fixtureId === fixtureId ? {...f, isAdded: false} : f)),
-      );
-    } catch (error) {
-      console.error('Error removing fixture from bet:', error);
-    }
-  };
+  useEffect(() => {
+    const filteredGames = filteredFixtures.filter(
+      game =>
+        game.homeTeam.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setVisibleFixtures(filteredGames.slice(0, 10));
+  }, [searchQuery, filteredFixtures]);
 
   const handleLoadMore = () => {
-    if (hasMore && !loading) {
-      setPage(prevPage => prevPage + 1);
-    }
+    const moreFixtures = filteredFixtures.slice(
+      visibleFixtures.length,
+      visibleFixtures.length + 10
+    );
+    setVisibleFixtures([...visibleFixtures, ...moreFixtures]);
   };
 
-  const renderFooter = () => {
-    if (!loading) return null;
-    return <ActivityIndicator style={{margin: 20}} />;
-  };
-
-  const filteredGames = fixtures.filter(
+  const filteredGames = visibleFixtures.filter(
     game =>
       game.homeTeam.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const backButtonColor = mode === 'predict' ? '#E74C3C' : '#3498db';
   const headerRightBgColor = mode === 'predict' ? '#E74C3C' : '#3498db';
 
-  const renderItem = useCallback(
-    ({item}) => (
-      <GameItem
-        game={item}
-        addTeamToBet={handleAddFixture}
-        removeTeamFromBet={handleRemoveFixture}
-        betId={betId}
-        addedFixtures={addedFixtures}
-        mode={mode}
-      />
-    ),
-    [mode, addedFixtures],
+  const renderItem = ({ item }) => (
+    <GameItem
+      game={item}
+      mode={mode}
+    />
   );
 
   return (
@@ -146,19 +74,20 @@ const LeagueDetailScreen = ({route, navigation}) => {
           </TouchableOpacity>
           <Text style={styles.headerTitle}>{leagueName}</Text>
         </View>
-        <View
-          style={[styles.headerRight, {backgroundColor: headerRightBgColor}]}>
-          <Text style={styles.headerGameCount}>{fixtures.length}</Text>
+        <View style={[styles.headerRight, { backgroundColor: headerRightBgColor }]}>
+          <Text style={styles.headerGameCount}>{filteredFixtures.length}</Text>
         </View>
       </View>
       <SearchBar placeholder="Search games..." onChangeText={setSearchQuery} />
       <FlatList
         data={filteredGames}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id.toString()} // Ensure the key is unique using _id
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={renderFooter}
+        ListFooterComponent={() =>
+          visibleFixtures.length < filteredFixtures.length && <ActivityIndicator size="large" color="#3498db" />
+        }
       />
     </SafeAreaView>
   );

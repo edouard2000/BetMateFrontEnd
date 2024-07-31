@@ -1,18 +1,20 @@
 import React from 'react';
-import {View, ScrollView, TouchableOpacity, SafeAreaView} from 'react-native';
+import { View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './ProfileScreenStyles';
 import UserProfileHeader from './UserProfileHeader';
 import PersonalInfoSection from './PersonalInfoSection';
 import PaymentMethodsSection from './PaymentMethodsSection';
 import SettingsSection from './SettingsSection';
-import {useAuth} from '../../context/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../redux/slices/authSlice'; // Adjust the path as needed
 
-const ProfileScreen = ({navigation}) => {
-  const {user, logout} = useAuth();
+const ProfileScreen = ({ navigation }) => {
+  const user = useSelector(state => state.auth.user);
+  const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    await logout();
+    await dispatch(logout());
     navigation.navigate('Main');
   };
 

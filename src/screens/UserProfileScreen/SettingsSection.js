@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './ProfileScreenStyles';
 
-const SettingsSection = ({ navigation, handleLogout }) => {
+const SettingsSection = ({navigation, handleLogout}) => {
   return (
     <View style={[styles.section, styles.settingsSection]}>
       <View style={styles.sectionTitleContainer}>
