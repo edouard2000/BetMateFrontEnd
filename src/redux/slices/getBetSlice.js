@@ -19,6 +19,49 @@ export const fetchBetsByUser = createAsyncThunk(
   },
 );
 
+export const publishBet = createAsyncThunk(
+  'bets/publishBet',
+  async (betId, { getState, rejectWithValue }) => {
+    try {
+      const state = getState();
+      const token = state.auth.token;
+
+      const response = await axios.patch(
+        `http://localhost:5001/api/publish-bet/${betId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const unpublishBet = createAsyncThunk(
+  'bets/unpublishBet',
+  async (betId, { getState, rejectWithValue }) => {
+    try {
+      const state = getState();
+      const token = state.auth.token;
+
+      const response = await axios.patch(
+        `http://localhost:5001/api/unpublish-bet/${betId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const betsSlice = createSlice({
   name: 'bets',
@@ -51,6 +94,36 @@ const betsSlice = createSlice({
       .addCase(fetchBetsByUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(publishBet.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(publishBet.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedBet = action.payload;
+        // Update status to 'Active' when published
+        updatedBet.status = 'Active';
+        state.unpublishedBets = state.unpublishedBets.filter(bet => bet._id !== updatedBet._id);
+        state.publishedBets.push(updatedBet);
+      })
+      .addCase(publishBet.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || 'Failed to publish bet';
+      })
+      .addCase(unpublishBet.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(unpublishBet.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedBet = action.payload;
+        // Update status to 'Unpublished' when unpublished
+        updatedBet.status = 'Unpublished';
+        state.publishedBets = state.publishedBets.filter(bet => bet._id !== updatedBet._id);
+        state.unpublishedBets.push(updatedBet);
+      })
+      .addCase(unpublishBet.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || 'Failed to unpublish bet';
       });
   },
 });

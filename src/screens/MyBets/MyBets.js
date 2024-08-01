@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -6,30 +6,33 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import styles from './styles';
 import BetCard from './BetCard';
 import FilterButton from './FilterButton';
-import dummyBets from './dummyBets';
 
-const MyBets = ({navigation}) => {
+console.log(BetCard)
+
+const MyBets = ({ navigation }) => {
   const [filteredStatus, setFilteredStatus] = useState('All');
+  const publishedBets = useSelector((state) => state.bets.publishedBets); 
 
-  const handleFilterChange = status => {
+  const handleFilterChange = (status) => {
     setFilteredStatus(status);
   };
 
-  const filteredBets = dummyBets.filter(
-    bet => filteredStatus === 'All' || bet.status === filteredStatus,
+  const filteredBets = publishedBets.filter(
+    (bet) => filteredStatus === 'All' || bet.status.toLowerCase() === filteredStatus.toLowerCase()
   );
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.filterContainer}>
-        {['All', 'Active', 'Pending', 'Completed'].map(status => (
+        {['All', 'Active', 'Pending', 'Completed'].map((status) => (
           <FilterButton
             key={status}
             label={status}
-            isActive={filteredStatus === status}
+            isActive={filteredStatus.toLowerCase() === status.toLowerCase()}
             onPress={() => handleFilterChange(status)}
           />
         ))}
@@ -37,7 +40,7 @@ const MyBets = ({navigation}) => {
       <ScrollView style={styles.scrollView}>
         {filteredBets.map((bet, index) => (
           <BetCard
-            key={bet.id}
+            key={bet._id}
             bet={bet}
             onCardPress={() =>
               navigation.navigate('FixtureDetailScreen', {
@@ -52,14 +55,14 @@ const MyBets = ({navigation}) => {
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.footerButton}>
-          <Text style={[styles.footerButtonText, {color: '#1E88E5'}]}>
+          <Text style={[styles.footerButtonText, { color: '#1E88E5' }]}>
             Back
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('SavedBetsScreen')}
           style={styles.footerButton}>
-          <Text style={[styles.footerButtonText, {color: '#1E88E5'}]}>
+          <Text style={[styles.footerButtonText, { color: '#1E88E5' }]}>
             Saved
           </Text>
         </TouchableOpacity>

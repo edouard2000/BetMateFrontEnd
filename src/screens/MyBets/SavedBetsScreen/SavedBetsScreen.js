@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import BetCard from './BetCard';
+import BetSavedCard from './BetSavedCard';
 import styles from './styles';
 import {fetchBetsByUser} from '../../../redux/slices/getBetSlice';
 
@@ -31,7 +31,7 @@ const SavedBetsScreen = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {unpublishedBets.map((bet, index) => (
-          <BetCard
+          <BetSavedCard
             key={bet._id}
             bet={bet}
             onCardPress={() =>

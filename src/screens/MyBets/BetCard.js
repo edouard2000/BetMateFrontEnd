@@ -1,12 +1,15 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
+import {unpublishBet} from '../../redux/slices/getBetSlice'; // Import the unpublish thunk
 
 const BetCard = ({bet, isLast}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const getStatusStyle = status => {
     switch (status) {
@@ -25,6 +28,10 @@ const BetCard = ({bet, isLast}) => {
     navigation.navigate('FixtureDetailScreen', {bet});
   };
 
+  const handleUnpublish = () => {
+    dispatch(unpublishBet(bet._id));
+  };
+
   return (
     <>
       <TouchableOpacity style={styles.card} onPress={handleCardPress}>
@@ -40,15 +47,15 @@ const BetCard = ({bet, isLast}) => {
             <Text style={[styles.status, getStatusStyle(bet.status)]}>
               {bet.status}
             </Text>
-            <Text style={styles.amount}>{bet.allocatedAmount}</Text>
+            <Text style={styles.amount}>${bet.amountAllocated}</Text>
           </View>
         </View>
         <View style={styles.bodySection}>
           <Text style={styles.bodyLabel}>
-            Teams: <Text style={styles.bodyValue}>{bet.numberOfTeams}</Text>
+            Teams: <Text style={styles.bodyValue}>{bet.fixtures.length}</Text>
           </Text>
           <Text style={styles.bodyLabel}>
-            People: <Text style={styles.bodyValue}>{bet.people}</Text>
+            People: <Text style={styles.bodyValue}>{bet.poepleBetted}</Text>
           </Text>
           <Text style={styles.bodyLabel}>
             Outcome: <Text style={styles.bodyValue}>{bet.outcome}</Text>
@@ -67,7 +74,9 @@ const BetCard = ({bet, isLast}) => {
               Edit
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.footerButton}>
+          <TouchableOpacity
+            style={styles.footerButton}
+            onPress={handleUnpublish}>
             <Icon name="eye-off-outline" size={18} color="#FF0000" />
             <Text style={[styles.footerButtonText, styles.unpublishButtonText]}>
               Unpublish

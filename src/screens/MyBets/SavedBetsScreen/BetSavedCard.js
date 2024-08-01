@@ -1,20 +1,21 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
 import styles from './styles';
 import generateAvatarUrl from '../../../utils/generateAvatarUrl';
+import {publishBet} from '../../../redux/slices/getBetSlice';
 
 const BetCard = ({bet, isLast}) => {
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  const handleCardPress = () => {
-    navigation.navigate('FixtureDetailScreen', {bet});
+  const handlePublish = () => {
+    dispatch(publishBet(bet._id));
   };
 
   return (
     <>
-      <TouchableOpacity style={styles.card} onPress={handleCardPress}>
+      <TouchableOpacity style={styles.card}>
         <View style={styles.cardHeader}>
           <View style={styles.headerLeft}>
             <Image
@@ -36,7 +37,7 @@ const BetCard = ({bet, isLast}) => {
             People: <Text style={styles.bodyValue}>{bet.poepleBetted}</Text>
           </Text>
           <Text style={styles.bodyLabel}>
-            Outcome: <Text style={styles.bodyValue}>{bet.outcome}</Text>
+            Outcome: <Text style={styles.bodyValue}>{bet.payout}</Text>
           </Text>
         </View>
         <View style={styles.cardFooter}>
@@ -52,12 +53,26 @@ const BetCard = ({bet, isLast}) => {
               Edit
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.footerButton}>
-            <Icon name="eye-outline" size={18} color="#FF0000" />
-            <Text style={[styles.footerButtonText, styles.publishButtonText]}>
-              Publish
-            </Text>
-          </TouchableOpacity>
+          {bet.ispublished ? (
+            <TouchableOpacity
+              style={styles.footerButton}
+              onPress={handleUnpublish}>
+              <Icon name="eye-off-outline" size={18} color="#FF0000" />
+              <Text
+                style={[styles.footerButtonText, styles.unpublishButtonText]}>
+                Unpublish
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.footerButton}
+              onPress={handlePublish}>
+              <Icon name="eye-outline" size={18} color="#FF0000" />
+              <Text style={[styles.footerButtonText, styles.publishButtonText]}>
+                Publish
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </TouchableOpacity>
       {!isLast && (
@@ -71,4 +86,4 @@ const BetCard = ({bet, isLast}) => {
   );
 };
 
-export default BetCard;
+export default BetSavedCard;
