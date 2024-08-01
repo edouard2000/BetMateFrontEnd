@@ -6,7 +6,7 @@ import styles from './styles';
 import generateAvatarUrl from '../../../utils/generateAvatarUrl';
 import {publishBet} from '../../../redux/slices/getBetSlice';
 
-const BetCard = ({bet, isLast}) => {
+const BetSavedCard = ({bet, isLast}) => {
   const dispatch = useDispatch();
 
   const handlePublish = () => {
@@ -56,7 +56,7 @@ const BetCard = ({bet, isLast}) => {
           {bet.ispublished ? (
             <TouchableOpacity
               style={styles.footerButton}
-              onPress={handleUnpublish}>
+              onPress={() => dispatch(unpublishBet(bet._id))}>
               <Icon name="eye-off-outline" size={18} color="#FF0000" />
               <Text
                 style={[styles.footerButtonText, styles.unpublishButtonText]}>

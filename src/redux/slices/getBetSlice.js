@@ -60,7 +60,7 @@ export const unpublishBet = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 const betsSlice = createSlice({
@@ -88,37 +88,35 @@ const betsSlice = createSlice({
       })
       .addCase(fetchBetsByUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.publishedBets = action.payload.filter(bet => bet.ispublished);
-        state.unpublishedBets = action.payload.filter(bet => !bet.ispublished);
+        state.publishedBets = action.payload.filter((bet) => bet.ispublished);
+        state.unpublishedBets = action.payload.filter(
+          (bet) => !bet.ispublished
+        );
       })
       .addCase(fetchBetsByUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(publishBet.pending, (state) => {
-        state.loading = true;
-      })
       .addCase(publishBet.fulfilled, (state, action) => {
         state.loading = false;
         const updatedBet = action.payload;
-        // Update status to 'Active' when published
-        updatedBet.status = 'Active';
-        state.unpublishedBets = state.unpublishedBets.filter(bet => bet._id !== updatedBet._id);
+        updatedBet.status = 'active';
+        state.unpublishedBets = state.unpublishedBets.filter(
+          (bet) => bet._id !== updatedBet._id
+        );
         state.publishedBets.push(updatedBet);
       })
       .addCase(publishBet.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || 'Failed to publish bet';
       })
-      .addCase(unpublishBet.pending, (state) => {
-        state.loading = true;
-      })
       .addCase(unpublishBet.fulfilled, (state, action) => {
         state.loading = false;
         const updatedBet = action.payload;
-        // Update status to 'Unpublished' when unpublished
-        updatedBet.status = 'Unpublished';
-        state.publishedBets = state.publishedBets.filter(bet => bet._id !== updatedBet._id);
+        updatedBet.status = 'unpublished';
+        state.publishedBets = state.publishedBets.filter(
+          (bet) => bet._id !== updatedBet._id
+        );
         state.unpublishedBets.push(updatedBet);
       })
       .addCase(unpublishBet.rejected, (state, action) => {

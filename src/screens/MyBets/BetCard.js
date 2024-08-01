@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 import generateAvatarUrl from '../../utils/generateAvatarUrl';
-import {unpublishBet} from '../../redux/slices/getBetSlice'; // Import the unpublish thunk
+import {unpublishBet} from '../../redux/slices/getBetSlice'; 
 
 const BetCard = ({bet, isLast}) => {
   const navigation = useNavigation();
