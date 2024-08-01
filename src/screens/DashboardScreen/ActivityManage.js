@@ -1,8 +1,23 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSelector, useDispatch } from 'react-redux'; // Ensure both hooks are imported
+import { fetchBetsByUser } from '../../redux/slices/getBetSlice'; // Ensure this path is correct
 
-const ActivityManage = ({navigation}) => {
+const ActivityManage = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const userId = useSelector(state => state.auth.user._id); 
+
+  const handleNavigateToMyBets = () => {
+    // Dispatch action to update the store before navigation
+    if (userId) {
+      dispatch(fetchBetsByUser(userId)).then(() => {
+        // Navigate after the store is updated
+        navigation.navigate('MyBets');
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -10,7 +25,7 @@ const ActivityManage = ({navigation}) => {
           <Text style={styles.title}>Bet</Text>
           <Text style={styles.description}>Manage your bets</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('MyBets')}>
+        <TouchableOpacity onPress={handleNavigateToMyBets}>
           <Icon name="chevron-forward-outline" size={30} color="#3498db" />
         </TouchableOpacity>
       </View>

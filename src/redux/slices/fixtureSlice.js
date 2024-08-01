@@ -1,16 +1,16 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchLeagues = createAsyncThunk(
   'fixtures/fetchLeagues',
-  async (_, { rejectWithValue }) => {
+  async (_, {rejectWithValue}) => {
     try {
       const response = await axios.get('http://localhost:5001/api/leagues');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 const initialState = {
@@ -27,7 +27,7 @@ const fixtureSlice = createSlice({
     setFixtures(state, action) {
       const fixtures = action.payload;
       fixtures.forEach(fixture => {
-        state.fixtures[fixture.id] = { ...fixture };
+        state.fixtures[fixture.id] = {...fixture};
       });
     },
   },
@@ -40,9 +40,9 @@ const fixtureSlice = createSlice({
         state.status = 'succeeded';
         state.leagues = action.payload;
         const fixtures = action.payload.flatMap(league =>
-          league.fixtures.map(fixture => ({ ...fixture, leagueId: league._id }))
+          league.fixtures.map(fixture => ({...fixture, leagueId: league._id})),
         );
-        fixtureSlice.caseReducers.setFixtures(state, { payload: fixtures });
+        fixtureSlice.caseReducers.setFixtures(state, {payload: fixtures});
       })
       .addCase(fetchLeagues.rejected, (state, action) => {
         state.status = 'failed';
@@ -51,5 +51,5 @@ const fixtureSlice = createSlice({
   },
 });
 
-export const { setFixtures } = fixtureSlice.actions;
+export const {setFixtures} = fixtureSlice.actions;
 export default fixtureSlice.reducer;

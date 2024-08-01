@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const CoinSection = () => {
+const CoinSection = ({ matchash, matecoins }) => {
   return (
     <View style={styles.section}>
       <View style={styles.coinContainer}>
         <View style={styles.card}>
-          <Text style={styles.coinValue}>$500.00</Text>
+          <Text style={styles.coinValue}>${matchash.toFixed(2)}</Text>
           <Text style={styles.coinText}>MateCash</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
@@ -22,7 +22,7 @@ const CoinSection = () => {
           </View>
         </View>
         <View style={styles.card}>
-          <Text style={styles.coinValue}>1200</Text>
+          <Text style={styles.coinValue}>{matecoins}</Text>
           <Text style={styles.coinText}>MateCoins</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity

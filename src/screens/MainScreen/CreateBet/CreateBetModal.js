@@ -8,19 +8,18 @@ import {
   Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { setBetName, setBalance, createBet } from '../../../redux/slices/betSlice';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { fetchBetsByUser } from '../../../redux/slices/getBetSlice'; // Ensure this action is imported correctly
 
 const CreateBetModal = ({ visible, onClose }) => {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const mode = route.params?.mode || 'bet';
-
   const dispatch = useDispatch();
-  const betName = useSelector(state => state.bet.betName);
-  const balance = useSelector(state => state.bet.balance);
-  const userId = useSelector(state => state.auth.user?._id); 
+  const navigation = useNavigation();
+  const userId = useSelector(state => state.auth.user?._id);
+
+  const [betName, setBetName] = useState('');
+  const [balance, setBalance] = useState('');
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -35,12 +34,18 @@ const CreateBetModal = ({ visible, onClose }) => {
       }
       try {
         setLoading(true);
-        await dispatch(
-          createBet({ name: betName, amountAllocated: balance, userId }),
-        ).unwrap();
-        setLoading(false);
-        navigation.navigate('AddFixtureScreen', { betName, balance, mode });
-        onClose();
+        await axios.post('http://localhost:5001/api/create-bet', {
+          name: betName,
+          amountAllocated: balance,
+          userId,
+        });
+
+        // Dispatch action to fetch and update bets
+        dispatch(fetchBetsByUser(userId)).then(() => {
+          setLoading(false);
+          navigation.navigate('SavedBetsScreen');
+          onClose();
+        });
       } catch (err) {
         setLoading(false);
         setError('Error creating bet');
@@ -75,7 +80,7 @@ const CreateBetModal = ({ visible, onClose }) => {
               placeholderTextColor="#AAAAAA"
               style={styles.input}
               value={betName}
-              onChangeText={text => dispatch(setBetName(text))}
+              onChangeText={text => setBetName(text)}
             />
           )}
           {step === 2 && (
@@ -84,7 +89,7 @@ const CreateBetModal = ({ visible, onClose }) => {
               placeholderTextColor="#AAAAAA"
               style={styles.input}
               value={balance}
-              onChangeText={text => dispatch(setBalance(text))}
+              onChangeText={text => setBalance(text)}
               keyboardType="numeric"
             />
           )}

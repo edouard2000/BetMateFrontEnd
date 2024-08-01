@@ -24,19 +24,19 @@ const BetCard = ({bet, isLast}) => {
             <Text style={styles.betName}>{bet.name}</Text>
           </View>
           <View style={styles.headerRight}>
-            <Text style={styles.status}>Saved</Text>
-            <Text style={styles.amount}>{bet.allocatedAmount}</Text>
+            <Text style={styles.status}>{bet.status}</Text>
+            <Text style={styles.amount}>${bet.amountAllocated}</Text>
           </View>
         </View>
         <View style={styles.bodySection}>
           <Text style={styles.bodyLabel}>
-            Teams: <Text style={styles.bodyValue}>{bet.numberOfTeams}</Text>
+            Teams: <Text style={styles.bodyValue}>{bet.fixtures.length}</Text>
           </Text>
           <Text style={styles.bodyLabel}>
-            People: <Text style={styles.bodyValue}>0</Text>
+            People: <Text style={styles.bodyValue}>{bet.poepleBetted}</Text>
           </Text>
           <Text style={styles.bodyLabel}>
-            Outcome: <Text style={styles.bodyValue}>0</Text>
+            Outcome: <Text style={styles.bodyValue}>{bet.outcome}</Text>
           </Text>
         </View>
         <View style={styles.cardFooter}>

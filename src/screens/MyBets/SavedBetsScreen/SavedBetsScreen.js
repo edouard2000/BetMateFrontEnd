@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   SafeAreaView,
@@ -6,70 +6,38 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import BetCard from './BetCard';
 import styles from './styles';
-
-const dummySavedBets = [
-  {
-    id: '1',
-    name: 'Saved Bet 1',
-    status: 'Saved',
-    people: 0,
-    numberOfTeams: 2,
-    dateCreated: '2024-07-01',
-    allocatedAmount: '$100',
-    outcome: '0',
-    fixtures: [
-      {
-        id: '1',
-        league: 'Premier League',
-        leagueIcon: 'https://example.com/league-icon.png',
-        teamA: 'Liverpool',
-        teamAIcon: 'https://example.com/teamA-icon.png',
-        teamB: 'Manchester United',
-        teamBIcon: 'https://example.com/teamB-icon.png',
-        time: '20:00',
-        multipliers: {teamA: '2.5', draw: '3.0', teamB: '2.8'},
-      },
-    ],
-  },
-  {
-    id: '2',
-    name: 'Saved Bet 2',
-    status: 'Saved',
-    people: 0,
-    numberOfTeams: 4,
-    dateCreated: '2024-07-02',
-    allocatedAmount: '$200',
-    outcome: '0',
-    fixtures: [
-      {
-        id: '1',
-        league: 'Champions League',
-        leagueIcon: 'https://example.com/league-icon.png',
-        teamA: 'Barcelona',
-        teamAIcon: 'https://example.com/teamA-icon.png',
-        teamB: 'Real Madrid',
-        teamBIcon: 'https://example.com/teamB-icon.png',
-        time: '22:00',
-        multipliers: {teamA: '2.0', draw: '3.5', teamB: '3.0'},
-      },
-    ],
-  },
-];
+import {fetchBetsByUser} from '../../../redux/slices/getBetSlice';
 
 const SavedBetsScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  const unpublishedBets = useSelector(state => state.bets.unpublishedBets);
+  const loading = useSelector(state => state.bets.loading);
+  const error = useSelector(state => state.bets.error);
+  const userId = useSelector(state => state.auth.user._id);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchBetsByUser(userId));
+    }
+  }, [dispatch, userId]);
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error: {error}</Text>;
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {dummySavedBets.map((bet, index) => (
+        {unpublishedBets.map((bet, index) => (
           <BetCard
-            key={bet.id}
+            key={bet._id}
             bet={bet}
             onCardPress={() =>
               navigation.navigate('FixtureDetailScreen', {bet})
             }
-            isLast={index === dummySavedBets.length - 1}
+            isLast={index === unpublishedBets.length - 1}
           />
         ))}
       </ScrollView>

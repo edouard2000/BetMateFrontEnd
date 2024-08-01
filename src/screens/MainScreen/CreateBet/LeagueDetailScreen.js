@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,13 +8,13 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import GameItem from './GameItem';
 import SearchBar from './SearchBar';
 
-const LeagueDetailScreen = ({ route, navigation }) => {
-  const { leagueId, leagueName, mode } = route.params;
+const LeagueDetailScreen = ({route, navigation}) => {
+  const {leagueId, leagueName, mode} = route.params;
   const fixtures = useSelector(state => state.fixtures.fixtures);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredFixtures, setFilteredFixtures] = useState([]);
@@ -22,7 +22,7 @@ const LeagueDetailScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     const leagueFixtures = Object.values(fixtures).filter(
-      fixture => fixture.leagueId === leagueId
+      fixture => fixture.leagueId === leagueId,
     );
     setFilteredFixtures(leagueFixtures);
     setVisibleFixtures(leagueFixtures.slice(0, 10));
@@ -32,7 +32,7 @@ const LeagueDetailScreen = ({ route, navigation }) => {
     const filteredGames = filteredFixtures.filter(
       game =>
         game.homeTeam.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase())
+        game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setVisibleFixtures(filteredGames.slice(0, 10));
   }, [searchQuery, filteredFixtures]);
@@ -40,7 +40,7 @@ const LeagueDetailScreen = ({ route, navigation }) => {
   const handleLoadMore = () => {
     const moreFixtures = filteredFixtures.slice(
       visibleFixtures.length,
-      visibleFixtures.length + 10
+      visibleFixtures.length + 10,
     );
     setVisibleFixtures([...visibleFixtures, ...moreFixtures]);
   };
@@ -48,18 +48,13 @@ const LeagueDetailScreen = ({ route, navigation }) => {
   const filteredGames = visibleFixtures.filter(
     game =>
       game.homeTeam.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase())
+      game.awayTeam.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const backButtonColor = mode === 'predict' ? '#E74C3C' : '#3498db';
   const headerRightBgColor = mode === 'predict' ? '#E74C3C' : '#3498db';
 
-  const renderItem = ({ item }) => (
-    <GameItem
-      game={item}
-      mode={mode}
-    />
-  );
+  const renderItem = ({item}) => <GameItem game={item} mode={mode} />;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -74,7 +69,8 @@ const LeagueDetailScreen = ({ route, navigation }) => {
           </TouchableOpacity>
           <Text style={styles.headerTitle}>{leagueName}</Text>
         </View>
-        <View style={[styles.headerRight, { backgroundColor: headerRightBgColor }]}>
+        <View
+          style={[styles.headerRight, {backgroundColor: headerRightBgColor}]}>
           <Text style={styles.headerGameCount}>{filteredFixtures.length}</Text>
         </View>
       </View>
@@ -86,7 +82,9 @@ const LeagueDetailScreen = ({ route, navigation }) => {
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         ListFooterComponent={() =>
-          visibleFixtures.length < filteredFixtures.length && <ActivityIndicator size="large" color="#3498db" />
+          visibleFixtures.length < filteredFixtures.length && (
+            <ActivityIndicator size="large" color="#3498db" />
+          )
         }
       />
     </SafeAreaView>

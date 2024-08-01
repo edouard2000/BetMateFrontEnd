@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useSelector, useDispatch } from 'react-redux';
-import { addFixture, removeFixture } from '../../../redux/slices/fixtureSlice';
-import { formatTime, formatDate } from '../../../utils/formatTimeAndDate';
+import {useSelector, useDispatch} from 'react-redux';
+import {addFixture, removeFixture} from '../../../redux/slices/fixtureSlice';
+import {formatTime, formatDate} from '../../../utils/formatTimeAndDate';
 
-const LeagueItem = ({ league, navigation, betId, mode }) => {
+const LeagueItem = ({league, navigation, betId, mode}) => {
   if (!league) return null;
 
   const leagueId = league._id;
@@ -28,7 +28,7 @@ const LeagueItem = ({ league, navigation, betId, mode }) => {
   return (
     <View style={styles.leagueContainer}>
       <View style={styles.leagueHeader}>
-        <Image source={{ uri: leagueLogo }} style={styles.leagueLogo} />
+        <Image source={{uri: leagueLogo}} style={styles.leagueLogo} />
         <View style={styles.leagueTitle}>
           <Text style={styles.leagueName}>{leagueName}</Text>
           <Text style={styles.countryName}>{countryName}</Text>
@@ -66,11 +66,11 @@ const LeagueItem = ({ league, navigation, betId, mode }) => {
               </View>
               <View style={styles.teamsContainer}>
                 <View style={styles.team}>
-                  <Image source={{ uri: homeLogo }} style={styles.teamLogo} />
+                  <Image source={{uri: homeLogo}} style={styles.teamLogo} />
                   <Text style={styles.teamName}>{homeTeamName}</Text>
                 </View>
                 <View style={styles.team}>
-                  <Image source={{ uri: awayLogo }} style={styles.teamLogo} />
+                  <Image source={{uri: awayLogo}} style={styles.teamLogo} />
                   <Text style={styles.teamName}>{awayTeamName}</Text>
                 </View>
               </View>
