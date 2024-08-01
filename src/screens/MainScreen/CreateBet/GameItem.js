@@ -1,10 +1,37 @@
+// GameItem.js
+
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  addFixtureToBet,
+  removeFixtureFromBet,
+  fetchAddedFixtures,
+} from '../../../redux/slices/fixtureSlice';
 import {formatTime, formatDate} from '../../../utils/formatTimeAndDate';
+import {makeGetAddedFixturesByBetId} from '../../../redux/selectors';
 
-const GameItem = ({game, mode}) => {
-  const homeLogo = game.homeTeam.logo;
-  const awayLogo = game.awayTeam.logo;
+const GameItem = ({game, mode, betId}) => {
+  const dispatch = useDispatch();
+  const getAddedFixturesByBetId = React.useMemo(
+    () => makeGetAddedFixturesByBetId(),
+    [],
+  );
+  const addedFixtures = useSelector(state =>
+    getAddedFixturesByBetId(state, betId),
+  );
+
+  const handleAddRemoveFixture = () => {
+    if (addedFixtures[game._id]) {
+      dispatch(removeFixtureFromBet({betId, fixtureId: game._id})).then(() => {
+        dispatch(fetchAddedFixtures(betId));
+      });
+    } else {
+      dispatch(addFixtureToBet({betId, fixtureId: game._id})).then(() => {
+        dispatch(fetchAddedFixtures(betId));
+      });
+    }
+  };
 
   return (
     <View style={styles.gameContainer}>
@@ -14,17 +41,24 @@ const GameItem = ({game, mode}) => {
       </View>
       <View style={styles.teamsContainer}>
         <View style={styles.team}>
-          <Image source={{uri: homeLogo}} style={styles.teamLogo} />
+          <Image source={{uri: game.homeTeam.logo}} style={styles.teamLogo} />
           <Text style={styles.teamName}>{game.homeTeam.name}</Text>
         </View>
         <View style={styles.team}>
-          <Image source={{uri: awayLogo}} style={styles.teamLogo} />
+          <Image source={{uri: game.awayTeam.logo}} style={styles.teamLogo} />
           <Text style={styles.teamName}>{game.awayTeam.name}</Text>
         </View>
       </View>
       {mode === 'bet' && (
-        <TouchableOpacity style={[styles.button, styles.addButton]}>
-          <Text style={styles.buttonText}>Add</Text>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            addedFixtures[game._id] ? styles.removeButton : styles.addButton,
+          ]}
+          onPress={handleAddRemoveFixture}>
+          <Text style={styles.buttonText}>
+            {addedFixtures[game._id] ? 'Remove' : 'Add'}
+          </Text>
         </TouchableOpacity>
       )}
       {mode === 'predict' && (
@@ -79,6 +113,9 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: '#3498db',
+  },
+  removeButton: {
+    backgroundColor: '#E74C3C',
   },
   buttonText: {
     color: '#FFFFFF',

@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, ActivityIndicator, Text, View, TouchableOpacity } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BetInfoCard from './BetInfoCard';
 import SearchBar from './SearchBar';
 import LeagueList from './LeagueList';
-import { fetchLeagues } from '../../../redux/slices/fixtureSlice';
+import {fetchLeagues} from '../../../redux/slices/fixtureSlice';
+import CustomToast from '../../../utils/CustomToast'; 
 
-const AddFixtureScreen = ({ route, navigation }) => {
-  const { betId, betName, balance, mode } = route.params;
+const AddFixtureScreen = ({route, navigation}) => {
+  const {betId, betName, balance, mode} = route.params;
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
   const leagues = useSelector(state => state.fixtures.leagues);
@@ -21,8 +29,15 @@ const AddFixtureScreen = ({ route, navigation }) => {
   }, [dispatch]);
 
   const filteredLeagues = leagues.filter(league =>
-    league.leagueName?.toLowerCase().includes(searchQuery.toLowerCase())
+    league.leagueName?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  const handleSavePress = () => {
+    CustomToast.show({
+      message: 'Bet saved successfully!',
+      onHiddenCallback: () => navigation.navigate('SavedBetsScreen'),
+    });
+  };
 
   if (loading) {
     return (
@@ -33,10 +48,11 @@ const AddFixtureScreen = ({ route, navigation }) => {
   }
 
   if (error) {
-    const errorMessage = error.error || 'Something went wrong';
     return (
       <SafeAreaView style={styles.loadingContainer}>
-        <Text style={styles.errorText}>{errorMessage}</Text>
+        <Text style={styles.errorText}>
+          {error.error || 'Something went wrong'}
+        </Text>
       </SafeAreaView>
     );
   }
@@ -48,11 +64,20 @@ const AddFixtureScreen = ({ route, navigation }) => {
         balance={balance}
         mode={mode}
         userName={userName}
-        onSavePress={() => alert('Save pressed')}
+        betId={betId}
+        onSavePress={handleSavePress}
         onNextPress={() => alert('Next pressed')}
       />
-      <SearchBar placeholder="Search leagues..." onChangeText={setSearchQuery} />
-      <LeagueList leagues={filteredLeagues} navigation={navigation} betId={betId} mode={mode} />
+      <SearchBar
+        placeholder="Search leagues..."
+        onChangeText={setSearchQuery}
+      />
+      <LeagueList
+        leagues={filteredLeagues}
+        navigation={navigation}
+        betId={betId}
+        mode={mode}
+      />
       <View style={styles.footer}>
         <View style={styles.backButtonContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('Main')}>

@@ -1,16 +1,28 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import generateAvatarUrl from '../../../utils/generateAvatarUrl';
-import {publishBet} from '../../../redux/slices/getBetSlice';
+import { publishBet, unpublishBet } from '../../../redux/slices/getBetSlice';
 
-const BetSavedCard = ({bet, isLast}) => {
+const BetSavedCard = ({ bet, isLast }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation(); // Add this to use navigation
 
   const handlePublish = () => {
     dispatch(publishBet(bet._id));
+  };
+
+  const handleAddFixture = () => {
+    // Navigate to AddFixtureScreen with the specified parameters
+    navigation.navigate('AddFixtureScreen', {
+      betId: bet._id,
+      betName: bet.name,
+      balance: bet.amountAllocated,
+      mode: 'bet',
+    });
   };
 
   return (
@@ -19,7 +31,7 @@ const BetSavedCard = ({bet, isLast}) => {
         <View style={styles.cardHeader}>
           <View style={styles.headerLeft}>
             <Image
-              source={{uri: generateAvatarUrl(bet.name)}}
+              source={{ uri: generateAvatarUrl(bet.name) }}
               style={styles.avatar}
             />
             <Text style={styles.betName}>{bet.name}</Text>
@@ -41,38 +53,45 @@ const BetSavedCard = ({bet, isLast}) => {
           </Text>
         </View>
         <View style={styles.cardFooter}>
-          <TouchableOpacity style={styles.footerButton}>
-            <Icon name="chatbubble-outline" size={18} color="#3498db" />
-            <Text style={[styles.footerButtonText, styles.chatButtonText]}>
-              Chat
+          <TouchableOpacity style={styles.footerButton} onPress={handleAddFixture}>
+            <Icon name="add-outline" size={18} color="#3498db" />
+            <Text style={[styles.footerButtonText, styles.addFixtureText]}>
+              Add Fixture
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.footerButton}>
-            <Icon name="create-outline" size={18} color="#FFA500" />
-            <Text style={[styles.footerButtonText, styles.editButtonText]}>
-              Edit
-            </Text>
-          </TouchableOpacity>
-          {bet.ispublished ? (
-            <TouchableOpacity
-              style={styles.footerButton}
-              onPress={() => dispatch(unpublishBet(bet._id))}>
-              <Icon name="eye-off-outline" size={18} color="#FF0000" />
-              <Text
-                style={[styles.footerButtonText, styles.unpublishButtonText]}>
-                Unpublish
+          <View style={styles.rightFooterButtons}>
+            <TouchableOpacity style={styles.footerButton}>
+              <Icon name="create-outline" size={18} color="#FFA500" />
+              <Text style={[styles.footerButtonText, styles.editButtonText]}>
+                Edit
               </Text>
             </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={styles.footerButton}
-              onPress={handlePublish}>
-              <Icon name="eye-outline" size={18} color="#FF0000" />
-              <Text style={[styles.footerButtonText, styles.publishButtonText]}>
-                Publish
-              </Text>
-            </TouchableOpacity>
-          )}
+            {bet.ispublished ? (
+              <TouchableOpacity
+                style={styles.footerButton}
+                onPress={() => dispatch(unpublishBet(bet._id))}
+              >
+                <Icon name="eye-off-outline" size={18} color="#FF0000" />
+                <Text
+                  style={[styles.footerButtonText, styles.unpublishButtonText]}
+                >
+                  Unpublish
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.footerButton}
+                onPress={handlePublish}
+              >
+                <Icon name="eye-outline" size={18} color="#FF0000" />
+                <Text
+                  style={[styles.footerButtonText, styles.publishButtonText]}
+                >
+                  Publish
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       </TouchableOpacity>
       {!isLast && (

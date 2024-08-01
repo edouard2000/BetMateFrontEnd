@@ -1,16 +1,28 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {useSelector} from 'react-redux';
 import generateAvatarUrl from '../../../utils/generateAvatarUrl';
+import {makeGetAddedFixturesByBetId} from '../../../redux/selectors';
 
 const BetInfoCard = ({
   betName,
   balance,
-  teamCount,
   mode,
   userName,
   onSavePress,
   onNextPress,
+  betId,
 }) => {
+  const getAddedFixturesByBetId = React.useMemo(
+    () => makeGetAddedFixturesByBetId(),
+    [],
+  );
+
+  const addedFixtures = useSelector(state =>
+    getAddedFixturesByBetId(state, betId),
+  );
+  const addedFixturesCount = Object.keys(addedFixtures).length;
+
   const avatarUrl = generateAvatarUrl(mode === 'predict' ? userName : betName);
   const teamCountBgColor = mode === 'predict' ? '#E74C3C' : '#3498db';
 
@@ -30,13 +42,13 @@ const BetInfoCard = ({
               styles.teamCountContainer,
               {backgroundColor: teamCountBgColor},
             ]}>
-            <Text style={styles.teamCount}>{teamCount}</Text>
+            <Text style={styles.teamCount}>{addedFixturesCount}</Text>
           </View>
           <TouchableOpacity style={styles.saveButton} onPress={onSavePress}>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.nextButton} onPress={onNextPress}>
-            <Text style={styles.buttonText}>Next</Text>
+            <Text style={styles.buttonText}>Publish</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -1,43 +1,59 @@
-import React from 'react';
+// LeagueItem.js
+
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector, useDispatch} from 'react-redux';
-import {addFixture, removeFixture} from '../../../redux/slices/fixtureSlice';
+import {
+  addFixtureToBet,
+  removeFixtureFromBet,
+  fetchAddedFixtures, // Import fetchAddedFixtures thunk
+} from '../../../redux/slices/fixtureSlice';
 import {formatTime, formatDate} from '../../../utils/formatTimeAndDate';
+import {makeGetAddedFixturesByBetId} from '../../../redux/selectors';
 
 const LeagueItem = ({league, navigation, betId, mode}) => {
-  if (!league) return null;
-
-  const leagueId = league._id;
-  const leagueLogo = league.leagueLogo || '';
-  const leagueName = league.leagueName || 'Unknown League';
-  const countryName = league.countryName || 'Unknown Country';
-  const navigationIconColor = mode === 'predict' ? '#E74C3C' : '#3498db';
-
   const dispatch = useDispatch();
-  const addedFixtures = useSelector(state => state.fixtures.fixtures);
+  const getAddedFixturesByBetId = React.useMemo(
+    () => makeGetAddedFixturesByBetId(),
+    [],
+  );
+  const addedFixtures = useSelector(state =>
+    getAddedFixturesByBetId(state, betId),
+  );
 
-  const handleAddFixture = fixtureId => {
-    dispatch(addFixture(fixtureId));
-  };
+  useEffect(() => {
+    // Fetch the added fixtures when the component mounts
+    dispatch(fetchAddedFixtures(betId));
+  }, [dispatch, betId]);
 
-  const handleRemoveFixture = fixtureId => {
-    dispatch(removeFixture(fixtureId));
+  const handleAddRemoveFixture = fixtureId => {
+    if (addedFixtures[fixtureId]) {
+      dispatch(removeFixtureFromBet({betId, fixtureId})).then(() => {
+        // Re-fetch added fixtures to update the UI after removal
+        dispatch(fetchAddedFixtures(betId));
+      });
+    } else {
+      dispatch(addFixtureToBet({betId, fixtureId})).then(() => {
+        // Re-fetch added fixtures to update the UI after addition
+        dispatch(fetchAddedFixtures(betId));
+      });
+    }
   };
 
   return (
     <View style={styles.leagueContainer}>
       <View style={styles.leagueHeader}>
-        <Image source={{uri: leagueLogo}} style={styles.leagueLogo} />
+        <Image source={{uri: league.leagueLogo}} style={styles.leagueLogo} />
         <View style={styles.leagueTitle}>
-          <Text style={styles.leagueName}>{leagueName}</Text>
-          <Text style={styles.countryName}>{countryName}</Text>
+          <Text style={styles.leagueName}>{league.leagueName}</Text>
+          <Text style={styles.countryName}>{league.countryName}</Text>
         </View>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('LeagueDetailScreen', {
-              leagueId: leagueId,
-              leagueName: leagueName,
+              leagueId: league._id,
+              leagueName: league.leagueName,
               mode,
               betId,
             });
@@ -45,59 +61,54 @@ const LeagueItem = ({league, navigation, betId, mode}) => {
           <Icon
             name="chevron-forward-outline"
             size={20}
-            color={navigationIconColor}
+            color={mode === 'predict' ? '#E74C3C' : '#3498db'}
           />
         </TouchableOpacity>
       </View>
       {league.fixtures && league.fixtures.length > 0 ? (
-        league.fixtures.slice(0, 5).map((fixture, index) => {
-          const homeTeamName = fixture.homeTeam?.name || 'Unknown Home Team';
-          const awayTeamName = fixture.awayTeam?.name || 'Unknown Away Team';
-          const homeLogo = fixture.homeTeam?.logo || '';
-          const awayLogo = fixture.awayTeam?.logo || '';
-
-          const isFixtureAdded = addedFixtures[fixture.id]?.added;
-
-          return (
-            <View key={index} style={styles.gameContainer}>
-              <View>
-                <Text style={styles.gameTime}>{formatTime(fixture.date)}</Text>
-                <Text style={styles.gameDate}>{formatDate(fixture.date)}</Text>
-              </View>
-              <View style={styles.teamsContainer}>
-                <View style={styles.team}>
-                  <Image source={{uri: homeLogo}} style={styles.teamLogo} />
-                  <Text style={styles.teamName}>{homeTeamName}</Text>
-                </View>
-                <View style={styles.team}>
-                  <Image source={{uri: awayLogo}} style={styles.teamLogo} />
-                  <Text style={styles.teamName}>{awayTeamName}</Text>
-                </View>
-              </View>
-              {mode === 'bet' && (
-                <TouchableOpacity
-                  style={[
-                    styles.button,
-                    isFixtureAdded ? styles.removeButton : styles.addButton,
-                  ]}
-                  onPress={() =>
-                    isFixtureAdded
-                      ? handleRemoveFixture(fixture.id)
-                      : handleAddFixture(fixture.id)
-                  }>
-                  <Text style={styles.buttonText}>
-                    {isFixtureAdded ? 'Remove' : 'Add'}
-                  </Text>
-                </TouchableOpacity>
-              )}
-              {mode === 'predict' && (
-                <TouchableOpacity style={styles.predictButton}>
-                  <Text style={styles.predictButtonText}>Predict</Text>
-                </TouchableOpacity>
-              )}
+        league.fixtures.slice(0, 5).map((fixture, index) => (
+          <View key={index} style={styles.gameContainer}>
+            <View>
+              <Text style={styles.gameTime}>{formatTime(fixture.date)}</Text>
+              <Text style={styles.gameDate}>{formatDate(fixture.date)}</Text>
             </View>
-          );
-        })
+            <View style={styles.teamsContainer}>
+              <View style={styles.team}>
+                <Image
+                  source={{uri: fixture.homeTeam.logo}}
+                  style={styles.teamLogo}
+                />
+                <Text style={styles.teamName}>{fixture.homeTeam.name}</Text>
+              </View>
+              <View style={styles.team}>
+                <Image
+                  source={{uri: fixture.awayTeam.logo}}
+                  style={styles.teamLogo}
+                />
+                <Text style={styles.teamName}>{fixture.awayTeam.name}</Text>
+              </View>
+            </View>
+            {mode === 'bet' && (
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  addedFixtures[fixture._id]
+                    ? styles.removeButton
+                    : styles.addButton,
+                ]}
+                onPress={() => handleAddRemoveFixture(fixture._id)}>
+                <Text style={styles.buttonText}>
+                  {addedFixtures[fixture._id] ? 'Remove' : 'Add'}
+                </Text>
+              </TouchableOpacity>
+            )}
+            {mode === 'predict' && (
+              <TouchableOpacity style={styles.predictButton}>
+                <Text style={styles.predictButtonText}>Predict</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        ))
       ) : (
         <Text style={styles.noFixturesText}>No fixtures available</Text>
       )}

@@ -1,3 +1,5 @@
+// LeagueDetailScreen.js
+
 import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
@@ -8,17 +10,34 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import GameItem from './GameItem';
 import SearchBar from './SearchBar';
+import {makeGetAddedFixturesByBetId} from '../../../redux/selectors';
+import {fetchAddedFixtures} from '../../../redux/slices/fixtureSlice'; // Import fetchAddedFixtures
 
 const LeagueDetailScreen = ({route, navigation}) => {
-  const {leagueId, leagueName, mode} = route.params;
+  const {leagueId, leagueName, mode, betId} = route.params;
+  const dispatch = useDispatch();
   const fixtures = useSelector(state => state.fixtures.fixtures);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredFixtures, setFilteredFixtures] = useState([]);
   const [visibleFixtures, setVisibleFixtures] = useState([]);
+
+  // Memoized selector for added fixtures
+  const getAddedFixturesByBetId = React.useMemo(
+    () => makeGetAddedFixturesByBetId(),
+    [],
+  );
+  const addedFixtures = useSelector(state =>
+    getAddedFixturesByBetId(state, betId),
+  );
+
+  useEffect(() => {
+    // Fetch added fixtures when the screen loads
+    dispatch(fetchAddedFixtures(betId));
+  }, [dispatch, betId]);
 
   useEffect(() => {
     const leagueFixtures = Object.values(fixtures).filter(
@@ -54,7 +73,9 @@ const LeagueDetailScreen = ({route, navigation}) => {
   const backButtonColor = mode === 'predict' ? '#E74C3C' : '#3498db';
   const headerRightBgColor = mode === 'predict' ? '#E74C3C' : '#3498db';
 
-  const renderItem = ({item}) => <GameItem game={item} mode={mode} />;
+  const renderItem = ({item}) => (
+    <GameItem game={item} mode={mode} betId={betId} />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -78,7 +99,7 @@ const LeagueDetailScreen = ({route, navigation}) => {
       <FlatList
         data={filteredGames}
         renderItem={renderItem}
-        keyExtractor={item => item._id.toString()} // Ensure the key is unique using _id
+        keyExtractor={item => item._id.toString()}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         ListFooterComponent={() =>

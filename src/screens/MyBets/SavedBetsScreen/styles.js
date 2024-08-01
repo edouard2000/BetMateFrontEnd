@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,19 +71,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
+    alignItems: 'center',
+  },
+  rightFooterButtons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   footerButton: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 5,
     borderRadius: 5,
+    marginHorizontal: 5,
   },
   footerButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
     marginLeft: 5,
   },
-  chatButtonText: {
+  addFixtureText: {
     color: '#1E88E5',
   },
   editButtonText: {
