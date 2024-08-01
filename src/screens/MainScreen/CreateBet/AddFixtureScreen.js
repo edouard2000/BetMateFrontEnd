@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,36 +7,77 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BetInfoCard from './BetInfoCard';
 import SearchBar from './SearchBar';
 import LeagueList from './LeagueList';
-import {fetchLeagues} from '../../../redux/slices/fixtureSlice';
-import CustomToast from '../../../utils/CustomToast'; 
+import { fetchLeagues } from '../../../redux/slices/fixtureSlice';
+import { publishBet } from '../../../redux/slices/getBetSlice'; // Import the async thunk
+import { CustomToast, toastConfig } from '../../../utils/CustomToast';
+import Toast from 'react-native-toast-message';
 
-const AddFixtureScreen = ({route, navigation}) => {
-  const {betId, betName, balance, mode} = route.params;
+const AddFixtureScreen = ({ route, navigation }) => {
+  const { betId, betName, balance, mode } = route.params;
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
-  const leagues = useSelector(state => state.fixtures.leagues);
-  const loading = useSelector(state => state.fixtures.status === 'loading');
-  const error = useSelector(state => state.fixtures.error);
-  const userName = useSelector(state => state.auth.user?.name);
+  const leagues = useSelector((state) => state.fixtures.leagues);
+  const loading = useSelector((state) => state.fixtures.status === 'loading');
+  const error = useSelector((state) => state.fixtures.error);
+  const userName = useSelector((state) => state.auth.user?.name);
 
   useEffect(() => {
     dispatch(fetchLeagues());
   }, [dispatch]);
 
-  const filteredLeagues = leagues.filter(league =>
-    league.leagueName?.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredLeagues = leagues.filter((league) =>
+    league.leagueName?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleSavePress = () => {
-    CustomToast.show({
-      message: 'Bet saved successfully!',
-      onHiddenCallback: () => navigation.navigate('SavedBetsScreen'),
-    });
+    // Dispatch the fetchBetsByUser thunk with the userId
+    dispatch(fetchBetsByUser(userId))
+      .unwrap() // Unwrap the result to handle fulfillment or rejection
+      .then(() => {
+        CustomToast.show({
+          message: 'Bet saved successfully!',
+          textColor: '#3498db',
+          onHiddenCallback: () => {
+            console.log('Navigating to SavedBetsScreen');
+            navigation.navigate('SavedBetsScreen');
+          },
+        });
+      })
+      .catch((error) => {
+        console.error('Failed to fetch bets:', error);
+        CustomToast.show({
+          message: 'Failed to fetch bets',
+          textColor: 'red',
+        });
+      });
+  };
+
+  const handlePublishPress = () => {
+    // Dispatch the publishBet thunk with the betId
+    dispatch(publishBet(betId))
+      .unwrap()
+      .then(() => {
+        CustomToast.show({
+          message: 'Bet published successfully!',
+          textColor: '#3498db',
+          onHiddenCallback: () => {
+            console.log('Navigating to MyBets');
+            navigation.navigate('MyBets');
+          },
+        });
+      })
+      .catch((error) => {
+        console.error('Failed to publish bet:', error);
+        CustomToast.show({
+          message: error.message || 'Failed to publish bet',
+          textColor: 'red',
+        });
+      });
   };
 
   if (loading) {
@@ -66,12 +107,9 @@ const AddFixtureScreen = ({route, navigation}) => {
         userName={userName}
         betId={betId}
         onSavePress={handleSavePress}
-        onNextPress={() => alert('Next pressed')}
+        onPublishPress={handlePublishPress} // Pass the onPublish function to the card
       />
-      <SearchBar
-        placeholder="Search leagues..."
-        onChangeText={setSearchQuery}
-      />
+      <SearchBar placeholder="Search leagues..." onChangeText={setSearchQuery} />
       <LeagueList
         leagues={filteredLeagues}
         navigation={navigation}
@@ -85,6 +123,7 @@ const AddFixtureScreen = ({route, navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
+      <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
     </SafeAreaView>
   );
 };

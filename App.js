@@ -10,7 +10,7 @@ const App = () => {
     <Provider store={store}>
       <StatusBarManager>
         <AppNavigator />
-        <Toast ref={ref => Toast.setRef(ref)} />
+        <Toast ref={(ref) => Toast.setRef(ref)} />
       </StatusBarManager>
     </Provider>
   );

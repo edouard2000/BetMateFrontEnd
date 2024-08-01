@@ -10,7 +10,7 @@ const BetInfoCard = ({
   mode,
   userName,
   onSavePress,
-  onNextPress,
+  onPublishPress,
   betId,
 }) => {
   const getAddedFixturesByBetId = React.useMemo(
@@ -47,7 +47,7 @@ const BetInfoCard = ({
           <TouchableOpacity style={styles.saveButton} onPress={onSavePress}>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.nextButton} onPress={onNextPress}>
+          <TouchableOpacity style={styles.nextButton} onPress={onPublishPress}>
             <Text style={styles.buttonText}>Publish</Text>
           </TouchableOpacity>
         </View>

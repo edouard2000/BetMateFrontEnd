@@ -1,35 +1,39 @@
-// CustomToast.js
 import React from 'react';
+import {Text} from 'react-native';
 import Toast from 'react-native-toast-message';
 
 const CustomToast = {
-  show: ({type, message, onHiddenCallback}) => {
+  show: ({message, textColor = '#3498db', onHiddenCallback}) => {
     Toast.show({
-      type: type || 'success',
+      type: 'custom',
       text1: message,
       visibilityTime: 3000,
       autoHide: true,
-      onHidden: visibility => {
-        if (visibility === 'hidden' && onHiddenCallback) {
+      onHide: () => {
+        if (onHiddenCallback) {
           onHiddenCallback();
         }
       },
-      textStyle: {
-        textAlign: 'center',
-      },
-      style: {
-        backgroundColor: '#000000',
-        borderWidth: 1,
-        borderColor: '#FFFFFF',
-        width: '90%',
-        alignSelf: 'center',
-      },
-      text1Style: {
-        color: '#FFFFFF',
-        fontSize: 16,
-      },
+      position: 'top',
+      offset: 200,
+      props: {textColor},
     });
   },
 };
 
-export default CustomToast;
+const toastConfig = {
+  custom: ({text1, props}) => (
+    <Text
+      style={{
+        color: props.textColor || '#3498db',
+        textAlign: 'center',
+        fontSize: 16,
+        padding: 10,
+        backgroundColor: 'transparent',
+      }}>
+      {text1}
+    </Text>
+  ),
+};
+
+export {CustomToast, toastConfig};
